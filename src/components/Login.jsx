@@ -11,24 +11,27 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      if (data.token) {
-        login({ ...data.user, token: data.token });
-        navigate(`/${data.user.role}-dashboard`);
-      } else {
-        alert('Login failed');
-      }
-    } catch (error) {
-      alert('Error during login');
+  e.preventDefault();
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+
+    if (data.token && data.user) {
+      login({ user: data.user, token: data.token }); // ✅ Fixed here
+      navigate(`/${data.user.role}-dashboard`);
+    } else {
+      alert('Login failed');
     }
-  };
+  } catch (error) {
+    alert('Error during login');
+    console.error(error);
+  }
+};
+
 
   return (
     <div id="login-page" className="min-h-screen pt-16 bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">

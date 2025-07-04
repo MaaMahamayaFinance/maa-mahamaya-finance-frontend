@@ -52,6 +52,14 @@ function App() {
           {/* Redirect any unknown routes to home */}
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<Navigate to="/" />} />
+          <Route
+            path="/admin-dashboard/employee-details"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <EmployeeDetails />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </ErrorBoundary>
@@ -59,5 +67,6 @@ function App() {
 }
 
 import Services from './components/Services';
+import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 
 export default App;

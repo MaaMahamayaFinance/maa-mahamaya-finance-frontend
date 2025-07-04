@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import EmployeeProfile from './EmployeeProfile';
 import CustomerProfile from './CustomerProfile';
@@ -7,6 +8,7 @@ import BusinessProfile from './BusinessProfile';
 function Sidebar({ role, activeSection, setActiveSection }) {
   const [isOpen, setIsOpen] = useState(false);
   const { logout, user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const customerItems = [
     { id: 'overview', label: 'Overview', icon: 'fas fa-tachometer-alt' },
@@ -38,23 +40,15 @@ function Sidebar({ role, activeSection, setActiveSection }) {
 
   const adminItems = [
     { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
+    { id: 'employee-details', label: 'Employee Details', icon: 'fas fa-cogs' },
     { id: 'users', label: 'User Management', icon: 'fas fa-users' },
     { id: 'reports', label: 'System Reports', icon: 'fas fa-chart-bar' },
     { id: 'settings', label: 'System Settings', icon: 'fas fa-cogs' },
   ];
 
   const goHome = () => {
-    window.location.href = '/';
+    navigate('/');
   };
-
-  const homeItem = (
-    <div
-      className="sidebar-item px-6 py-3 cursor-pointer flex items-center mb-4"
-      onClick={goHome}
-    >
-      <i className="fas fa-home mr-3"></i>Home
-    </div>
-  );
 
   let items = [];
   switch (role) {
@@ -74,10 +68,9 @@ function Sidebar({ role, activeSection, setActiveSection }) {
       items = [];
   }
 
-  // Use this logout handler to clear session and redirect
   const handleLogout = () => {
     logout();
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   return (
@@ -129,7 +122,12 @@ function Sidebar({ role, activeSection, setActiveSection }) {
           </div>
         </div>
         <nav className="mt-6">
-          {homeItem}
+          <div
+            className="sidebar-item px-6 py-3 cursor-pointer flex items-center mb-4"
+            onClick={goHome}
+          >
+            <i className="fas fa-home mr-3"></i>Home
+          </div>
           {items.map((item) => (
             <div
               key={item.id}
@@ -139,6 +137,9 @@ function Sidebar({ role, activeSection, setActiveSection }) {
               onClick={() => {
                 setActiveSection(item.id);
                 if (isOpen) setIsOpen(false);
+                if (item.id === 'employee-details') {
+                  navigate('/admin-dashboard/employee-details');
+                }
               }}
             >
               <i className={`${item.icon} mr-3`}></i>
@@ -153,6 +154,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
           </div>
         </nav>
       </aside>
+
       {role === 'employee' && activeSection === 'profile' && (
         <div className="p-6 mt-4 bg-white rounded-md shadow-md border border-gray-200 max-w-md mx-auto">
           <EmployeeProfile />

@@ -115,7 +115,7 @@ function Home() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <img src="/MMF_logo.png" alt="Maa Mahamaya Finance" className="h-8 w-auto mr-2" />
+                <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-8 w-auto mr-2" />
                 <span className="text-white text-xl font-bold">Maa Mahamaya Finance</span>
               </div>
             </div>
@@ -329,10 +329,9 @@ function Home() {
           </div>
           <div>
             <h3 className="text-white text-xl font-bold mb-4">Contact Us</h3>
-            <p>123 Finance Street</p>
-            <p>City, State, 12345</p>
+            <p>PALAMU, JHARKHAND</p>
             <p>Email: support@maamahamayafinance.com</p>
-            <p>Phone: (123) 456-7890</p>
+            <p>Phone: (+91) 9798678275</p>
             <div className="flex space-x-4 mt-4">
               <a href="#" aria-label="Facebook" className="hover:text-white"><i className="fab fa-facebook-f"></i></a>
               <a href="#" aria-label="Twitter" className="hover:text-white"><i className="fab fa-twitter"></i></a>

@@ -39,50 +39,66 @@ function EmployeeProfile() {
   }, [user, token]);
 
   const handleDownloadPDF = async () => {
-    if (!cardRef.current) return;
+  if (!cardRef.current) return;
 
-    cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    await new Promise((res) => setTimeout(res, 300));
+  cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  await new Promise((res) => setTimeout(res, 300));
 
-    const canvas = await html2canvas(cardRef.current, {
-      backgroundColor: '#ffffff',
-      scale: 2,
-      useCORS: true
-    });
+  const canvas = await html2canvas(cardRef.current, {
+    backgroundColor: '#ffffff',
+    scale: 3,
+    useCORS: true,
+    allowTaint: false,
+    imageTimeout: 1500,
+  });
 
-    const imgData = canvas.toDataURL('image/png');
+  const imgData = canvas.toDataURL('image/png');
 
-    const pdf = new jsPDF({
-      orientation: 'landscape',
-      unit: 'px',
-      format: [canvas.width, canvas.height]
-    });
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'px',
+    format: 'a4',
+  });
 
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-    pdf.save('Employee_ID_Card.pdf');
-  };
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+
+  const ratio = Math.min(pageWidth / canvas.width, pageHeight / canvas.height);
+  const canvasWidth = canvas.width * ratio;
+  const canvasHeight = canvas.height * ratio;
+
+  const x = (pageWidth - canvasWidth) / 2;
+  const y = (pageHeight - canvasHeight) / 2;
+
+  pdf.addImage(imgData, 'PNG', x, y, canvasWidth, canvasHeight);
+  pdf.save('Employee_ID_Card.pdf');
+};
+
 
   const handleDownloadImage = async () => {
-    if (!cardRef.current) return;
+  if (!cardRef.current) return;
 
-    cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    await new Promise((res) => setTimeout(res, 300));
+  cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  await new Promise((res) => setTimeout(res, 300));
 
-    const canvas = await html2canvas(cardRef.current, {
-      backgroundColor: '#ffffff',
-      scale: 2,
-      useCORS: true
-    });
+  const canvas = await html2canvas(cardRef.current, {
+    backgroundColor: '#ffffff',
+    scale: 3,
+    useCORS: true,
+    allowTaint: false,
+    imageTimeout: 1500,
+  });
 
-    const imgData = canvas.toDataURL('image/png');
+  const imgData = canvas.toDataURL('image/png');
 
-    const link = document.createElement('a');
-    link.href = imgData;
-    link.download = 'Employee_ID_Card.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const link = document.createElement('a');
+  link.href = imgData;
+  link.download = 'Employee_ID_Card.png';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-md shadow-md border border-gray-200">
@@ -90,9 +106,6 @@ function EmployeeProfile() {
       <p><strong>Name:</strong> {user?.name}</p>
       <p><strong>Email:</strong> {user?.email}</p>
       <p><strong>Role:</strong> {user?.role}</p>
-      <p><strong>Address:</strong> {user?.address}</p>
-      <p><strong>Pincode:</strong> {user?.pincode}</p>
-      <p><strong>Mobile Number:</strong> {user?.mobileNumber}</p>
 
       <div className="mt-6 border-t pt-4">
         <h3 className="text-lg font-semibold mb-2">Employee ID Card</h3>
@@ -117,39 +130,95 @@ function EmployeeProfile() {
           <div className="space-y-3 mt-4">
             <div
   ref={cardRef}
-  className="w-[300px] h-[360px] bg-blue-100 rounded-lg overflow-hidden shadow-lg border relative font-sans"
+  className="w-[300px] h-[450px] relative overflow-hidden rounded-2xl shadow-2xl font-sans bg-white"
+  style={{
+    fontFamily: 'Inter, sans-serif',
+    background: 'linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%)',
+  }}
 >
-  {/* Header */}
-  <div className="bg-blue-900 text-white p-2 text-center">
-    <h2 className="text-lg font-bold">MAA MAHAMAYA FINANCE</h2>
-    {/* <p className="text-[10px] -mt-1">Near SBI Road Barabanki</p> */}
-  </div>
+  {/* Decorative Backgrounds */}
+  <div className="absolute w-[250%] h-[250%] rounded-full top-[-180%] left-[-70%] bg-blue-900 opacity-20"></div>
+  <div className="absolute w-[250%] h-[250%] rounded-full bottom-[-180%] right-[-70%] bg-yellow-500 opacity-30"></div>
 
-  {/* Image Placeholder */}
-  <div className="bg-pink-100 flex justify-center items-center h-[100px]">
-    <div className="w-[80px] h-[80px] bg-white rounded-md shadow-inner border border-gray-300"></div>
-  </div>
+  {/* Top Accent */}
+  <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-yellow-400"></div>
 
-  {/* Name + Class banner */}
-  <div className="bg-blue-800 text-white px-1 text-center">
-    <h3 className="text-md font-bold uppercase tracking-wide">{idCard.name}</h3>
-    <p className="text-xs font-semibold mb-2">{idCard.subRole}</p>
-  </div>
+  {/* Main Content */}
+  <div className="relative z-10 h-full flex flex-col">
+    {/* Header */}
+    <div className="pt-6 pb-3 text-center">
+      <div className="flex items-center justify-center mb-1">
+        <img
+          src="/logo.png"
+          alt="Company Logo"
+          className="w-10 h-10 rounded-full mr-2 "
+          onError={(e) => (e.target.style.display = 'none')}
+        />
+        <h1 className="text-gray-800 font-bold text-sm tracking-wide">
+          MAA MAHAMAYA FINANCE
+        </h1>
+      </div>
+    </div>
 
-  {/* Details */}
-  <div className="text-[12px] p-3 leading-[1.4] mt-2 ml-4">
-    <p><strong>Email:</strong> {idCard.email}</p>
-    <p><strong>Role:</strong> {idCard.role}</p>
-    <p><strong>Sub Role:</strong> {idCard.subRole}</p>
-    <p><strong>Address:</strong> {idCard.address}</p>
-    <p><strong>Pincode:</strong> {idCard.pincode}</p>
-    <p><strong>Mobile:</strong> {idCard.mobileNumber}</p>
-  </div>
+    {/* Profile Image */}
+    <div className="flex justify-center mb-4">
+      <div className="w-[110px] h-[110px] rounded-full border-4 border-yellow-400 bg-gray-100 flex items-center justify-center shadow-md">
+        <img 
+          src={idCard.profilePhoto}
+          alt={`${idCard.name}'s profile`}
+          className="w-24 h-24 object-cover rounded-full border border-gray-300 shadow-sm"
+        />
+      </div>
+    </div>
 
+    {/* Name & Designation */}
+    <div className="bg-blue-900 text-white py-2 px-2 text-center mb-4 rounded-md mx-6">
+      <h2 className="text-sm font-bold tracking-wide mb-1 uppercase break-words">
+        {idCard.name}
+      </h2>
+      <p className="text-sm font-medium opacity-90">{idCard.subRole}</p>
+    </div>
 
-  {/* Powered by */}
-  <div className="absolute right-2 text-[9px] text-gray-400 italic">
-    Powered by Maa Mahamaya Finance
+    {/* Details */}
+    <div className="px-8 text-[12px] text-gray-800 space-y-1 flex-1 overflow-auto">
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Email</span>
+        <span className="mr-1">:</span>
+        <span className="break-words">{idCard.email}</span>
+      </div>
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Role</span>
+        <span className="mr-1">:</span>
+        <span className="break-words">{idCard.role}</span>
+      </div>
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Sub Role</span>
+        <span className="mr-1">:</span>
+        <span className="break-words">{idCard.subRole}</span>
+      </div>
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Address</span>
+        <span className="mr-1">:</span>
+        <span className="break-words">{idCard.address}</span>
+      </div>
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Pincode</span>
+        <span className="mr-1">:</span>
+        <span>{idCard.pincode}</span>
+      </div>
+      <div className="flex items-start">
+        <span className="font-semibold w-16">Mobile</span>
+        <span className="mr-1">:</span>
+        <span>{idCard.mobileNumber}</span>
+      </div>
+    </div>
+
+    {/* Footer */}
+    <div className="px-5 pb-3 mt-2 text-center">
+      <p className="text-[10px] text-black">
+        Powered by Maa Mahamaya Finance
+      </p>
+    </div>
   </div>
 </div>
 
@@ -171,11 +240,6 @@ function EmployeeProfile() {
             </div>
           </div>
         )}
-      </div>
-
-      <div className="mt-6 border-t pt-4">
-        <p className="font-semibold">Profile Upload</p>
-        <p className="text-xs text-gray-500">Coming soon...</p>
       </div>
     </div>
   );

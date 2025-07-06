@@ -52,6 +52,7 @@ function App() {
           {/* Redirect any unknown routes to home */}
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<Navigate to="/" />} />
+
           <Route
             path="/admin-dashboard/employee-details"
             element={
@@ -60,6 +61,18 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/admin-dashboard/bussiness-details"           // changes
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <EmployeeDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          
+
         </Routes>
       </AuthProvider>
     </ErrorBoundary>

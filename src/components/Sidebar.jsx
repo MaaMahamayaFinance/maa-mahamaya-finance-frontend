@@ -41,6 +41,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
   const adminItems = [
     { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
     { id: 'employee-details', label: 'Employee Details', icon: 'fas fa-cogs' },
+    { id: 'bussiness-details', label: 'Bussiness Details', icon: 'fas fa-cogs' }, //change
     { id: 'users', label: 'User Management', icon: 'fas fa-users' },
     { id: 'reports', label: 'System Reports', icon: 'fas fa-chart-bar' },
     { id: 'settings', label: 'System Settings', icon: 'fas fa-cogs' },
@@ -137,9 +138,16 @@ function Sidebar({ role, activeSection, setActiveSection }) {
               onClick={() => {
                 setActiveSection(item.id);
                 if (isOpen) setIsOpen(false);
+
                 if (item.id === 'employee-details') {
                   navigate('/admin-dashboard/employee-details');
                 }
+                if (item.id === 'bussiness-details') {
+                  navigate('/admin-dashboard/bussiness-details'); // changes
+                }
+
+                
+
               }}
             >
               <i className={`${item.icon} mr-3`}></i>

@@ -22,6 +22,9 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [otpError, setOtpError] = useState('');
   const [otpLoading, setOtpLoading] = useState(false);
+  const [profilePhotoFile, setProfilePhotoFile] = useState(null);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const requestOtp = async () => {
     if (!email) {
@@ -77,29 +80,88 @@ function Register() {
     }
   };
 
+  const uploadProfilePhoto = async () => {
+  if (!profilePhotoFile) return null;
+
+  setUploadingPhoto(true);
+
+  const fileName = encodeURIComponent(profilePhotoFile.name);
+
+  let contentType = profilePhotoFile.type;
+  if (contentType === 'image/jpg') {
+    contentType = 'image/jpeg';
+  }
+
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/get-upload-url?fileName=${fileName}&contentType=${encodeURIComponent(contentType)}`
+    );
+
+    const { uploadUrl, publicUrl } = await res.json();
+
+    const uploadRes = await fetch(uploadUrl, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': contentType
+  },
+  body: profilePhotoFile,
+});
+
+    if (!uploadRes.ok) throw new Error('Upload failed');
+
+    setProfilePhotoUrl(publicUrl);
+    return publicUrl;
+  } catch (err) {
+    alert('Image upload failed. Try again.');
+    return null;
+  } finally {
+    setUploadingPhoto(false);
+  }
+};
+
+
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!otpVerified) {
-      alert('Please verify OTP before registering');
-      return;
+  e.preventDefault();
+
+  if (!otpVerified) {
+    alert('Please verify OTP before registering');
+    return;
+  }
+
+  const uploadedPhotoUrl = await uploadProfilePhoto();
+  if (!uploadedPhotoUrl) return;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+        role,
+        subRole,
+        address,
+        pincode,
+        mobileNumber,
+        otp,
+        profilePhoto: uploadedPhotoUrl
+      }),
+    });
+
+    const data = await response.json();
+    if (data.token) {
+      login({ ...data.user, token: data.token });
+      navigate(`/${data.user.role}-dashboard`);
+    } else {
+      alert(data.message || 'Registration failed');
     }
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, role, subRole, address, pincode, mobileNumber, otp }),
-      });
-      const data = await response.json();      
-      if (data.token) {
-        login({ ...data.user, token: data.token });
-        navigate(`/${data.user.role}-dashboard`);
-      } else {
-        alert('Registration failed');
-      }
-    } catch (error) {
-      alert('Error during registration');
-    }
-  };
+  } catch (error) {
+    alert('Error during registration');
+  }
+};
+
 
   return (
     <div id="register-page" className="min-h-screen pt-16 bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
@@ -332,6 +394,32 @@ function Register() {
                 </select>
               </div>
             )}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Profile Photo <span className="text-red-600">*</span>
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setProfilePhotoFile(file);
+                  }
+                }}
+                className="w-full"
+                required
+              />
+              {uploadingPhoto && <p className="text-sm text-blue-600 mt-2">Uploading...</p>}
+              {profilePhotoUrl && (
+                <img
+                  src={profilePhotoUrl}
+                  alt="Profile Preview"
+                  className="mt-2 w-24 h-24 object-cover rounded-full border"
+                />
+              )}
+            </div>
+
             <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-lg transition-colors">
               Create Account
             </button>

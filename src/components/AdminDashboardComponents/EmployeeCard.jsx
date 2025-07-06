@@ -1,29 +1,58 @@
 import React from "react";
 
 const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
-    const { name, email, role, subRole, address, pincode, mobileNumber } = employee;
+    const {
+        name,
+        email,
+        role,
+        subRole,
+        address,
+        pincode,
+        mobileNumber,
+        profilePhoto,
+    } = employee;
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-md m-4 border border-gray-200">
-        <h2 className="text-lg font-semibold">{name}</h2>
-        <p><strong>Email:</strong> {email}</p>
-        <p><strong>Role:</strong> {role}</p>
-        <p><strong>subRole:</strong> {subRole}</p>
-        <p><strong>Address:</strong> {address}</p>
-        <p><strong>Pincode:</strong> {pincode}</p>
-        <p><strong>Mobile:</strong> {mobileNumber}</p>
+        <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+        <div className="flex items-start justify-between gap-4">
+            {/* Left: Text Content */}
+            <div className="flex-1 text-sm text-gray-700 space-y-1">
+            <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2">{name}</h2>
+            <p><span className="font-medium">Email:</span> {email}</p>
+            <p><span className="font-medium">Role:</span> {role}</p>
+            <p><span className="font-medium">Sub Role:</span> {subRole}</p>
+            <p><span className="font-medium">Address:</span> {address}</p>
+            <p><span className="font-medium">Pincode:</span> {pincode}</p>
+            <p><span className="font-medium">Mobile:</span> {mobileNumber}</p>
+            </div>
 
-        {!isIdCreated && (
+            {/* Right: Profile Photo */}
+            {profilePhoto && (
+            <div className="flex-shrink-0">
+                <img
+                src={profilePhoto}
+                alt={`${name}'s profile`}
+                className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md hover:scale-105 transition-transform duration-200"
+                onError={(e) => (e.target.style.display = "none")}
+                />
+            </div>
+            )}
+        </div>
+
+        {/* Action Button or Status */}
+        {!isIdCreated ? (
+            <div className="mt-5 text-left">
             <button
-            onClick={() => onCreateId(employee)}
-            className="mt-3 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={() => onCreateId(employee)}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md transition-colors duration-200"
             >
-            Create ID Card
+                Create ID Card
             </button>
-        )}
-
-        {isIdCreated && (
-            <p className="mt-3 text-green-600 font-medium">ID Card Created</p>
+            </div>
+        ) : (
+            <p className="mt-5 text-left text-sm font-medium text-green-600">
+            ✅ ID Card Created
+            </p>
         )}
         </div>
     );

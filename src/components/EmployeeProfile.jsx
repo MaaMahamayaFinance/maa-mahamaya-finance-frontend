@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { fetchMyEmployeeIdCard } from '../components/api/employeeAPI.js';
 import html2canvas from 'html2canvas';
@@ -116,23 +116,43 @@ function EmployeeProfile() {
         {!loading && !error && idCard && (
           <div className="space-y-3 mt-4">
             <div
-              ref={cardRef}
-              className="w-[350px] h-[220px] bg-white border-2 border-blue-500 shadow-lg rounded-md p-4 flex flex-col justify-between"
-            >
-              <div>
-                <h3 className="text-center text-blue-600 font-bold text-lg mb-2">Employee ID Card</h3>
-                <p className="text-sm"><strong>Name:</strong> {idCard.name}</p>
-                <p className="text-sm"><strong>Email:</strong> {idCard.email}</p>
-                <p className="text-sm"><strong>Role:</strong> {idCard.role}</p>
-                <p className="text-sm"><strong>Sub Role:</strong> {idCard.subRole}</p>
-                <p className="text-sm"><strong>Address:</strong> {idCard.address}</p>
-                <p className="text-sm"><strong>Pincode:</strong> {idCard.pincode}</p>
-                <p className="text-sm"><strong>Mobile Number:</strong> {idCard.mobileNumber}</p>
-              </div>
-              <div className="text-[10px] text-right text-gray-400">
-                Powered by Maa Mahamaya Finance
-              </div>
-            </div>
+  ref={cardRef}
+  className="w-[300px] h-[360px] bg-blue-100 rounded-lg overflow-hidden shadow-lg border relative font-sans"
+>
+  {/* Header */}
+  <div className="bg-blue-900 text-white p-2 text-center">
+    <h2 className="text-lg font-bold">MAA MAHAMAYA FINANCE</h2>
+    {/* <p className="text-[10px] -mt-1">Near SBI Road Barabanki</p> */}
+  </div>
+
+  {/* Image Placeholder */}
+  <div className="bg-pink-100 flex justify-center items-center h-[100px]">
+    <div className="w-[80px] h-[80px] bg-white rounded-md shadow-inner border border-gray-300"></div>
+  </div>
+
+  {/* Name + Class banner */}
+  <div className="bg-blue-800 text-white px-1 text-center">
+    <h3 className="text-md font-bold uppercase tracking-wide">{idCard.name}</h3>
+    <p className="text-xs font-semibold mb-2">{idCard.subRole}</p>
+  </div>
+
+  {/* Details */}
+  <div className="text-[12px] p-3 leading-[1.4] mt-2 ml-4">
+    <p><strong>Email:</strong> {idCard.email}</p>
+    <p><strong>Role:</strong> {idCard.role}</p>
+    <p><strong>Sub Role:</strong> {idCard.subRole}</p>
+    <p><strong>Address:</strong> {idCard.address}</p>
+    <p><strong>Pincode:</strong> {idCard.pincode}</p>
+    <p><strong>Mobile:</strong> {idCard.mobileNumber}</p>
+  </div>
+
+
+  {/* Powered by */}
+  <div className="absolute right-2 text-[9px] text-gray-400 italic">
+    Powered by Maa Mahamaya Finance
+  </div>
+</div>
+
 
             <div className="flex gap-3">
               <button

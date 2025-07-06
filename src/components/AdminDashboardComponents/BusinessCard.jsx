@@ -1,6 +1,6 @@
 import React from "react";
 
-const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
+const BusinessCard = ({ business, onCreateId, isIdCreated }) => {
     const {
         name,
         email,
@@ -10,7 +10,7 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
         pincode,
         mobileNumber,
         profilePhoto,
-    } = employee;
+    } = business;
 
     return (
         <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
@@ -43,7 +43,7 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
         {!isIdCreated ? (
             <div className="mt-5 text-left">
             <button
-                onClick={() => onCreateId(employee)}
+                onClick={() => onCreateId(business)}
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md transition-colors duration-200"
             >
                 Create ID Card
@@ -58,4 +58,4 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
     );
 };
 
-export default EmployeeCard;
+export default BusinessCard;

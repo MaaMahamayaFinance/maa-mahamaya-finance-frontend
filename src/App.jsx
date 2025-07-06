@@ -7,6 +7,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './components/Home';
 import ErrorBoundary from './components/ErrorBoundary';
 import Testimonials from './components/Testimonials';
+import Services from './components/Services';
+import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
+import BusinessDetails from './components/pages/BusinessDetails.jsx';
 
 function App() {
   return (
@@ -63,10 +66,10 @@ function App() {
           />
 
           <Route
-            path="/admin-dashboard/bussiness-details"           // changes
+            path="/admin-dashboard/business-details"           // changes
             element={
               <ProtectedRoute allowedRoles={['admin']}>
-                <EmployeeDetails />
+                <BusinessDetails />
               </ProtectedRoute>
             }
           />
@@ -78,8 +81,5 @@ function App() {
     </ErrorBoundary>
   );
 }
-
-import Services from './components/Services';
-import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 
 export default App;

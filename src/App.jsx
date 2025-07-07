@@ -10,13 +10,18 @@ import Testimonials from './components/Testimonials';
 import Services from './components/Services';
 import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 import BusinessDetails from './components/pages/BusinessDetails.jsx';
+import { Toaster } from 'react-hot-toast';
+import OfferLetter from './components/OfferLetter/OfferLetter.jsx';
 
 function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
+        <Toaster position="top-right" reverseOrder={false} />
         <Routes>
+
           <Route path="/" element={<Home />} />
+          <Route path="/offerletter" element={<OfferLetter />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/testimonials" element={<Testimonials />} />

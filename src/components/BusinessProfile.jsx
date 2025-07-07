@@ -233,12 +233,12 @@ function BusinessProfile() {
                     <span className="break-words">{idCard.email}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Role</span>
+                    <span className="font-semibold w-16">Bus Id</span>
                     <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.role}</span>
+                    <span className="break-words">{idCard.uniqueId}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Sub Role</span>
+                    <span className="font-semibold w-16">Sector</span>
                     <span className="mr-1">:</span>
                     <span className="break-words">{idCard.subRole}</span>
                   </div>

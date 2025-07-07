@@ -5,51 +5,68 @@ import EmployeeProfile from './EmployeeProfile';
 import CustomerProfile from './CustomerProfile';
 import BusinessProfile from './BusinessProfile';
 
+import {
+  FaTachometerAlt,
+  FaUniversity,
+  FaCreditCard,
+  FaHandHoldingUsd,
+  FaChartPie,
+  FaUserCog,
+  FaExchangeAlt,
+  FaUsers,
+  FaChartBar,
+  FaCog,
+  FaTasks,
+  FaChartLine,
+  FaHome,
+  FaUser,
+  FaSignOutAlt,
+  FaCogs,
+} from 'react-icons/fa';
+
 function Sidebar({ role, activeSection, setActiveSection }) {
   const [isOpen, setIsOpen] = useState(false);
   const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const customerItems = [
-    { id: 'overview', label: 'Overview', icon: 'fas fa-tachometer-alt' },
-    { id: 'accounts', label: 'Accounts', icon: 'fas fa-university' },
-    { id: 'payments', label: 'Payments', icon: 'fas fa-credit-card' },
-    { id: 'loans', label: 'Loans', icon: 'fas fa-hand-holding-usd' },
-    { id: 'investments', label: 'Investments', icon: 'fas fa-chart-pie' },
-    { id: 'profile', label: 'Profile', icon: 'fas fa-user-cog' },
+    { id: 'overview', label: 'Overview', icon: <FaTachometerAlt className="mr-3" /> },
+    { id: 'accounts', label: 'Accounts', icon: <FaUniversity className="mr-3" /> },
+    { id: 'payments', label: 'Payments', icon: <FaCreditCard className="mr-3" /> },
+    { id: 'loans', label: 'Loans', icon: <FaHandHoldingUsd className="mr-3" /> },
+    { id: 'investments', label: 'Investments', icon: <FaChartPie className="mr-3" /> },
+    { id: 'profile', label: 'Profile', icon: <FaUserCog className="mr-3" /> },
   ];
 
   const businessItems = [
-    { id: 'overview', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-    { id: 'accounts', label: 'Accounts', icon: 'fas fa-university' },
-    { id: 'transactions', label: 'Transactions', icon: 'fas fa-exchange-alt' },
-    { id: 'payroll', label: 'Payroll', icon: 'fas fa-users' },
-    { id: 'reports', label: 'Reports', icon: 'fas fa-chart-bar' },
-    { id: 'loans', label: 'Loan Status', icon: 'fas fa-hand-holding-usd' },
-    { id: 'settings', label: 'Settings', icon: 'fas fa-cog' },
-    { id: 'profile', label: 'Profile', icon: 'fas fa-user-cog' },
+    { id: 'overview', label: 'Dashboard', icon: <FaTachometerAlt className="mr-3" /> },
+    { id: 'accounts', label: 'Accounts', icon: <FaUniversity className="mr-3" /> },
+    { id: 'transactions', label: 'Transactions', icon: <FaExchangeAlt className="mr-3" /> },
+    { id: 'payroll', label: 'Payroll', icon: <FaUsers className="mr-3" /> },
+    { id: 'reports', label: 'Reports', icon: <FaChartBar className="mr-3" /> },
+    { id: 'loans', label: 'Loan Status', icon: <FaHandHoldingUsd className="mr-3" /> },
+    { id: 'settings', label: 'Settings', icon: <FaCog className="mr-3" /> },
+    { id: 'profile', label: 'Profile', icon: <FaUserCog className="mr-3" /> },
   ];
 
   const employeeItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-    { id: 'tasks', label: 'Tasks', icon: 'fas fa-tasks' },
-    { id: 'clients', label: 'Clients', icon: 'fas fa-users' },
-    { id: 'performance', label: 'Performance', icon: 'fas fa-chart-line' },
-    { id: 'profile', label: 'Profile', icon: 'fas fa-user' },
+    { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt className="mr-3" /> },
+    { id: 'tasks', label: 'Tasks', icon: <FaTasks className="mr-3" /> },
+    { id: 'clients', label: 'Clients', icon: <FaUsers className="mr-3" /> },
+    { id: 'performance', label: 'Performance', icon: <FaChartLine className="mr-3" /> },
+    { id: 'profile', label: 'Profile', icon: <FaUser className="mr-3" /> },
   ];
 
   const adminItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: 'fas fa-tachometer-alt' },
-    { id: 'employee-details', label: 'Employee Details', icon: 'fas fa-cogs' },
-    { id: 'business-details', label: 'Business Details', icon: 'fas fa-cogs' },
-    { id: 'users', label: 'User Management', icon: 'fas fa-users' },
-    { id: 'reports', label: 'System Reports', icon: 'fas fa-chart-bar' },
-    { id: 'settings', label: 'System Settings', icon: 'fas fa-cogs' },
+    { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt className="mr-3" /> },
+    { id: 'employee-details', label: 'Employee Details', icon: <FaCogs className="mr-3" /> },
+    { id: 'business-details', label: 'Business Details', icon: <FaCogs className="mr-3" /> },
+    { id: 'users', label: 'User Management', icon: <FaUsers className="mr-3" /> },
+    { id: 'reports', label: 'System Reports', icon: <FaChartBar className="mr-3" /> },
+    { id: 'settings', label: 'System Settings', icon: <FaCog className="mr-3" /> },
   ];
 
-  const goHome = () => {
-    navigate('/');
-  };
+  const goHome = () => navigate('/');
 
   let items = [];
   switch (role) {
@@ -76,7 +93,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
 
   return (
     <>
-      {/* Mobile menu button */}
+      {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center bg-white shadow p-4 z-50 fixed top-0 left-0 right-0">
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -100,40 +117,40 @@ function Sidebar({ role, activeSection, setActiveSection }) {
         </button>
         <div className="ml-3 font-semibold text-gray-900 capitalize">{role} Account</div>
         {isOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
-            onClick={() => setIsOpen(false)}
-          ></div>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsOpen(false)}></div>
         )}
       </div>
 
       {/* Sidebar */}
       <aside
-        className={`bg-white shadow-lg md:w-64 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:block fixed md:static inset-y-0 left-0 z-50 overflow-y-auto transform transition-transform duration-300 ease-in-out`}
+        className={`bg-white shadow-lg md:w-64 h-screen 
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+          md:translate-x-0 md:block fixed md:static inset-y-0 left-0 z-50 
+          transform transition-transform duration-300 ease-in-out`}
       >
         <div className="p-6 border-b hidden md:flex flex-col items-center">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-2">
-            <i className="fas fa-user text-white text-2xl"></i>
+            <FaUser className="text-white text-2xl" />
           </div>
           <div className="text-center mb-4">
             <p className="font-semibold text-gray-900 capitalize">{user?.name || role} Account</p>
             <p className="text-sm text-gray-600">{user?.email}</p>
           </div>
         </div>
-        <nav className="mt-6">
+
+        <nav className="mt-6 px-2 overflow-y-auto overflow-x-hidden max-h-[calc(100vh-180px)]">
           <div
-            className="sidebar-item px-6 py-3 cursor-pointer flex items-center mb-4"
+            className="sidebar-item px-6 py-3 cursor-pointer flex items-center -mb-2"
             onClick={goHome}
           >
-            <i className="fas fa-home mr-3"></i>Home
+            <FaHome className="mr-3" /> Home
           </div>
+
           {items.map((item) => (
             <div
               key={item.id}
-              className={`sidebar-item px-6 py-3 cursor-pointer flex items-center ${
-                activeSection === item.id ? 'active' : ''
+              className={`sidebar-item px-6 py-2 cursor-pointer flex items-center ${
+                activeSection === item.id ? 'bg-blue-100 font-semibold rounded' : ''
               }`}
               onClick={() => {
                 setActiveSection(item.id);
@@ -145,24 +162,27 @@ function Sidebar({ role, activeSection, setActiveSection }) {
                 if (item.id === 'business-details') {
                   navigate('/admin-dashboard/business-details');
                 }
-
-                
-
               }}
             >
-              <i className={`${item.icon} mr-3`}></i>
+              {item.icon}
               {item.label}
             </div>
           ))}
-          <div
-            className="sidebar-item px-6 py-3 cursor-pointer text-red-600 flex items-center mt-4"
-            onClick={handleLogout}
-          >
-            <i className="fas fa-sign-out-alt mr-3"></i>Logout
+
+          <div className="absolute bottom-6 left-0 w-full px-4">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow transition duration-200"
+            >
+              <FaSignOutAlt />
+              Logout
+            </button>
           </div>
+
         </nav>
       </aside>
 
+      {/* Profile Section */}
       {role === 'employee' && activeSection === 'profile' && (
         <div className="p-6 mt-4 bg-white rounded-md shadow-md border border-gray-200 max-w-md mx-auto">
           <EmployeeProfile />

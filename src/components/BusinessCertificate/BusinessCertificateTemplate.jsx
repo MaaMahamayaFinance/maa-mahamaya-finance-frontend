@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BusinessCertificateTemplate = ({ name = "Recipient Name", date = "YYYY/MM/DD" }) => {
+const BusinessCertificateTemplate = ({ name, date }) => {
   return (
     <div className="w-full min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="relative w-[900px] h-[600px] bg-white shadow-2xl rounded-md border border-gray-300 overflow-hidden">
@@ -33,7 +33,7 @@ const BusinessCertificateTemplate = ({ name = "Recipient Name", date = "YYYY/MM/
 
           <h1 className="text-4xl font-bold text-red-700 tracking-wide z-10">AUTHORIZATION</h1>
           <h2 className="text-4xl text-red-700 font-medium tracking-wider mb-6">CERTIFICATE</h2>
-          <p className="text-3xl italic font-serif text-gray-800 mb-4 z-10">{name}</p>
+          <p className="text-3xl italic font-serif text-gray-800 mb-4 z-10">{name.toUpperCase()}</p>
 
           <p className="text-sm text-gray-600 w-4/5 z-10">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut

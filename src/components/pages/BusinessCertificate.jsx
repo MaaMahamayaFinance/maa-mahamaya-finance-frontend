@@ -1,0 +1,81 @@
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import BusinessCertificateTemplate from '../BusinessCertificate/BusinessCertificateTemplate';
+import { fetchMyBusinessCertificate } from '../api/businessAPI';
+import { AuthContext } from '../../context/AuthContext';
+import toast from 'react-hot-toast';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+const BusinessCertificate = () => {
+    const { token } = useContext(AuthContext);
+    const [certificate, setCertificate] = useState(null);
+    const certificateRef = useRef();
+
+    useEffect(() => {
+        const getCertificate = async () => {
+        try {
+            const data = await fetchMyBusinessCertificate(token);
+            setCertificate(data);
+        } catch (error) {
+            console.error('Error fetching certificate:', error);
+            toast.error('Failed to load certificate');
+        }
+        };
+
+        getCertificate();
+    }, [token]);
+
+    const handleDownloadPDF = async () => {
+        const input = certificateRef.current;
+        if (!input) return;
+
+        try {
+        const canvas = await html2canvas(input, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'landscape',
+            unit: 'px',
+            format: [canvas.width, canvas.height],
+        });
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`Business_Certificate_${certificate.name}.pdf`);
+        } catch (error) {
+        console.error('Error generating PDF:', error);
+        toast.error('Failed to download PDF');
+        }
+    };
+
+    return (
+        <>
+        {certificate ? (
+            <div className="relative">
+            <div ref={certificateRef}>
+                <BusinessCertificateTemplate
+                name={certificate.name}
+                date={new Date(certificate.date).toLocaleDateString('en-IN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                })}
+                />
+            </div>
+
+            {/* Download PDF Button */}
+            <div className="flex justify-center mt-6">
+                <button
+                onClick={handleDownloadPDF}
+                className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md shadow-md transition"
+                >
+                Download PDF
+                </button>
+            </div>
+            </div>
+        ) : (
+            <div className="text-center text-gray-600 mt-10">Loading certificate...</div>
+        )}
+        </>
+    );
+};
+
+export default BusinessCertificate;

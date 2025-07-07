@@ -12,7 +12,8 @@ import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 import BusinessDetails from './components/pages/BusinessDetails.jsx';
 import { Toaster } from 'react-hot-toast';
 import OfferLetter from './components/pages/OfferLetter.jsx';
-import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';'./components/BusinessCertificate/BusinessCertificateTemplate.jsx';
+import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';
+import BusinessCertificate from './components/pages/BusinessCertificate.jsx';
 
 function App() {
   return (
@@ -94,7 +95,7 @@ function App() {
             path="/business-dashboard/certificate" 
             element={
               <ProtectedRoute allowedRoles={['business']}>
-                <BusinessCertificateTemplate />
+                <BusinessCertificate />
               </ProtectedRoute>
             }
           />

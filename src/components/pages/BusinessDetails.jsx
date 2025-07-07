@@ -52,6 +52,7 @@ const BusinessDetails = () => {
                 business={emp}
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
+                isCertificateCreated={emp.isCertificateCreated}
             />
             ))}
         </div>

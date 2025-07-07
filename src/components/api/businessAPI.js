@@ -32,3 +32,30 @@ export const fetchMyBusinessIdCard = async (token) => {
 
     return response.data.data;
 };
+
+
+
+
+export const createBusinessCertificate = async (business) => {
+    const { name, email, subRole, userId, uniqueId, date } = business;
+
+    const response = await axios.post(
+        `${API_BASE_URL}/api/createbusinesscertificate`,
+        { name, email, subRole, _id: userId, uniqueId, date }
+    );
+
+    return response.data;
+};
+
+
+
+export const fetchMyBusinessCertificate = async (token) => {
+
+    const response = await axios.get(`${API_BASE_URL}/api/authorizationcertificate/me`, {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data.data;
+};

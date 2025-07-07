@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../config.js'; // <-- Add this line
+import { API_BASE_URL } from '../config.js';
+import toast from 'react-hot-toast';
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -11,33 +12,34 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
+    e.preventDefault();
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (data.token && data.user) {
-      login({ user: data.user, token: data.token }); // ✅ Fixed here
-      navigate(`/${data.user.role}-dashboard`);
-    } else {
-      alert('Login failed');
+      const data = await response.json();
+
+      if (data.token && data.user) {
+        login({ user: data.user, token: data.token });
+        toast.success('Login successful!');
+        navigate(`/${data.user.role}-dashboard`);
+      } else {
+        toast.error(data.message || 'Invalid credentials');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong during login');
     }
-  } catch (error) {
-    alert('Error during login');
-    console.error(error);
-  }
-};
-
+  };
 
   return (
-    <div id="login-page" className="min-h-screen pt-16 bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
-      <div className="w-full max-w-md mx-6 sm:mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="text-center mb-8">
+    <div id="login-page" className="min-h-screen bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 pt-6 flex items-center justify-center">
+      <div className="w-full md:max-w-md mx-6 sm:mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-10">
+          <div className="text-center mb-2">
             <div className="flex items-center justify-center mb-4">
               <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-10 w-auto mr-2" />
               <span className="text-2xl font-bold text-gray-900">Maa Mahamaya Finance</span>
@@ -115,4 +117,3 @@ function Login() {
 }
 
 export default Login;
-

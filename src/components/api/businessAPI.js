@@ -10,11 +10,11 @@ export const fetchAllBusiness = async () => {
 
 
 export const createBusinessIdCard = async (business) => {
-    const { profilePhoto, name, email,role, subRole, address, pincode, mobileNumber } = business;
+    const { profilePhoto, name, email, uniqueId, subRole, address, pincode, mobileNumber } = business;
 
     const response = await axios.post(
         `${API_BASE_URL}/api/createbusinessidcard`,
-        { profilePhoto, name, email,role, subRole, address, pincode, mobileNumber }
+        { profilePhoto, name, email, uniqueId, subRole, address, pincode, mobileNumber }
     );
 
     return response.data;

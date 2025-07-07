@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchAllEmployees, createEmployeeIdCard } from "../api/employeeAPI.js";
 import EmployeeCard from "../AdminDashboardComponents/EmployeeCard.jsx";
+import toast from "react-hot-toast";
 
 const EmployeeDetails = () => {
     const [employees, setEmployees] = useState([]);
@@ -21,7 +22,7 @@ const EmployeeDetails = () => {
         try {
         console.log("Creating ID card for employee:", employee);
         const res = await createEmployeeIdCard(employee);
-        alert(res.message || "ID Card created!");
+        toast.success(res.message || "ID Card created!");
 
         setEmployees((prev) =>
             prev.map((emp) =>
@@ -29,7 +30,7 @@ const EmployeeDetails = () => {
             )
         );
         } catch (error) {
-        alert("Failed to create ID Card.");
+        toast.error("Failed to create ID Card.");
         console.error(error);
         }
     };
@@ -39,24 +40,25 @@ const EmployeeDetails = () => {
     }, []);
 
     return (
-        <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">Employee Details</h1>
+    <div className="p-4 sm:p-6 bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300">
+        <h1 className="text-2xl text-gray-800 font-bold mb-6 text-center underline">Employee Details</h1>
         {loading ? (
-            <p>Loading...</p>
+        <p className="text-center text-gray-500">Loading...</p>
         ) : (
-            <div className="flex flex-wrap">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {employees.map((emp) => (
-                <EmployeeCard
+            <EmployeeCard
                 key={emp._id}
                 employee={emp}
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
-                />
+            />
             ))}
-            </div>
-        )}
         </div>
+        )}
+    </div>
     );
+
 };
 
 export default EmployeeDetails;

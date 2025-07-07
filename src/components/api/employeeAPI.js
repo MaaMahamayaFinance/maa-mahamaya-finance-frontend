@@ -10,11 +10,11 @@ export const fetchAllEmployees = async () => {
 
 
 export const createEmployeeIdCard = async (employee) => {
-    const { profilePhoto, name, email,role, subRole, address, pincode, mobileNumber } = employee;
+    const { profilePhoto, name, email,uniqueId, subRole, address, pincode, mobileNumber } = employee;
 
     const response = await axios.post(
         `${API_BASE_URL}/api/createemployeeidcard`,
-        { profilePhoto, name, email,role, subRole, address, pincode, mobileNumber }
+        { profilePhoto, name, email, uniqueId, subRole, address, pincode, mobileNumber }
     );
 
     return response.data;

@@ -132,6 +132,20 @@ function EmployeeProfile() {
       imageTimeout: 1500,
     });
 
+    function formatSubRole(subRole) {
+      // Insert a space before each uppercase letter (if camelCase)
+      const spaced = subRole.replace(/([a-z])([A-Z])/g, '$1 $2');
+      // Add space between lowercase compound words like 'softwaredeveloper'
+      const withSpace = spaced.replace(/([a-z])([A-Z])/g, '$1 $2') || subRole;
+      // Capitalize each word
+      return withSpace
+        .split(/[_\s]/) // split on space or underscore
+        .filter(Boolean)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+
     const imgData = canvas.toDataURL('image/jpg');
 
     const link = document.createElement('a');
@@ -229,12 +243,12 @@ function EmployeeProfile() {
                     <span className="break-words">{idCard.email}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Role</span>
+                    <span className="font-semibold w-16">Emp Id</span>
                     <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.role}</span>
+                    <span className="break-words">{idCard.uniqueId}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Sub Role</span>
+                    <span className="font-semibold w-16">Role</span>
                     <span className="mr-1">:</span>
                     <span className="break-words">{idCard.subRole}</span>
                   </div>

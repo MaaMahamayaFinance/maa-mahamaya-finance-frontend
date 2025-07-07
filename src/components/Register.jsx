@@ -3,11 +3,13 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import PhoneInput from 'react-phone-input-2';
+import toast from 'react-hot-toast';
 import 'react-phone-input-2/lib/style.css';
 
 function Register() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,9 +30,10 @@ function Register() {
 
   const requestOtp = async () => {
     if (!email) {
-      alert('Please enter your email to receive OTP');
+      toast.error('Please enter your email to receive OTP');
       return;
     }
+
     setOtpLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/request-otp`, {
@@ -42,12 +45,14 @@ function Register() {
       if (response.ok) {
         setOtpSent(true);
         setOtpError('');
-        alert('OTP sent to your email');
+        toast.success('OTP sent to your email');
       } else {
         setOtpError(data.message || 'Failed to send OTP');
+        toast.error(data.message || 'Failed to send OTP');
       }
     } catch (error) {
       setOtpError('Error sending OTP');
+      toast.error('Error sending OTP');
     } finally {
       setOtpLoading(false);
     }
@@ -56,8 +61,10 @@ function Register() {
   const verifyOtp = async () => {
     if (!otp) {
       setOtpError('Please enter the OTP');
+      toast.error('Please enter the OTP');
       return;
     }
+
     setOtpLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/verify-otp`, {
@@ -66,107 +73,106 @@ function Register() {
         body: JSON.stringify({ email, otp }),
       });
       const data = await response.json();
-        if (response.ok) {
-          setOtpVerified(true);
-          setOtpError('');
-          alert('OTP verified successfully');
-        } else {
-          setOtpError(data.message || 'Invalid OTP');
-        }
+      if (response.ok) {
+        setOtpVerified(true);
+        setOtpError('');
+        toast.success('OTP verified successfully');
+      } else {
+        setOtpError(data.message || 'Invalid OTP');
+        toast.error(data.message || 'Invalid OTP');
+      }
     } catch (error) {
       setOtpError('Error verifying OTP');
+      toast.error('Error verifying OTP');
     } finally {
       setOtpLoading(false);
     }
   };
 
   const uploadProfilePhoto = async () => {
-  if (!profilePhotoFile) return null;
+    if (!profilePhotoFile) return null;
 
-  setUploadingPhoto(true);
+    setUploadingPhoto(true);
 
-  const fileName = encodeURIComponent(profilePhotoFile.name);
+    const fileName = encodeURIComponent(profilePhotoFile.name);
+    let contentType = profilePhotoFile.type;
+    if (contentType === 'image/jpg') {
+      contentType = 'image/jpeg';
+    }
 
-  let contentType = profilePhotoFile.type;
-  if (contentType === 'image/jpg') {
-    contentType = 'image/jpeg';
-  }
+    try {
+      const res = await fetch(
+        `${API_BASE_URL}/api/get-upload-url?fileName=${fileName}&contentType=${encodeURIComponent(contentType)}`
+      );
 
-  try {
-    const res = await fetch(
-      `${API_BASE_URL}/api/get-upload-url?fileName=${fileName}&contentType=${encodeURIComponent(contentType)}`
-    );
+      const { uploadUrl, publicUrl } = await res.json();
 
-    const { uploadUrl, publicUrl } = await res.json();
+      const uploadRes = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': contentType },
+        body: profilePhotoFile,
+      });
 
-    const uploadRes = await fetch(uploadUrl, {
-  method: 'PUT',
-  headers: {
-    'Content-Type': contentType
-  },
-  body: profilePhotoFile,
-});
+      if (!uploadRes.ok) throw new Error('Upload failed');
 
-    if (!uploadRes.ok) throw new Error('Upload failed');
-
-    setProfilePhotoUrl(publicUrl);
-    return publicUrl;
-  } catch (err) {
-    alert('Image upload failed. Try again.');
-    return null;
-  } finally {
-    setUploadingPhoto(false);
-  }
-};
-
-
+      setProfilePhotoUrl(publicUrl);
+      return publicUrl;
+    } catch (err) {
+      toast.error('Image upload failed. Try again.');
+      return null;
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!otpVerified) {
-    alert('Please verify OTP before registering');
-    return;
-  }
-
-  const uploadedPhotoUrl = await uploadProfilePhoto();
-  if (!uploadedPhotoUrl) return;
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        role,
-        subRole,
-        address,
-        pincode,
-        mobileNumber,
-        otp,
-        profilePhoto: uploadedPhotoUrl
-      }),
-    });
-
-    const data = await response.json();
-    if (data.token) {
-      login({ ...data.user, token: data.token });
-      navigate(`/${data.user.role}-dashboard`);
-    } else {
-      alert(data.message || 'Registration failed');
+    if (!otpVerified) {
+      toast.error('Please verify OTP before registering');
+      return;
     }
-  } catch (error) {
-    alert('Error during registration');
-  }
-};
+
+    const uploadedPhotoUrl = await uploadProfilePhoto();
+    if (!uploadedPhotoUrl) return;
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role,
+          subRole,
+          address,
+          pincode,
+          mobileNumber,
+          otp,
+          profilePhoto: uploadedPhotoUrl,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.token) {
+        login({ ...data.user, token: data.token });
+        toast.success('Account created successfully!');
+        navigate(`/${data.user.role}-dashboard`);
+      } else {
+        toast.error(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      toast.error('Error during registration');
+    }
+  };
+
 
 
   return (
-    <div id="register-page" className="min-h-screen pt-16 bg-gradient-to-br from-blue-50 to-white flex items-center justify-center">
-      <div className="w-full max-w-md mx-6 sm:mx-auto">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+    <div id="register-page" className="min-h-screen pt-4 bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 flex items-center justify-center">
+      <div className="w-full max-w-4xl md:max-w-md mx-6 sm:mx-auto">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-4">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center mb-4">
               <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-10 w-auto mr-2" />

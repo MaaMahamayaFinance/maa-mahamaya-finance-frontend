@@ -52,6 +52,7 @@ const EmployeeDetails = () => {
                 employee={emp}
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
+                isOfferLetterCreated={emp.isOfferLetterCreated}
             />
             ))}
         </div>

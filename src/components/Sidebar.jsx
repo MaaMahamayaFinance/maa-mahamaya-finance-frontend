@@ -56,7 +56,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
     { id: 'tasks', label: 'Tasks', icon: <FaTasks className="mr-3" /> },
     { id: 'clients', label: 'Clients', icon: <FaUsers className="mr-3" /> },
     { id: 'performance', label: 'Performance', icon: <FaChartLine className="mr-3" /> },
-    { id: 'performance', label: 'View Offer Letter', icon: <FaDownload className="mr-3" /> },
+    { id: 'view-offer-letter', label: 'View Offer Letter', icon: <FaDownload className="mr-3" /> },
     { id: 'profile', label: 'Profile', icon: <FaUser className="mr-3" /> },
   ];
 
@@ -164,6 +164,9 @@ function Sidebar({ role, activeSection, setActiveSection }) {
                 }
                 if (item.id === 'business-details') {
                   navigate('/admin-dashboard/business-details');
+                }
+                if (item.id === 'view-offer-letter') {
+                  navigate('/employee-dashboard/offerLetter');
                 }
               }}
             >

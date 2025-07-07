@@ -11,7 +11,7 @@ import Services from './components/Services';
 import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 import BusinessDetails from './components/pages/BusinessDetails.jsx';
 import { Toaster } from 'react-hot-toast';
-import OfferLetter from './components/OfferLetter/OfferLetter.jsx';
+import OfferLetter from './components/pages/OfferLetter.jsx';
 
 function App() {
   return (
@@ -71,7 +71,7 @@ function App() {
           />
 
           <Route
-            path="/admin-dashboard/business-details"           // changes
+            path="/admin-dashboard/business-details" 
             element={
               <ProtectedRoute allowedRoles={['admin']}>
                 <BusinessDetails />
@@ -79,7 +79,14 @@ function App() {
             }
           />
 
-          
+          <Route
+            path="/employee-dashboard/offerLetter" 
+            element={
+              <ProtectedRoute allowedRoles={['employee']}>
+                <OfferLetter />
+              </ProtectedRoute>
+            }
+          />
 
         </Routes>
       </AuthProvider>

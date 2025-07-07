@@ -32,3 +32,30 @@ export const fetchMyEmployeeIdCard = async (token) => {
 
     return response.data.data;
 };
+
+
+
+
+export const createEmployeeOfferLetter = async (employee) => {
+    const { name, email, subRole, address, pincode, ctc, userId, uniqueId, joiningDate } = employee;
+
+    const response = await axios.post(
+        `${API_BASE_URL}/api/createemployeeofferletter`,
+        { name, email, subRole, address, pincode, ctc,  _id: userId, uniqueId, joiningDate }
+    );
+
+    return response.data;
+};
+
+
+
+export const fetchMyEmployeeOfferLetter = async (token) => {
+
+    const response = await axios.get(`${API_BASE_URL}/api/employeeofferletter/me`, {
+        headers: {
+        Authorization: `Bearer ${token}`,
+        },
+    });
+
+    return response.data.data;
+};

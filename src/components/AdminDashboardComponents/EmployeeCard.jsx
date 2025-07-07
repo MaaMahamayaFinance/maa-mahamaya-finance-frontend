@@ -50,6 +50,7 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated 
         userId: employee._id,
       };
 
+      // business
       const response = await createEmployeeOfferLetter(payload);
       toast.success("Offer letter created");
 

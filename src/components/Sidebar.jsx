@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import EmployeeProfile from './EmployeeProfile';
 import CustomerProfile from './CustomerProfile';
 import BusinessProfile from './BusinessProfile';
+import { PiCertificate } from "react-icons/pi";
 
 
 import {
@@ -44,7 +45,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
     { id: 'overview', label: 'Dashboard', icon: <FaTachometerAlt className="mr-3" /> },
     { id: 'accounts', label: 'Accounts', icon: <FaUniversity className="mr-3" /> },
     { id: 'transactions', label: 'Transactions', icon: <FaExchangeAlt className="mr-3" /> },
-    { id: 'payroll', label: 'Payroll', icon: <FaUsers className="mr-3" /> },
+    { id: 'view-authorization-certificate', label: 'View Certificate', icon: <PiCertificate  className="mr-3" /> },
     { id: 'reports', label: 'Reports', icon: <FaChartBar className="mr-3" /> },
     { id: 'loans', label: 'Loan Status', icon: <FaHandHoldingUsd className="mr-3" /> },
     { id: 'settings', label: 'Settings', icon: <FaCog className="mr-3" /> },
@@ -167,6 +168,9 @@ function Sidebar({ role, activeSection, setActiveSection }) {
                 }
                 if (item.id === 'view-offer-letter') {
                   navigate('/employee-dashboard/offerLetter');
+                }
+                if (item.id === 'view-authorization-certificate') {
+                  navigate('/business-dashboard/certificate');
                 }
               }}
             >

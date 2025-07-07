@@ -12,6 +12,7 @@ import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 import BusinessDetails from './components/pages/BusinessDetails.jsx';
 import { Toaster } from 'react-hot-toast';
 import OfferLetter from './components/pages/OfferLetter.jsx';
+import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';'./components/BusinessCertificate/BusinessCertificateTemplate.jsx';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Routes>
 
           <Route path="/" element={<Home />} />
-          <Route path="/offerletter" element={<OfferLetter />} />
+          <Route path="/certificate" element={<BusinessCertificateTemplate />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/testimonials" element={<Testimonials />} />
@@ -88,6 +89,15 @@ function App() {
             }
           />
 
+
+            <Route
+            path="/business-dashboard/certificate" 
+            element={
+              <ProtectedRoute allowedRoles={['business']}>
+                <BusinessCertificateTemplate />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </ErrorBoundary>

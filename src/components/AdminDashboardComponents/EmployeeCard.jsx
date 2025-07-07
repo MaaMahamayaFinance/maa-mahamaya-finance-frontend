@@ -1,81 +1,165 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-    FaEnvelope,
-    FaUserTag,
-    FaMapMarkerAlt,
-    FaPhoneAlt,
-    FaCheckCircle,
-    FaIdCard,
-    FaUserCircle,
+  FaEnvelope,
+  FaUserTag,
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaCheckCircle,
+  FaIdCard,
+  FaUserCircle,
+  FaFileSignature,
+  FaTimes,
 } from "react-icons/fa";
 
-const EmployeeCard = ({ employee, onCreateId, isIdCreated }) => {
-    const {
-        name,
-        email,
-        uniqueId,
-        subRole,
-        address,
-        pincode,
-        mobileNumber,
-        profilePhoto,
-    } = employee;
+/**
+ * EmployeeCard.jsx
+ * ----------------
+ * Displays an employee card with actions to create an ID card and an offer letter.
+ *
+ * Props
+ * -----
+ * employee (object)           – Employee data.
+ * onCreateId (func)           – Callback when ID card creation is requested.
+ * isIdCreated (bool)          – Flag to show ID card status.
+ * onCreateOfferLetter (func)  – Callback to generate an offer letter: (employee, ctc) => void
+ */
 
-    return (
-        <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-            <div className="flex items-start justify-between gap-4">
-                {/* Left: Text Content */}
-                <div className="flex-1 text-sm text-gray-700 space-y-2">
-                <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2 flex items-center gap-2">
-                    <FaUserCircle className="text-blue-600" /> {name}
-                </h2>
-                <p className="flex items-center gap-2">
-                    <FaEnvelope className="text-gray-500" /> {email}
-                </p>
-                <p className="flex items-center gap-2">
-                    <FaUserTag className="text-gray-500" /> EMP ID: {uniqueId}
-                </p>
-                <p className="flex items-center gap-2">
-                    <FaUserTag className="text-gray-500" /> Sub Role: {subRole}
-                </p>
-                <p className="flex items-center gap-2">
-                    <FaMapMarkerAlt className="text-gray-500" /> {address}, {pincode}
-                </p>
-                <p className="flex items-center gap-2">
-                    <FaPhoneAlt className="text-gray-500" /> {mobileNumber}
-                </p>
-                </div>
+const EmployeeCard = ({ employee, onCreateId, isIdCreated, onCreateOfferLetter }) => {
+  const {
+    name,
+    email,
+    uniqueId,
+    subRole,
+    address,
+    pincode,
+    mobileNumber,
+    profilePhoto,
+  } = employee;
 
-                {/* Right: Profile Photo */}
-                {profilePhoto && (
-                <div className="flex-shrink-0">
-                    <img
-                    src={profilePhoto}
-                    alt={`${name}'s profile`}
-                    className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md hover:scale-105 transition-transform duration-200"
-                    onError={(e) => (e.target.style.display = "none")}
-                    />
-                </div>
-                )}
+  // Modal state for offer‑letter CTC input
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [ctcValue, setCtcValue] = useState(3.6);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+  const handleGenerateOffer = () => {
+    if (onCreateOfferLetter) {
+      onCreateOfferLetter(employee, ctcValue);
+    }
+    closeModal();
+  };
+
+  return (
+    <>
+      {/* Card */}
+      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+        <div className="flex items-start justify-between gap-4">
+          {/* Left: Text Content */}
+          <div className="flex-1 text-sm text-gray-700 space-y-2">
+            <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2 flex items-center gap-2">
+              <FaUserCircle className="text-blue-600" /> {name}
+            </h2>
+            <p className="flex items-center gap-2">
+              <FaEnvelope className="text-gray-500" /> {email}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaUserTag className="text-gray-500" /> EMP ID: {uniqueId}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaUserTag className="text-gray-500" /> Sub Role: {subRole}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaMapMarkerAlt className="text-gray-500" /> {address}, {pincode}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaPhoneAlt className="text-gray-500" /> {mobileNumber}
+            </p>
+          </div>
+
+          {/* Right: Profile Photo */}
+          {profilePhoto && (
+            <div className="flex-shrink-0">
+              <img
+                src={profilePhoto}
+                alt={`${name}'s profile`}
+                className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md hover:scale-105 transition-transform duration-200"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-5 flex flex-wrap gap-3">
+          {/* ID Card */}
+          {!isIdCreated ? (
+            <button
+              onClick={() => onCreateId(employee)}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
+            >
+              <FaIdCard /> Create ID Card
+            </button>
+          ) : (
+            <p className="text-sm font-medium text-green-600 flex items-center gap-2">
+              <FaCheckCircle /> ID Card Created
+            </p>
+          )}
+
+          {/* Offer Letter */}
+          <button
+            onClick={openModal}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
+          >
+            <FaFileSignature /> Create Offer Letter
+          </button>
+        </div>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl space-y-6 animate-fadeIn">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold flex items-center gap-2">
+                <FaFileSignature className="text-indigo-600" /> Generate Offer Letter
+              </h3>
+              <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">
+                <FaTimes />
+              </button>
             </div>
 
-            {/* Action Button or Status */}
-            {!isIdCreated ? (
-                <div className="mt-5 text-left">
-                <button
-                    onClick={() => onCreateId(employee)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
-                >
-                    <FaIdCard /> Create ID Card
-                </button>
-                </div>
-            ) : (
-                <p className="mt-5 text-left text-sm font-medium text-green-600 flex items-center gap-2">
-                <FaCheckCircle /> ID Card Created
-                </p>
-            )}
+            <label className="block text-sm font-medium text-gray-700">
+              CTC (in LPA)
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value={ctcValue}
+                onChange={(e) => setCtcValue(e.target.value)}
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+              />
+            </label>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={closeModal}
+                className="px-4 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleGenerateOffer}
+                className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 flex items-center gap-2"
+              >
+                <FaCheckCircle /> Generate
+              </button>
             </div>
-        );
-    };
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default EmployeeCard;

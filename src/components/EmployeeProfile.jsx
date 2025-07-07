@@ -164,7 +164,7 @@ function EmployeeProfile() {
       <p><strong>Role:</strong> {user?.role}</p>
 
       <div className="mt-6 border-t pt-4">
-        <h3 className="text-lg font-semibold mb-2">Business ID Card</h3>
+        <h3 className="text-lg font-semibold mb-2">Employee ID Card</h3>
 
         {loading && (
           <p className="text-gray-500 text-sm">Loading ID card...</p>

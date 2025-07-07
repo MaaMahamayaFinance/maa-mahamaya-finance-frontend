@@ -5,6 +5,7 @@ import EmployeeProfile from './EmployeeProfile';
 import CustomerProfile from './CustomerProfile';
 import BusinessProfile from './BusinessProfile';
 
+
 import {
   FaTachometerAlt,
   FaUniversity,
@@ -22,6 +23,7 @@ import {
   FaUser,
   FaSignOutAlt,
   FaCogs,
+  FaDownload,
 } from 'react-icons/fa';
 
 function Sidebar({ role, activeSection, setActiveSection }) {
@@ -54,6 +56,7 @@ function Sidebar({ role, activeSection, setActiveSection }) {
     { id: 'tasks', label: 'Tasks', icon: <FaTasks className="mr-3" /> },
     { id: 'clients', label: 'Clients', icon: <FaUsers className="mr-3" /> },
     { id: 'performance', label: 'Performance', icon: <FaChartLine className="mr-3" /> },
+    { id: 'performance', label: 'View Offer Letter', icon: <FaDownload className="mr-3" /> },
     { id: 'profile', label: 'Profile', icon: <FaUser className="mr-3" /> },
   ];
 

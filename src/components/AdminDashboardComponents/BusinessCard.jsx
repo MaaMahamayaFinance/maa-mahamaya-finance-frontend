@@ -36,7 +36,7 @@ const BusinessCard = ({ business, onCreateId, isIdCreated }) => {
                     <FaUserTag className="text-gray-500" /> Bus Id: {uniqueId}
                 </p>
                 <p className="flex items-center gap-2">
-                    <FaUserTag className="text-gray-500" /> Sub Role: {subRole}
+                    <FaUserTag className="text-gray-500" /> Sector: {subRole}
                 </p>
                 <p className="flex items-center gap-2">
                     <FaMapMarkerAlt className="text-gray-500" /> {address}, {pincode}

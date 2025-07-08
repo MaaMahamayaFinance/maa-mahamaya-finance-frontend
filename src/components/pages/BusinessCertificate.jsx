@@ -49,7 +49,7 @@ const BusinessCertificate = () => {
     return (
         <>
         {certificate ? (
-            <div className="relative">
+            <div className="w-full min-h-screen bg-gray-100 flex items-center justify-center p-6">
             <div ref={certificateRef}>
                 <BusinessCertificateTemplate
                 name={certificate.name}
@@ -64,10 +64,10 @@ const BusinessCertificate = () => {
             {/* Download PDF Button */}
             <div className="flex justify-center mt-6">
                 <button
-                onClick={handleDownloadPDF}
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md shadow-md transition"
-                >
-                Download PDF
+                    onClick={handleDownloadPDF}
+                    className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md shadow-md transition z-10"
+                    >
+                    Download PDF
                 </button>
             </div>
             </div>

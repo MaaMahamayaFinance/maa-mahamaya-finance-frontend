@@ -2,8 +2,8 @@ import React from 'react';
 
 const BusinessCertificateTemplate = ({ name, date }) => {
   return (
-    <div className="w-full min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="relative w-[900px] h-[600px] bg-white shadow-2xl rounded-md border border-gray-300 overflow-hidden">
+
+    <div className="relative w-[900px] h-[600px] bg-white shadow-2xl rounded-md border border-gray-300 overflow-hidden">
 
         {/* Left Red Ribbon */}
         <div className="absolute left-0 top-0 h-full w-8 bg-red-700 z-10 shadow-md" />
@@ -54,7 +54,6 @@ const BusinessCertificateTemplate = ({ name, date }) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

@@ -6,9 +6,11 @@ import LoanStatus from './LoanStatus.jsx';
 import PaymentManagement from './PaymentManagement.jsx';
 import FinancialReports from './FinancialReports.jsx';
 import QueryManagement from './QueryManagement.jsx';
-import AdminPanel from './AdminPanel.jsx';
+import AdminPanel from './pages/Admin-Dashboard-Pages/AdminPanel.jsx';
 import EmployeeTasks from './EmployeeTasks.jsx';
 import { API_BASE_URL } from '../config.js'; // <-- Add this line
+import Reports from './pages/Admin-Dashboard-Pages/Reports.jsx';
+import SystemSetting from './pages/Admin-Dashboard-Pages/SystemSetting.jsx';
 
 function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -249,9 +251,9 @@ function Dashboard() {
       case 'users':
         return <AdminPanel currentUser={user} />;
       case 'reports':
-        return <div><h2>System Reports</h2></div>;
+        return <Reports currentUser={user}/>;
       case 'settings':
-        return <div><h2>System Settings</h2></div>; 
+        return <SystemSetting currentUser={user}/>; 
       default: 
         return null;
     }
@@ -273,9 +275,9 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50 pt-0">
+    <div className="flex bg-gray-50 pt-0">
       <Sidebar role={user?.role} activeSection={activeSection} setActiveSection={setActiveSection} className="pt-16" />
-      <main className="flex-1 p-10 md:ml-64 w-full min-h-screen">
+      <main className="flex-1 p-10 md:ml-64 w-full">
         {renderContent()}
       </main>
     </div>

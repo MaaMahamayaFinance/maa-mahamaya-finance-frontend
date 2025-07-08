@@ -9,11 +9,11 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Testimonials from './components/Testimonials';
 import Services from './components/Services';
 import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
-import BusinessDetails from './components/pages/BusinessDetails.jsx';
 import { Toaster } from 'react-hot-toast';
 import OfferLetter from './components/pages/OfferLetter.jsx';
 import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';
 import BusinessCertificate from './components/pages/BusinessCertificate.jsx';
+import AdminRoutes from './Routes/AdminRoutes.jsx';
 
 function App() {
   return (
@@ -51,14 +51,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/admin-dashboard"
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <Dashboard role="admin" />
-              </ProtectedRoute>
-            }
-          />
+          
           {/* Redirect any unknown routes to home */}
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<Navigate to="/" />} />
@@ -72,14 +65,6 @@ function App() {
             }
           />
 
-          <Route
-            path="/admin-dashboard/business-details" 
-            element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <BusinessDetails />
-              </ProtectedRoute>
-            }
-          />
 
           <Route
             path="/employee-dashboard/offerLetter" 
@@ -99,6 +84,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+
+          {AdminRoutes()}
         </Routes>
       </AuthProvider>
     </ErrorBoundary>

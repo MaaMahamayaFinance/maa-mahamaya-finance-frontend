@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext.jsx';
+import { AuthContext } from '../../../context/AuthContext.jsx';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import AdminLoanApprovals from './AdminLoanApprovals';
-import { API_BASE_URL } from '../config'; // <-- Add this import
+import AdminLoanApprovals from '../../AdminLoanApprovals.jsx';
+import { API_BASE_URL } from '../../../config.js'; // <-- Add this import
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

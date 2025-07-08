@@ -64,9 +64,9 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
     { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
     { id: 'clients', label: 'Clients', icon: <FaUsers /> },
     { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
-    { id: 'view-offer-letter', label: 'View Offer Letter', icon: <FaDownload /> },
-    { id: 'certificate', label: 'View Certificate', icon: <FaUser /> },
-    { id: 'profile', label: 'Profile', icon: <FaUser /> }
+    { id: 'view-intern-offer-letter', label: 'View Offer Letter', icon: <FaDownload /> },
+    { id: 'view-intern-certificate', label: 'View Certificate', icon: <FaUser /> },
+    { id: 'internprofile', label: 'Profile', icon: <FaUser /> }
   ];
 
   const adminItems = [
@@ -141,13 +141,17 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
               const routeMap = {
                 'employee-details': '/admin-dashboard/employee-details',
                 'business-details': '/admin-dashboard/business-details',
+                'intern-details': '/admin-dashboard/intern-details',
                 'view-offer-letter': '/employee-dashboard/offerLetter',
+                'view-intern-offer-letter': '/intern-dashboard/offerLetter',
                 'view-authorization-certificate': '/business-dashboard/certificate',
+                'view-intern-certificate': '/intern-dashboard/certificate',
                 'users': '/business-dashboard/usermanagement',
                 'reports': '/business-dashboard/reports',
                 'settings': '/business-dashboard/setting',
                 'profile': '/employee-dashboard/profile',
                 'businessprofile': '/business-dashboard/profile',
+                'internprofile': '/intern-dashboard/profile',
 
               };
               if (routeMap[item.id]) navigate(routeMap[item.id]);

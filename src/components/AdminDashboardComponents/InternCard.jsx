@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-// import { createEmployeeOfferLetter } from "../api/employeeAPI.js";
-// import { createBusinessCertificate } from "../api/businessAPI.js";
+import { createInternOfferLetter, createInternCertificate } from "../api/internAPI.js";
 
 import {
   FaEnvelope,
@@ -65,7 +64,7 @@ const InternCard = ({
         ctc: ctcValue,
         userId: _id,
       };
-      await createEmployeeOfferLetter(payload);
+      await createInternOfferLetter(payload);
       toast.success("Offer letter created");
       setOfferLetterCreated(true);
       closeModal();
@@ -88,7 +87,7 @@ const InternCard = ({
         date: certificateDate,
         userId: _id,
       };
-      await createBusinessCertificate(payload);
+      await createInternCertificate(payload);
       toast.success("Certificate created");
       setCertificateCreated(true);
       closeModal();

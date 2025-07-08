@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { AuthContext } from '../../../context/AuthContext.jsx';
-import { fetchMyEmployeeIdCard } from '../../api/employeeAPI.js'; // Change this if you create a separate API for interns
+import { fetchMyInternIdCard } from '../../api/internAPI.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -16,7 +16,7 @@ function InternProfile() {
   useEffect(() => {
     const getIdCard = async () => {
       try {
-        const card = await fetchMyEmployeeIdCard(token); // Change this to `fetchMyInternIdCard` if needed
+        const card = await fetchMyInternIdCard(token); // Change this to `fetchMyInternIdCard` if needed
         setIdCard(card);
         setError('');
       } catch (err) {

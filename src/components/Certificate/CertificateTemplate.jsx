@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BusinessCertificateTemplate = ({ name, date }) => {
+const CertificateTemplate = ({ name, date, certificateType }) => {
   return (
 
     <div className="relative w-[900px] h-[600px] bg-white shadow-2xl rounded-md border border-gray-300 overflow-hidden">
@@ -12,7 +12,7 @@ const BusinessCertificateTemplate = ({ name, date }) => {
         {/* Gold Seal */}
         <div className="absolute left-6 bottom-6 w-24 h-24 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full border-4 border-yellow-600 flex items-center justify-center text-center text-[10px] font-semibold text-gray-800 z-20 shadow-lg">
           <div className="flex flex-col justify-center items-center">
-            <div className="text-[8px] font-medium uppercase">Authorization</div>
+            <div className="text-[8px] font-medium uppercase">{certificateType}</div>
             <div className="text-[8px] font-medium uppercase">Certificate</div>
           </div>
         </div>
@@ -31,7 +31,7 @@ const BusinessCertificateTemplate = ({ name, date }) => {
             <img src="/logo.png" alt="Logo" className="w-28 h-28 object-contain" />
           </div>
 
-          <h1 className="text-4xl font-bold text-red-700 tracking-wide z-10">AUTHORIZATION</h1>
+          <h1 className="text-4xl font-bold text-red-700 tracking-wide z-10">{certificateType}</h1>
           <h2 className="text-4xl text-red-700 font-medium tracking-wider mb-6">CERTIFICATE</h2>
           <p className="text-3xl italic font-serif text-gray-800 mb-4 z-10">{name.toUpperCase()}</p>
 
@@ -57,4 +57,4 @@ const BusinessCertificateTemplate = ({ name, date }) => {
   );
 };
 
-export default BusinessCertificateTemplate;
+export default CertificateTemplate;

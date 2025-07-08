@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import CertificateTemplate from '../Certificate/CertificateTemplate';
-import { fetchMyBusinessCertificate } from '../api/businessAPI';
-import { AuthContext } from '../../context/AuthContext';
+import CertificateTemplate from '../../Certificate/CertificateTemplate.jsx';
+import { fetchMyInternCertificate } from '../../api/internAPI.js';
+import { AuthContext } from '../../../context/AuthContext.jsx';
 import toast from 'react-hot-toast';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const BusinessCertificate = () => {
+const InternCertificate = () => {
     const { token } = useContext(AuthContext);
     const [certificate, setCertificate] = useState(null);
     const certificateRef = useRef();
@@ -14,7 +14,7 @@ const BusinessCertificate = () => {
     useEffect(() => {
         const getCertificate = async () => {
         try {
-            const data = await fetchMyBusinessCertificate(token);
+            const data = await fetchMyInternCertificate(token);
             setCertificate(data);
         } catch (error) {
             console.error('Error fetching certificate:', error);
@@ -58,7 +58,7 @@ const BusinessCertificate = () => {
                     month: 'long',
                     day: 'numeric',
                 })}
-                certificateType="AUTHORIZATION"
+                certificateType="INTERNSHIP"
                 />
             </div>
 
@@ -79,4 +79,4 @@ const BusinessCertificate = () => {
     );
 };
 
-export default BusinessCertificate;
+export default InternCertificate;

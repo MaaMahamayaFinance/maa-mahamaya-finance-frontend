@@ -10,10 +10,10 @@ import Services from './components/Services';
 import EmployeeDetails from './components/pages/EmployeeDetails.jsx';
 import { Toaster } from 'react-hot-toast';
 import OfferLetter from './components/pages/OfferLetter.jsx';
-import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';
+import BusinessCertificateTemplate from './components/Certificate/CertificateTemplate.jsx';
 import BusinessCertificate from './components/pages/BusinessCertificate.jsx';
 import AdminRoutes from './Routes/AdminRoutes.jsx';
-// import InternRoutes from './Routes/InternRoutes.jsx';
+import InternRoutes from './Routes/InternRoutes.jsx';
 import EmployeeProfile from './components/pages/Employee-Dashboard-Pages/EmployeeProfile.jsx';
 import BusinessProfile from './components/pages/Business-Dashboard-Pages/BusinessProfile.jsx';
 import Home from './components/Home.jsx';
@@ -117,7 +117,7 @@ function App() {
             }
           />
 
-          {/* {InternRoutes()} */}
+          {InternRoutes()}
           {AdminRoutes()}
         </Routes>
       </AuthProvider>

@@ -40,7 +40,7 @@ const InternDetails = () => {
   }, []);
 
   return (
-    <div className="p-4 sm:p-6 bg-gradient-to-br from-green-100 via-yellow-100 to-pink-200">
+    <div className="p-4 sm:p-6 bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300">
       <h1 className="text-2xl text-gray-800 font-bold mb-6 text-center underline">Intern Details</h1>
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
@@ -53,6 +53,7 @@ const InternDetails = () => {
               onCreateId={handleCreateId}
               isIdCreated={intn.isIdCardCreated}
               isOfferLetterCreated={intn.isOfferLetterCreated}
+              isCertificateCreated={intn.isCertificateCreated}
             />
           ))}
         </div>

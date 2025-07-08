@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchAllBusiness, createBusinessIdCard } from "../api/businessAPI.js";
-import BusinessCard from "../AdminDashboardComponents/BusinessCard.jsx";
+import { fetchAllBusiness, createBusinessIdCard } from "./api/businessAPI.js";
+import BusinessCard from "./AdminDashboardComponents/BusinessCard.jsx";
 import toast from "react-hot-toast";
 
 const BusinessDetails = () => {

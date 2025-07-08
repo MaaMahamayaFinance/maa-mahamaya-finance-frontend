@@ -44,8 +44,8 @@ function MobileSidebar({ isOpen, onClose, navigate, user, logout }) {
                 onClick={() => {
                   if (user.role === 'employee') {
                     navigate('/employee-dashboard');
-                  } else if (user.role === 'admin') {
-                    navigate('/admin-dashboard');
+                  }else if (user.role === 'intern') {
+                    navigate('/intern-dashboard');
                   } else if (user.role === 'customer') {
                     navigate('/customer-dashboard');
                   } else if (user.role === 'business') {
@@ -134,6 +134,8 @@ function Home() {
                         navigate('/employee-dashboard');
                       } else if (user.role === 'admin') {
                         navigate('/admin-dashboard');
+                      }else if (user.role === 'intern') {
+                        navigate('/intern-dashboard');
                       } else if (user.role === 'customer') {
                         navigate('/customer-dashboard');
                       } else if (user.role === 'business') {

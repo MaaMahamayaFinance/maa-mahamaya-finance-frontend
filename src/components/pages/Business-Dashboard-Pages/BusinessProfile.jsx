@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '../context/AuthContext.jsx';
-import { fetchMyEmployeeIdCard } from '../components/api/employeeAPI.js';
+import { AuthContext } from '../../../context/AuthContext.jsx';
+import { fetchMyBusinessIdCard } from '../../api/businessAPI.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-function EmployeeProfile() {
+function BusinessProfile() {
   const { user } = useContext(AuthContext);
   const [idCard, setIdCard] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ function EmployeeProfile() {
   useEffect(() => {
     const getIdCard = async () => {
       try {
-        const card = await fetchMyEmployeeIdCard(token);
+        const card = await fetchMyBusinessIdCard(token);
         setIdCard(card);
         setError('');
       } catch (err) {
@@ -33,7 +33,7 @@ function EmployeeProfile() {
       }
     };
 
-    if (user?.role === 'employee') {
+    if (user?.role === 'business') {
       getIdCard();
     }
   }, [user, token]);
@@ -67,6 +67,8 @@ function EmployeeProfile() {
   }
 };
 
+
+
   useEffect(() => {
     const loadBase64Image = async () => {
       if (idCard?.profilePhoto) {
@@ -81,6 +83,7 @@ function EmployeeProfile() {
 
     loadBase64Image();
   }, [idCard?.profilePhoto]);
+
 
   const handleDownloadPDF = async () => {
     if (!cardRef.current) return;
@@ -115,7 +118,7 @@ function EmployeeProfile() {
     const y = (pageHeight - canvasHeight) / 2;
 
     pdf.addImage(imgData, 'JPG', x, y, canvasWidth, canvasHeight);
-    pdf.save('Employee_ID_Card.pdf');
+    pdf.save('Business_ID_Card.pdf');
   };
 
   const handleDownloadImage = async () => {
@@ -132,25 +135,11 @@ function EmployeeProfile() {
       imageTimeout: 1500,
     });
 
-    // function formatSubRole(subRole) {
-    //   // Insert a space before each uppercase letter (if camelCase)
-    //   const spaced = subRole.replace(/([a-z])([A-Z])/g, '$1 $2');
-    //   // Add space between lowercase compound words like 'softwaredeveloper'
-    //   const withSpace = spaced.replace(/([a-z])([A-Z])/g, '$1 $2') || subRole;
-    //   // Capitalize each word
-    //   return withSpace
-    //     .split(/[_\s]/) // split on space or underscore
-    //     .filter(Boolean)
-    //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    //     .join(' ');
-    // }
-
-
     const imgData = canvas.toDataURL('image/jpg');
 
     const link = document.createElement('a');
     link.href = imgData;
-    link.download = 'Employee_ID_Card.jpg';
+    link.download = 'Business_ID_Card.jpg';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -164,7 +153,7 @@ function EmployeeProfile() {
       <p><strong>Role:</strong> {user?.role}</p>
 
       <div className="mt-6 border-t pt-4">
-        <h3 className="text-lg font-semibold mb-2">Employee ID Card</h3>
+        <h3 className="text-lg font-semibold mb-2">Business ID Card</h3>
 
         {loading && (
           <p className="text-gray-500 text-sm">Loading ID card...</p>
@@ -220,7 +209,8 @@ function EmployeeProfile() {
                 <div className="flex justify-center mb-4">
                   <div className="w-[110px] h-[110px] rounded-full border-4 border-yellow-400 bg-gray-100 flex items-center justify-center shadow-md">
                     <img
-                      src={profilePhotoBase64 || idCard.profilePhoto}
+                      src={profilePhotoBase64}
+                      crossOrigin="anonymous"
                       alt={`${idCard.name}'s profile`}
                       className="w-24 h-24 object-cover rounded-full border border-gray-300 shadow-sm"
                     />
@@ -243,12 +233,12 @@ function EmployeeProfile() {
                     <span className="break-words">{idCard.email}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Emp Id</span>
+                    <span className="font-semibold w-16">Bus Id</span>
                     <span className="mr-1">:</span>
                     <span className="break-words">{idCard.uniqueId}</span>
                   </div>
                   <div className="flex items-start">
-                    <span className="font-semibold w-16">Role</span>
+                    <span className="font-semibold w-16">Sector</span>
                     <span className="mr-1">:</span>
                     <span className="break-words">{idCard.subRole}</span>
                   </div>
@@ -300,4 +290,4 @@ function EmployeeProfile() {
   );
 }
 
-export default EmployeeProfile;
+export default BusinessProfile;

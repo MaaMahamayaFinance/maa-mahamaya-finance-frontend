@@ -1,9 +1,8 @@
 // src/routes/AdminRoutes.jsx
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import Dashboard from '../components/Dashboard.jsx';
-import BusinessDetails from '../components/pages/BusinessDetails.jsx';
+import BusinessDetails from '../components/BusinessDetails.jsx';
 import AdminPanel from '../components/pages/Admin-Dashboard-Pages/AdminPanel.jsx';
 import Reports from '../components/pages/Admin-Dashboard-Pages/Reports.jsx';
 import SystemSetting from '../components/pages/Admin-Dashboard-Pages/SystemSetting.jsx';

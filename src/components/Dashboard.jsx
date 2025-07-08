@@ -11,6 +11,7 @@ import EmployeeTasks from './EmployeeTasks.jsx';
 import { API_BASE_URL } from '../config.js'; // <-- Add this line
 import Reports from './pages/Admin-Dashboard-Pages/Reports.jsx';
 import SystemSetting from './pages/Admin-Dashboard-Pages/SystemSetting.jsx';
+import { FiMenu } from 'react-icons/fi';
 
 function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,12 @@ function Dashboard() {
   const [loans, setLoans] = useState([]);
   const [pendingLoans, setPendingLoans] = useState([]);
   const [users, setUsers] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
+
+
+
+  // Employee
   useEffect(() => {
     if (user?.role === 'employee') {
       const fetchPendingLoans = async () => {
@@ -43,6 +49,7 @@ function Dashboard() {
       fetchPendingLoans();
     }
   }, [user]);
+
   
   useEffect(() => {
     setActiveSection('overview');
@@ -191,6 +198,11 @@ function Dashboard() {
     }
   };
 
+
+
+
+
+  // *********************************************************
   const renderEmployeeSections = () => {
     switch (activeSection) {
       case 'dashboard':
@@ -215,15 +227,91 @@ function Dashboard() {
           </div>
         );
       case 'tasks':
-        return <EmployeeTasks />;
+        return <div><h2>Performance</h2></div>;
       case 'clients':
-        return <QueryManagement userId={user?._id} />;
+        return <div><h2>Performance</h2></div>
       case 'performance':
         return <div><h2>Performance</h2></div>;
       default:
         return null;
     }
   };
+
+  // ***********************************************************************
+
+
+
+
+
+
+
+
+  // ***********************************************************************
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    const renderInternSections = () => {
+    switch (activeSection) {
+      case 'dashboard':
+        return (
+          <div className="w-full mx-4 p-6 bg-white rounded-md shadow-md border border-gray-200">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-1">Welcome back, {user?.name || 'Intern'}!</h1>
+            <p className="mb-6">Here is your Intern dashboard overview.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-green-100 p-6 rounded-lg shadow-md">
+                <h2 className="text-xl font-semibold mb-2">Clients Managed</h2>
+                <p className="text-3xl font-bold text-green-700">15</p>
+              </div>
+              <div className="bg-yellow-100 p-6 rounded-lg shadow-md">
+                <h2 className="text-xl font-semibold mb-2">Performance Score</h2>
+                <p className="text-3xl font-bold text-yellow-700">92%</p>
+              </div>
+            </div>
+          </div>
+        );
+      // case 'tasks':
+      //   return <EmployeeTasks />;
+      // case 'clients':
+      //   return <QueryManagement userId={user?._id} />;
+      case 'performance':
+        return <div><h2>Performance</h2></div>;
+      default:
+        return null;
+    }
+  };
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // ***********************************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const renderAdminSections = () => {
     switch (activeSection) {
@@ -267,6 +355,8 @@ function Dashboard() {
         return renderBusinessSections();
       case 'employee':
         return renderEmployeeSections();
+        case 'intern':
+        return renderInternSections();
       case 'admin':
         return renderAdminSections();
       default:
@@ -275,13 +365,39 @@ function Dashboard() {
   };
 
   return (
-    <div className="flex bg-gray-50 pt-0">
-      <Sidebar role={user?.role} activeSection={activeSection} setActiveSection={setActiveSection} className="pt-16" />
-      <main className="flex-1 p-10 md:ml-64 w-full">
-        {renderContent()}
-      </main>
+  <div className="flex bg-gray-50 min-h-screen relative">
+    {/* Mobile Hamburger Button */}
+    <button
+      className="absolute top-4 left-4 z-50 md:hidden bg-white p-2 rounded shadow"
+      onClick={() => setSidebarOpen(true)}
+    >
+      <FiMenu size={24} />
+    </button>
+
+    {/* Sidebar */}
+    {sidebarOpen && (
+      <Sidebar
+        role={user?.role}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+        onClose={() => setSidebarOpen(false)} // Close on mobile
+      />
+    )}
+
+    <div className="hidden md:block">
+      <Sidebar
+        role={user?.role}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
     </div>
-  );
+
+    <main className="flex-1 p-10 md:ml-64 w-full">
+      {renderContent()}
+    </main>
+  </div>
+);
+
 }
 
 export default Dashboard;

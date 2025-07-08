@@ -4,7 +4,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
-import Home from './components/Home';
 import ErrorBoundary from './components/ErrorBoundary';
 import Testimonials from './components/Testimonials';
 import Services from './components/Services';
@@ -14,6 +13,10 @@ import OfferLetter from './components/pages/OfferLetter.jsx';
 import BusinessCertificateTemplate from './components/BusinessCertificate/BusinessCertificateTemplate.jsx';
 import BusinessCertificate from './components/pages/BusinessCertificate.jsx';
 import AdminRoutes from './Routes/AdminRoutes.jsx';
+// import InternRoutes from './Routes/InternRoutes.jsx';
+import EmployeeProfile from './components/pages/Employee-Dashboard-Pages/EmployeeProfile.jsx';
+import BusinessProfile from './components/pages/Business-Dashboard-Pages/BusinessProfile.jsx';
+import Home from './components/Home.jsx';
 
 function App() {
   return (
@@ -35,6 +38,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/intern-dashboard"
+            element={
+              <ProtectedRoute allowedRoles={['intern']}>
+                <Dashboard role="intern" />
+              </ProtectedRoute>
+            }
+          />
+          
+
           <Route
             path="/business-dashboard"
             element={
@@ -75,6 +89,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/employee-dashboard/profile" 
+            element={
+              <ProtectedRoute allowedRoles={['employee']}>
+                <EmployeeProfile />
+              </ProtectedRoute>
+            }
+          />
+
 
             <Route
             path="/business-dashboard/certificate" 
@@ -85,7 +108,16 @@ function App() {
             }
           />
 
+          <Route
+            path="/business-dashboard/profile" 
+            element={
+              <ProtectedRoute allowedRoles={['business']}>
+                <BusinessProfile />
+              </ProtectedRoute>
+            }
+          />
 
+          {/* {InternRoutes()} */}
           {AdminRoutes()}
         </Routes>
       </AuthProvider>

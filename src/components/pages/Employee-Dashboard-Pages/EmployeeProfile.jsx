@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '../context/AuthContext.jsx';
-import { fetchMyBusinessIdCard } from '../components/api/businessAPI.js';
+import { AuthContext } from '../../../context/AuthContext.jsx';
+import { fetchMyEmployeeIdCard } from '../../api/employeeAPI.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-function BusinessProfile() {
+function EmployeeProfile() {
   const { user } = useContext(AuthContext);
   const [idCard, setIdCard] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ function BusinessProfile() {
   useEffect(() => {
     const getIdCard = async () => {
       try {
-        const card = await fetchMyBusinessIdCard(token);
+        const card = await fetchMyEmployeeIdCard(token);
         setIdCard(card);
         setError('');
       } catch (err) {
@@ -33,7 +33,7 @@ function BusinessProfile() {
       }
     };
 
-    if (user?.role === 'business') {
+    if (user?.role === 'employee') {
       getIdCard();
     }
   }, [user, token]);
@@ -67,8 +67,6 @@ function BusinessProfile() {
   }
 };
 
-
-
   useEffect(() => {
     const loadBase64Image = async () => {
       if (idCard?.profilePhoto) {
@@ -83,7 +81,6 @@ function BusinessProfile() {
 
     loadBase64Image();
   }, [idCard?.profilePhoto]);
-
 
   const handleDownloadPDF = async () => {
     if (!cardRef.current) return;
@@ -118,7 +115,7 @@ function BusinessProfile() {
     const y = (pageHeight - canvasHeight) / 2;
 
     pdf.addImage(imgData, 'JPG', x, y, canvasWidth, canvasHeight);
-    pdf.save('Business_ID_Card.pdf');
+    pdf.save('Employee_ID_Card.pdf');
   };
 
   const handleDownloadImage = async () => {
@@ -135,150 +132,145 @@ function BusinessProfile() {
       imageTimeout: 1500,
     });
 
+    // function formatSubRole(subRole) {
+    //   // Insert a space before each uppercase letter (if camelCase)
+    //   const spaced = subRole.replace(/([a-z])([A-Z])/g, '$1 $2');
+    //   // Add space between lowercase compound words like 'softwaredeveloper'
+    //   const withSpace = spaced.replace(/([a-z])([A-Z])/g, '$1 $2') || subRole;
+    //   // Capitalize each word
+    //   return withSpace
+    //     .split(/[_\s]/) // split on space or underscore
+    //     .filter(Boolean)
+    //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    //     .join(' ');
+    // }
+
+
     const imgData = canvas.toDataURL('image/jpg');
 
     const link = document.createElement('a');
     link.href = imgData;
-    link.download = 'Business_ID_Card.jpg';
+    link.download = 'Employee_ID_Card.jpg';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-md shadow-md border border-gray-200">
-      <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-      <p><strong>Name:</strong> {user?.name}</p>
-      <p><strong>Email:</strong> {user?.email}</p>
-      <p><strong>Role:</strong> {user?.role}</p>
+  <div className="w-full max-w-5xl mx-auto p-4 md:p-8 bg-white rounded-lg shadow-md border border-gray-200">
+    <h2 className="text-2xl font-bold text-gray-800 mb-6">Employee Profile</h2>
 
-      <div className="mt-6 border-t pt-4">
-        <h3 className="text-lg font-semibold mb-2">Business ID Card</h3>
+    <div className="flex flex-col md:flex-row md:items-start gap-6">
+      {/* Left: Basic Info */}
+      <div className="flex-1">
+        <div className="space-y-2 text-sm md:text-base text-gray-700">
+          <p><span className="font-semibold">Name:</span> {user?.name}</p>
+          <p><span className="font-semibold">Email:</span> {user?.email}</p>
+          <p><span className="font-semibold">Role:</span> {user?.role}</p>
+        </div>
+      </div>
+
+      {/* Right: ID Card Section */}
+      <div className="flex-1">
+        <h3 className="text-lg font-semibold text-gray-800 mb-3">Employee ID Card</h3>
 
         {loading && (
           <p className="text-gray-500 text-sm">Loading ID card...</p>
         )}
 
         {!loading && error === 'pending' && (
-          <p className="text-yellow-500 text-sm font-medium">
-            Your ID card has not been created yet. Please wait for the admin to generate it.
+          <p className="text-yellow-600 text-sm font-medium">
+            Your ID card has not been created yet. Please wait for the admin.
           </p>
         )}
 
         {!loading && error === 'error' && (
-          <p className="text-red-500 text-sm">
-            Something went wrong while fetching your ID card.
-          </p>
+          <p className="text-red-500 text-sm">Failed to fetch your ID card.</p>
         )}
 
         {!loading && !error && idCard && profilePhotoBase64 && (
-          <div className="space-y-3 mt-4">
+          <div className="flex flex-col items-center space-y-4">
+            {/* Card Display */}
             <div
               ref={cardRef}
-              className="w-[300px] h-[450px] relative overflow-hidden rounded-2xl shadow-2xl font-sans bg-white"
+              className="w-full max-w-[300px] h-[470px] relative overflow-hidden rounded-xl shadow-xl bg-white"
               style={{
                 fontFamily: 'Inter, sans-serif',
-                background: 'linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%)',
+                background: 'linear-gradient(135deg, #f0f4f8 0%, #dbeafe 100%)',
               }}
             >
               {/* Decorative Backgrounds */}
               <div className="absolute w-[250%] h-[250%] rounded-full top-[-180%] left-[-70%] bg-blue-900 opacity-20"></div>
               <div className="absolute w-[250%] h-[250%] rounded-full bottom-[-180%] right-[-70%] bg-yellow-500 opacity-30"></div>
 
-              {/* Top Accent */}
               <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-500 to-yellow-400"></div>
 
-              {/* Main Content */}
-              <div className="relative z-10 h-full flex flex-col">
+              {/* Main Card */}
+              <div className="relative z-10 h-full flex flex-col items-center justify-between py-4 px-4">
                 {/* Header */}
-                <div className="pt-6 pb-3 text-center">
-                  <div className="flex items-center justify-center mb-1">
-                    <img
-                      src="/logo.png"
-                      alt="Company Logo"
-                      className="w-10 h-10 rounded-full mr-2"
-                      onError={(e) => (e.target.style.display = 'none')}
-                    />
-                    <h1 className="text-gray-800 font-bold text-sm tracking-wide">
-                      MAA MAHAMAYA FINANCE
-                    </h1>
-                  </div>
+                <div className="text-center">
+                  <img
+                    src="/logo.png"
+                    alt="Company Logo"
+                    className="w-10 h-10 mx-auto rounded-full mb-1"
+                    onError={(e) => (e.target.style.display = 'none')}
+                  />
+                  <h1 className="text-sm font-bold text-gray-700">MAA MAHAMAYA FINANCE</h1>
                 </div>
 
-                {/* Profile Image */}
-                <div className="flex justify-center mb-4">
-                  <div className="w-[110px] h-[110px] rounded-full border-4 border-yellow-400 bg-gray-100 flex items-center justify-center shadow-md">
+                {/* Profile Photo */}
+                <div className="mt-3">
+                  <div className="w-[110px] h-[110px] rounded-full border-4 border-yellow-400 bg-gray-100 flex items-center justify-center shadow">
                     <img
-                      src={profilePhotoBase64}
-                      crossOrigin="anonymous"
-                      alt={`${idCard.name}'s profile`}
-                      className="w-24 h-24 object-cover rounded-full border border-gray-300 shadow-sm"
+                      src={profilePhotoBase64 || idCard.profilePhoto}
+                      alt={idCard.name}
+                      className="w-24 h-24 object-cover rounded-full"
                     />
                   </div>
                 </div>
 
-                {/* Name & Designation */}
-                <div className="bg-sky-800 text-white py-1 px-1 text-center mb-4 rounded-md mx-10">
-                  <h2 className="text-sm font-bold tracking-wide mb-1 uppercase break-words">
-                    {idCard.name}
-                  </h2>
-                  <p className="text-sm font-medium opacity-90">{idCard.subRole.toUpperCase()}</p>
+                {/* Name & Role */}
+                <div className="bg-sky-800 text-white w-full text-center py-1 rounded-md mt-3">
+                  <h2 className="text-sm font-semibold uppercase tracking-wide">{idCard.name}</h2>
+                  <p className="text-xs font-medium">{idCard.subRole.toUpperCase()}</p>
                 </div>
 
                 {/* Details */}
-                <div className="px-8 text-[12px] text-gray-800 space-y-1 flex-1 overflow-auto">
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Email</span>
-                    <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.email}</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Bus Id</span>
-                    <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.uniqueId}</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Sector</span>
-                    <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.subRole}</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Address</span>
-                    <span className="mr-1">:</span>
-                    <span className="break-words">{idCard.address}</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Pincode</span>
-                    <span className="mr-1">:</span>
-                    <span>{idCard.pincode}</span>
-                  </div>
-                  <div className="flex items-start">
-                    <span className="font-semibold w-16">Mobile</span>
-                    <span className="mr-1">:</span>
-                    <span>{idCard.mobileNumber}</span>
-                  </div>
+                <div className="text-xs text-gray-800 space-y-1 w-full mt-3">
+                  {[
+                    ['Email', idCard.email],
+                    ['Emp Id', idCard.uniqueId],
+                    ['Role', idCard.subRole],
+                    ['Address', idCard.address],
+                    ['Pincode', idCard.pincode],
+                    ['Mobile', idCard.mobileNumber],
+                  ].map(([label, value]) => (
+                    <div key={label} className="flex">
+                      <span className="w-16 font-medium">{label}</span>
+                      <span className="mr-1">:</span>
+                      <span className="flex-1 break-words">{value}</span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Footer */}
-                <div className="px-5 pb-3 mt-2 text-center">
-                  <p className="text-[10px] text-black">
-                    Powered by Maa Mahamaya Finance
-                  </p>
+                <div className="text-center text-[10px] text-black mt-3">
+                  Powered by Maa Mahamaya Finance
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-3">
+            {/* Download Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
               <button
                 onClick={handleDownloadPDF}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
                 Download PDF
               </button>
-
               <button
                 onClick={handleDownloadImage}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
               >
                 Download Image
               </button>
@@ -287,7 +279,9 @@ function BusinessProfile() {
         )}
       </div>
     </div>
-  );
+  </div>
+);
+
 }
 
-export default BusinessProfile;
+export default EmployeeProfile;

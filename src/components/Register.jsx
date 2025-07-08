@@ -356,12 +356,37 @@ function Register() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Select Account Type</option>
-                <option value="customer">Personal Customer</option>
+                <option value="customer">Customer Account</option>
                 <option value="business">Business Account</option>
-                <option value="employee">Employee Access</option>
+                <option value="employee">Employee Account</option>
+                <option value="intern">Intern Account</option>
               </select>
             </div>
-            {role === 'employee' && (
+            {/* *********************************************** */}
+
+
+            {(role === 'customer') && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select Role <span className="text-red-600">*</span>
+                </label>
+                <select
+                  value={subRole}
+                  onChange={(e) => setSubRole(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="">Select Role</option>
+                  <option value="customer">Customer</option>
+                </select>
+              </div>
+            )}
+
+
+
+
+            {/* *********************************************** */}
+            {(role === 'employee' || role === 'intern') && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Select Role <span className="text-red-600">*</span>
@@ -381,6 +406,7 @@ function Register() {
                 </select>
               </div>
             )}
+
             {role === 'business' && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">

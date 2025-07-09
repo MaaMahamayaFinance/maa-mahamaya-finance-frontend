@@ -129,34 +129,38 @@ function InternProfile() {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-4 md:p-8 bg-white rounded-lg shadow-md border border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Intern Profile</h2>
+  <div className="w-full max-w-6xl mx-auto px-6 py-10 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg border border-gray-200">
+    <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">Intern Profile</h2>
 
-      <div className="flex flex-col md:flex-row md:items-start gap-6">
-        <div className="flex-1">
-          <div className="space-y-2 text-sm md:text-base text-gray-700">
-            <p><span className="font-semibold">Name:</span> {user?.name}</p>
-            <p><span className="font-semibold">Email:</span> {user?.email}</p>
-            <p><span className="font-semibold">Role:</span> {user?.role}</p>
-          </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Left Side - Basic Info */}
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Intern Information</h3>
+        <div className="space-y-3 text-gray-700 text-base">
+          <p><span className="font-medium">Name:</span> {user?.name}</p>
+          <p><span className="font-medium">Email:</span> {user?.email}</p>
+          <p><span className="font-medium">Role:</span> {user?.role}</p>
         </div>
+      </div>
 
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-800 mb-3">Intern ID Card</h3>
+      {/* Right Side - ID Card Section */}
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Intern ID Card</h3>
 
-          {loading && <p className="text-gray-500 text-sm">Loading ID card...</p>}
-          {!loading && error === 'pending' && (
-            <p className="text-yellow-600 text-sm font-medium">
-              Your ID card has not been created yet. Please wait for the admin.
-            </p>
-          )}
-          {!loading && error === 'error' && (
-            <p className="text-red-500 text-sm">Failed to fetch your ID card.</p>
-          )}
+        {loading && <p className="text-gray-500 text-sm">Loading ID card...</p>}
+        {!loading && error === 'pending' && (
+          <p className="text-yellow-600 text-sm font-medium">
+            Your ID card is not yet created. Please wait for the admin approval.
+          </p>
+        )}
+        {!loading && error === 'error' && (
+          <p className="text-red-500 text-sm">Something went wrong. Unable to fetch your ID card.</p>
+        )}
 
-          {!loading && !error && idCard && profilePhotoBase64 && (
-            <div className="flex flex-col items-center space-y-4">
-              <div
+        {!loading && !error && idCard && profilePhotoBase64 && (
+          <div className="flex flex-col items-center space-y-5">
+            {/* ID Card Preview */}
+          <div
                 ref={cardRef}
                 className="w-full max-w-[300px] h-[470px] relative overflow-hidden rounded-xl shadow-xl bg-white"
                 style={{
@@ -217,26 +221,29 @@ function InternProfile() {
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-                <button
-                  onClick={handleDownloadPDF}
-                  className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  Download PDF
-                </button>
-                <button
-                  onClick={handleDownloadImage}
-                  className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  Download Image
-                </button>
-              </div>
+            {/* Download Buttons */}
+            <div className="flex flex-wrap justify-center gap-4">
+              <button
+                onClick={handleDownloadPDF}
+                className="px-5 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition"
+              >
+                Download PDF
+              </button>
+              <button
+                onClick={handleDownloadImage}
+                className="px-5 py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 transition"
+              >
+                Download Image
+              </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
+
+
 }
 
 export default InternProfile;

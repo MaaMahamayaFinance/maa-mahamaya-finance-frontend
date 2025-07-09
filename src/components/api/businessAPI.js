@@ -76,3 +76,17 @@ export const deleteBusiness = async (uniqueId, token) => {
         throw error.response?.data || { message: 'Failed to delete business' };
     }
 };
+
+
+
+export const searchBusinessByUniqueId = async (uniqueId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/searchbusiness`, {
+        params: { uniqueId },
+        });
+        return response.data; 
+    } catch (error) {
+        console.error('Error searching business:', error.response?.data || error.message);
+        throw error;
+    }
+};

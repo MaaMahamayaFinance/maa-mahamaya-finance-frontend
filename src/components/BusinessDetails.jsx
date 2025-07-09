@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchAllBusiness, createBusinessIdCard } from "./api/businessAPI.js";
+import { fetchAllBusiness, createBusinessIdCard, searchBusinessByUniqueId } from "./api/businessAPI.js";
 import BusinessCard from "./AdminDashboardComponents/BusinessCard.jsx";
+import SearchBar from "../utils/SearchBar.jsx";
 import toast from "react-hot-toast";
 
 const BusinessDetails = () => {
@@ -18,53 +19,68 @@ const BusinessDetails = () => {
         }
     };
 
-    const handleCreateId = async (business) => {
-        try {
-            console.log("Creating ID card for business:", business);
-            const res = await createBusinessIdCard(business);
-            toast.success(res.message || "ID Card created!");
-
-            setBusiness((prev) =>
-            prev.map((emp) =>
-                emp.email === business.email ? { ...emp, isIdCardCreated: true } : emp
-            )
-            );
-        } catch (error) {
-            toast.error("Failed to create ID Card.");
-            console.error(error);
+    const handleSearch = async (uniqueId) => {
+        if (!uniqueId) {
+        loadBusiness(); // Reset if search is cleared
+        return;
         }
+
+        try {
+        const result = await searchBusinessByUniqueId(uniqueId);
+        setBusiness([result]);
+        } catch (err) {
+        setBusiness([]); // No results found
+        }
+    };
+
+    const handleCreateId = async (businessItem) => {
+        try {
+        const res = await createBusinessIdCard(businessItem);
+        toast.success(res.message || "ID Card created!");
+        setBusiness((prev) =>
+            prev.map((b) =>
+            b.email === businessItem.email ? { ...b, isIdCardCreated: true } : b
+            )
+        );
+        } catch (error) {
+        toast.error("Failed to create ID Card.");
+        console.error(error);
+        }
+    };
+
+    const handleDeleteBusiness = (deletedId) => {
+        setBusiness((prev) => prev.filter((biz) => biz.uniqueId !== deletedId));
     };
 
     useEffect(() => {
         loadBusiness();
     }, []);
 
-
-
-    const handleDeleteBusiness = (deletedId) => {
-        setBusiness((prev) => prev.filter((biz) => biz.uniqueId !== deletedId));
-    };
-
     return (
-    <div className="p-4 sm:p-6 text-gray-800">
-        <h1 className="text-2xl font-bold mb-6 text-center ">Business Details</h1>
+        <div className="text-gray-800 relative p-4 sm:p-6 min-h-screen">
+        <h1 className="text-2xl font-bold mb-6 text-center">Business Details</h1>
+
+        <SearchBar placeholder="Search Business by Unique ID" onSearch={handleSearch} />
+
         {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
+            <p className="text-center text-gray-500">Loading...</p>
+        ) : business.length === 0 ? (
+            <p className="text-center text-red-500">No business found.</p>
         ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {business.map((emp) => (
-            <BusinessCard
+                <BusinessCard
                 key={emp._id}
                 business={emp}
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
                 isCertificateCreated={emp.isCertificateCreated}
                 onDelete={handleDeleteBusiness}
-            />
+                />
             ))}
-        </div>
+            </div>
         )}
-    </div>
+        </div>
     );
 };
 

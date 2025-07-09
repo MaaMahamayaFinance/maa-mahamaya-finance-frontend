@@ -76,3 +76,16 @@ export const deleteEmployee = async (uniqueId, token) => {
         throw error.response?.data || { message: 'Failed to delete employee' };
     }
 };
+
+
+export const searchEmployeeByUniqueId = async (uniqueId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/searchemployee`, {
+        params: { uniqueId },
+        });
+        return response.data; 
+    } catch (error) {
+        console.error('Error searching employee:', error.response?.data || error.message);
+        throw error;
+    }
+};

@@ -103,3 +103,18 @@ export const deleteIntern = async (uniqueId, token) => {
 };
 
 
+
+
+export const searchInternByUniqueId = async (uniqueId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/searchintern`, {
+        params: { uniqueId },
+        });
+        return response.data; 
+    } catch (error) {
+        console.error('Error searching intern:', error.response?.data || error.message);
+        throw error;
+    }
+};
+
+

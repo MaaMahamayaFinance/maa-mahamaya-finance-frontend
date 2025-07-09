@@ -7,12 +7,10 @@ import PaymentManagement from './PaymentManagement.jsx';
 import FinancialReports from './FinancialReports.jsx';
 import QueryManagement from './QueryManagement.jsx';
 import AdminPanel from './pages/Admin-Dashboard-Pages/AdminPanel.jsx';
-import EmployeeTasks from './EmployeeTasks.jsx';
 import { API_BASE_URL } from '../config.js'; // <-- Add this line
 import Reports from './pages/Admin-Dashboard-Pages/Reports.jsx';
 import SystemSetting from './pages/Admin-Dashboard-Pages/SystemSetting.jsx';
 import { FiMenu } from 'react-icons/fi';
-import AdminDashboard from './AdminDashboardComponents/AdminDashboard.jsx';
 
 function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -25,129 +23,107 @@ function Dashboard() {
 
 
 
-  // Employee
-  useEffect(() => {
-    if (user?.role === 'employee') {
-      const fetchPendingLoans = async () => {
-        try {
-          const response = await fetch(`${API_BASE_URL}/api/loans/pending`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-          });
-          const data = await response.json();
-          if (Array.isArray(data)) {
-            setPendingLoans(data);
-          } else if (data.loans && Array.isArray(data.loans)) {
-            setPendingLoans(data.loans);
-          } else {
-            setPendingLoans([]);
-            console.error('Unexpected pending loans data format:', data);
-          }
-        } catch (error) {
-          console.error('Error fetching pending loans:', error);
-          setPendingLoans([]);
-        }
-      };
-      fetchPendingLoans();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.role === 'employee') {
+  //     const fetchPendingLoans = async () => {
+  //       try {
+  //         const response = await fetch(`${API_BASE_URL}/api/loans/pending`, {
+  //           headers: { Authorization: `Bearer ${user.token}` },
+  //         });
+  //         const data = await response.json();
+  //         if (Array.isArray(data)) {
+  //           setPendingLoans(data);
+  //         } else if (data.loans && Array.isArray(data.loans)) {
+  //           setPendingLoans(data.loans);
+  //         } else {
+  //           setPendingLoans([]);
+  //           console.error('Unexpected pending loans data format:', data);
+  //         }
+  //       } catch (error) {
+  //         console.error('Error fetching pending loans:', error);
+  //         setPendingLoans([]);
+  //       }
+  //     };
+  //     fetchPendingLoans();
+  //   }
+  // }, [user]);
 
   
-  useEffect(() => {
-    setActiveSection('overview');
-  }, [user?.role]);
+  // useEffect(() => {
+  //   setActiveSection('overview');
+  // }, [user?.role]);
 
-  useEffect(() => {
-    const fetchLoans = async () => {
-      if (!user) return;
-      try {
-        console.log('Fetching loans for user:', user._id);
-        const userId = user._id || user.id;
-        const response = await fetch(`${API_BASE_URL}/api/loans/user/${userId}`, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        console.log('Response status:', response.status);
-        const data = await response.json();
-        console.log('Fetched loans data:', data);
-        setLoans(data);
-      } catch (error) {
-        console.error('Error fetching loans:', error);
-      }
-    };
-    fetchLoans();
-  }, [user]);
+  // useEffect(() => {
+  //   const fetchLoans = async () => {
+  //     if (!user) return;
+  //     try {
+  //       console.log('Fetching loans for user:', user._id);
+  //       const userId = user._id || user.id;
+  //       const response = await fetch(`${API_BASE_URL}/api/loans/user/${userId}`, {
+  //         headers: { Authorization: `Bearer ${user.token}` },
+  //       });
+  //       console.log('Response status:', response.status);
+  //       const data = await response.json();
+  //       console.log('Fetched loans data:', data);
+  //       setLoans(data);
+  //     } catch (error) {
+  //       console.error('Error fetching loans:', error);
+  //     }
+  //   };
+  //   fetchLoans();
+  // }, [user]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      if (!user || user.role !== 'admin') return;
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/users`, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch users');
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setUsers([]);
-      }
-    };
-    fetchUsers();
-  }, [user]);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     if (!user || user.role !== 'admin') return;
+  //     try {
+  //       const response = await fetch(`${API_BASE_URL}/api/users`, {
+  //         headers: { Authorization: `Bearer ${user.token}` },
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error('Failed to fetch users');
+  //       }
+  //       const data = await response.json();
+  //       setUsers(data);
+  //     } catch (error) {
+  //       console.error('Error fetching users:', error);
+  //       setUsers([]);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, [user]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      if (!user || user.role !== 'admin') return;
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/users`, {
-          headers: { Authorization: `Bearer ${user.token}` },
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setUsers([]);
-      }
-    };
-    fetchUsers();
-  }, [user]);
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     if (!user || user.role !== 'admin') return;
+  //     try {
+  //       const response = await fetch(`${API_BASE_URL}/api/users`, {
+  //         headers: { Authorization: `Bearer ${user.token}` },
+  //       });
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setUsers(data);
+  //     } catch (error) {
+  //       console.error('Error fetching users:', error);
+  //       setUsers([]);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, [user]);
 
-  const totalLoans = Array.isArray(loans) ? loans.length : 0;
-  const activeLoans = Array.isArray(loans) ? loans.filter(loan => loan.status === 'approved').length : 0;
-  const pendingPayments = Array.isArray(loans) ? loans.reduce((sum, loan) => {
-    if (loan.status === 'approved' && loan.pendingAmount) {
-      return sum + loan.pendingAmount;
-    }
-    return sum;
-  }, 0) : 0;
+  // const totalLoans = Array.isArray(loans) ? loans.length : 0;
+  // const activeLoans = Array.isArray(loans) ? loans.filter(loan => loan.status === 'approved').length : 0;
+  // const pendingPayments = Array.isArray(loans) ? loans.reduce((sum, loan) => {
+  //   if (loan.status === 'approved' && loan.pendingAmount) {
+  //     return sum + loan.pendingAmount;
+  //   }
+  //   return sum;
+  // }, 0) : 0;
 
   const renderCustomerSections = () => {
     switch (activeSection) {
-      case 'overview':
-        return (
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Welcome back, {user?.name || 'Customer'}!</h1>
-            <p>Here's your financial overview.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Total Loans</h2>
-                <p className="text-3xl font-bold text-blue-600">{totalLoans}</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Active Loans</h2>
-                <p className="text-3xl font-bold text-green-600">{activeLoans}</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Pending Payments</h2>
-                <p className="text-3xl font-bold text-red-600">${pendingPayments.toFixed(2)}</p>
-              </div>
-            </div>
-          </div>
-        );
       case 'accounts':
         return <div><h2>My Accounts</h2></div>;
       case 'payments':
@@ -165,21 +141,6 @@ function Dashboard() {
 
   const renderBusinessSections = () => {
     switch (activeSection) {
-      case 'overview':
-        return (
-          <div className="w-full mx-4 p-6 bg-white rounded-md shadow-md border border-gray-200">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-1">Business Dashboard</h1>
-            <p className="text-base text-gray-700 mb-3">Manage your business finances efficiently.</p>
-            <p className="text-sm font-semibold text-gray-800 mb-4">User: {user?.name}</p>
-            {/* Add more business overview content here */}
-            <button
-              className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition-colors font-semibold text-base"
-              onClick={() => setActiveSection('apply-loan')}
-            >
-              Apply for a Loan
-            </button>
-          </div>
-        );
       case 'accounts':
         return <div><h2>Business Accounts</h2></div>;
       case 'transactions':
@@ -201,32 +162,8 @@ function Dashboard() {
 
 
 
-
-
-  // *********************************************************
   const renderEmployeeSections = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return (
-          <div className="w-full mx-4 p-6 bg-white rounded-md shadow-md border border-gray-200">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-1">Welcome back, {user?.name || 'Employee'}!</h1>
-            <p className="mb-6">Here is your employee dashboard overview.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-blue-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Pending Tasks</h2>
-                <p className="text-3xl font-bold text-blue-700">{pendingLoans.length}</p>
-              </div>
-              <div className="bg-green-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Clients Managed</h2>
-                <p className="text-3xl font-bold text-green-700">15</p>
-              </div>
-              <div className="bg-yellow-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Performance Score</h2>
-                <p className="text-3xl font-bold text-yellow-700">92%</p>
-              </div>
-            </div>
-          </div>
-        );
       case 'tasks':
         return <div><h2>Performance</h2></div>;
       case 'clients':
@@ -238,49 +175,10 @@ function Dashboard() {
     }
   };
 
-  // ***********************************************************************
 
-
-
-
-
-
-
-
-  // ***********************************************************************
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
     const renderInternSections = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return (
-          <div className="w-full mx-4 p-6 bg-white rounded-md shadow-md border border-gray-200">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-1">Welcome back, {user?.name || 'Intern'}!</h1>
-            <p className="mb-6">Here is your Intern dashboard overview.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-green-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Clients Managed</h2>
-                <p className="text-3xl font-bold text-green-700">15</p>
-              </div>
-              <div className="bg-yellow-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Performance Score</h2>
-                <p className="text-3xl font-bold text-yellow-700">92%</p>
-              </div>
-            </div>
-          </div>
-        );
-      // case 'tasks':
-      //   return <EmployeeTasks />;
-      // case 'clients':
-      //   return <QueryManagement userId={user?._id} />;
       case 'performance':
         return <div><h2>Performance</h2></div>;
       default:
@@ -290,33 +188,9 @@ function Dashboard() {
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  // ***********************************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   const renderAdminSections = () => {
     switch (activeSection) {
-      
       case 'users':
         return <AdminPanel currentUser={user} />;
       case 'reports':

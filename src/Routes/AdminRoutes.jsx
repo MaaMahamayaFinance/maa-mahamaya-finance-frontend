@@ -79,6 +79,16 @@ const AdminRoutes = () => {
                 }
             />
 
+
+            <Route
+            path="/admin-dashboard/employee-details"
+            element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                    <EmployeeDetails />
+                </ProtectedRoute>
+                }
+            />
+
         </>
     );
 };

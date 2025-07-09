@@ -31,7 +31,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   };
 
   const customerItems = [
-    { id: 'overview', label: 'Overview', icon: <FaTachometerAlt /> },
+    { id: 'customer-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { id: 'accounts', label: 'Accounts', icon: <FaUniversity /> },
     { id: 'payments', label: 'Payments', icon: <FaCreditCard /> },
     { id: 'loans', label: 'Loans', icon: <FaHandHoldingUsd /> },
@@ -40,8 +40,8 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   ];
 
   const businessItems = [
-    { id: 'overview', label: 'Dashboard', icon: <FaTachometerAlt /> },
-    { id: 'accounts', label: 'Accounts', icon: <FaUniversity /> },
+    { id: 'business-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    // { id: 'accounts', label: 'Accounts', icon: <FaUniversity /> },
     { id: 'transactions', label: 'Transactions', icon: <FaExchangeAlt /> },
     { id: 'view-authorization-certificate', label: 'View Certificate', icon: <PiCertificate /> },
     { id: 'reports', label: 'Reports', icon: <FaChartBar /> },
@@ -51,7 +51,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   ];
 
   const employeeItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    { id: 'employee-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
     { id: 'clients', label: 'Clients', icon: <FaUsers /> },
     { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
@@ -60,7 +60,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   ];
 
   const internItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    { id: 'intern-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
     { id: 'clients', label: 'Clients', icon: <FaUsers /> },
     { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
@@ -95,7 +95,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
       variants={sidebarVariants}
       initial="hidden"
       animate="visible"
-      className="fixed top-0 left-0 z-50 bg-white w-64 h-screen overflow-y-auto shadow-lg md:static md:block"
+      className="fixed top-0 left-0 z-50 bg-white w-64 h-screen overflow-y-hidden overflow-x-hidden shadow-lg md:static md:block"
     >
       {/* Close button for mobile */}
       <div className="md:hidden flex justify-end p-4">
@@ -143,18 +143,25 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
                 'employee-details': '/admin-dashboard/employee-details',
                 'business-details': '/admin-dashboard/business-details',
                 'intern-details': '/admin-dashboard/intern-details',
+                'admin-dashboard': '/admin-dashboard/view-stats',
+                // ***************************************************
                 'view-offer-letter': '/employee-dashboard/offerLetter',
-                'view-intern-offer-letter': '/intern-dashboard/offerLetter',
+                'profile': '/employee-dashboard/profile',
+                'employee-dashboard': '/employee-dashboard/view-stats',
+                // ***************************************************
                 'view-authorization-certificate': '/business-dashboard/certificate',
-                'view-intern-certificate': '/intern-dashboard/certificate',
                 'users': '/business-dashboard/usermanagement',
                 'reports': '/business-dashboard/reports',
                 'settings': '/business-dashboard/setting',
-                'profile': '/employee-dashboard/profile',
                 'businessprofile': '/business-dashboard/profile',
                 'internprofile': '/intern-dashboard/profile',
-                'admin-dashboard': '/admin-dashboard/view-stats',
-
+                'business-dashboard': '/business-dashboard/view',
+                // ***************************************************
+                'view-intern-certificate': '/intern-dashboard/certificate',
+                'view-intern-offer-letter': '/intern-dashboard/offerLetter',
+                'intern-dashboard': '/intern-dashboard/view-stats',
+                // ****************************************************
+                'customer-dashboard': '/customer-dashboard/view',
               };
               if (routeMap[item.id]) navigate(routeMap[item.id]);
             }}

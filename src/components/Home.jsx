@@ -48,8 +48,8 @@ function MobileSidebar({ isOpen, onClose, navigate, user, logout }) {
                     navigate('/intern-dashboard');
                   } else if (user.role === 'customer') {
                     navigate('/customer-dashboard');
-                  } else if (user.role === 'business') {
-                    navigate('/business-dashboard');
+                  }else if (user.role === 'admin') {
+                    navigate('/admin-dashboard');
                   } else {
                     navigate('/');
                   }
@@ -115,7 +115,7 @@ function Home() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0 flex items-center">
-                <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-8 w-auto mr-2" />
+                <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-8 w-auto mr-2 rounded-full" />
                 <span className="text-white text-xl font-bold">Maa Mahamaya Finance</span>
               </div>
             </div>

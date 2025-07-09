@@ -1,85 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
+import Navbar from './ReusableNavbarComponents/Navbar.jsx';
+import MobileSidebar from './ReusableNavbarComponents/MobileSidebar.jsx';
 
-function MobileSidebar({ isOpen, onClose, navigate, user, logout }) {
-  if (!isOpen) return null;
 
-  return (
-    <>
-      <div
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
-        onClick={onClose}
-      ></div>
-      <aside className="fixed top-0 left-0 bottom-0 w-64 bg-slate-900 text-white z-50 p-6 flex flex-col space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">Menu</h2>
-          <button
-            onClick={onClose}
-            aria-label="Close menu"
-            className="text-white hover:text-gray-300"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <nav className="flex flex-col space-y-4">
-          <button onClick={() => { navigate('/'); onClose(); }} className="text-gray-300 hover:text-white text-left">HOME</button>
-          <button className="text-gray-300 hover:text-white text-left">PAGES</button>
-          <button onClick={() => { navigate('/services'); onClose(); }} className="text-gray-300 hover:text-white text-left">SERVICES</button>
-          <button className="text-gray-300 hover:text-white text-left">PROJECT</button>
-          <button onClick={() => { navigate('/testimonials'); onClose(); }} className="text-gray-300 hover:text-white text-left">TESTIMONIALS</button>
-          <button className="text-gray-300 hover:text-white text-left">CONTACT US</button>
-          {user ? (
-            <>
-              <button
-                onClick={() => {
-                  if (user.role === 'employee') {
-                    navigate('/employee-dashboard');
-                  }else if (user.role === 'intern') {
-                    navigate('/intern-dashboard');
-                  } else if (user.role === 'customer') {
-                    navigate('/customer-dashboard');
-                  }else if (user.role === 'admin') {
-                    navigate('/admin-dashboard');
-                  } else {
-                    navigate('/');
-                  }
-                  onClose();
-                }}
-                className="text-white font-semibold hover:underline text-left"
-              >
-                Hello {user?.name}
-              </button>
-              <button
-                onClick={() => {
-                  logout();
-                  navigate('/');
-                  onClose();
-                }}
-                className="btn-secondary text-white px-4 py-2 rounded-full font-medium text-left"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <button onClick={() => { navigate('/login'); onClose(); }} className="btn-primary text-white px-6 py-2 rounded-full font-medium text-left">
-              SIGN IN
-            </button>
-          )}
-        </nav>
-      </aside>
-    </>
-  );
-}
+
 
 function Home() {
   const navigate = useNavigate();
@@ -110,78 +36,12 @@ function Home() {
   return (
     <div>
       {/* Navigation */}
-      <nav className="bg-slate-900 shadow-lg fixed w-full top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <img src="/logo.png" alt="Maa Mahamaya Finance" className="h-8 w-auto mr-2 rounded-full" />
-                <span className="text-white text-xl font-bold">Maa Mahamaya Finance</span>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center space-x-8" role="menu" aria-label="Main menu">
-              <button onClick={() => navigate('/')} className="text-gray-300 hover:text-white transition-colors" role="menuitem">HOME</button>
-              <button className="text-gray-300 hover:text-white transition-colors" role="menuitem">PAGES</button>
-              <button onClick={() => navigate('/services')} className="text-gray-300 hover:text-white transition-colors" role="menuitem">SERVICES</button>
-              <button className="text-gray-300 hover:text-white transition-colors" role="menuitem">PROJECT</button>
-              <button className="text-gray-300 hover:text-white transition-colors" onClick={() => navigate('/testimonials')} role="menuitem">TESTIMONIALS</button>
-              <button className="text-gray-300 hover:text-white transition-colors" role="menuitem">CONTACT US</button>
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={() => {
-                      if (user.role === 'employee') {
-                        navigate('/employee-dashboard');
-                      } else if (user.role === 'admin') {
-                        navigate('/admin-dashboard');
-                      }else if (user.role === 'intern') {
-                        navigate('/intern-dashboard');
-                      } else if (user.role === 'customer') {
-                        navigate('/customer-dashboard');
-                      } else if (user.role === 'business') {
-                        navigate('/business-dashboard');
-                      } else {
-                        navigate('/');
-                      }
-                    }}
-                    className="text-white font-semibold hover:underline focus:outline-none"
-                    role="menuitem"
-                  >
-                    Hello, {user.name}
-                  </button>
-                  <button
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                    className="btn-secondary text-white px-4 py-2 rounded-full font-medium"
-                    role="menuitem"
-                  >
-                    Logout
-                  </button>
-                </div>
-              ) : (
-                <button onClick={() => navigate('/login')} className="btn-primary text-white px-6 py-2 rounded-full font-medium" role="menuitem">
-                  SIGN IN
-                </button>
-              )}
-            </div>
-            <div className="md:hidden flex items-center">
-              <button
-                id="mobile-menu-btn"
-                className="text-gray-300 hover:text-white"
-                aria-label="Toggle menu"
-                aria-expanded={isMobileMenuOpen}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar
+        user={user}
+        navigate={navigate}
+        logout={logout}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
 
       <MobileSidebar
         isOpen={isMobileMenuOpen}
@@ -300,13 +160,13 @@ function Home() {
               We proudly collaborate with these trusted financial institutions.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
+          {/* <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 items-center">
             {partnerLogos.map((logo, index) => (
               <div key={index} className="flex justify-center items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow">
                 <img src={logo} alt={`Partner logo ${index + 1}`} className="max-h-16 object-contain" />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 

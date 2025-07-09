@@ -35,12 +35,17 @@ const EmployeeDetails = () => {
         }
     };
 
+
+    const handleDeleteEmployees = (deletedId) => {
+        setEmployees((prev) => prev.filter((biz) => biz.uniqueId !== deletedId));
+    };
+
     useEffect(() => {
         loadEmployees();
     }, []);
 
     return (
-    <div className="p-4 sm:p-6 bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300">
+    <div className="p-4 sm:p-6">
         <h1 className="text-2xl text-gray-800 font-bold mb-6 text-center underline">Employee Details</h1>
         {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
@@ -53,6 +58,7 @@ const EmployeeDetails = () => {
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
                 isOfferLetterCreated={emp.isOfferLetterCreated}
+                onDelete={handleDeleteEmployees}
             />
             ))}
         </div>

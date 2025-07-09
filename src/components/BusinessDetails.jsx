@@ -39,8 +39,14 @@ const BusinessDetails = () => {
         loadBusiness();
     }, []);
 
+
+
+    const handleDeleteBusiness = (deletedId) => {
+        setBusiness((prev) => prev.filter((biz) => biz.uniqueId !== deletedId));
+    };
+
     return (
-    <div className="p-4 sm:p-6 bg-gradient-to-br text-gray-800 from-indigo-200 via-blue-100 to-purple-300">
+    <div className="p-4 sm:p-6 text-gray-800">
         <h1 className="text-2xl font-bold mb-6 text-center ">Business Details</h1>
         {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
@@ -53,6 +59,7 @@ const BusinessDetails = () => {
                 onCreateId={handleCreateId}
                 isIdCreated={emp.isIdCardCreated}
                 isCertificateCreated={emp.isCertificateCreated}
+                onDelete={handleDeleteBusiness}
             />
             ))}
         </div>

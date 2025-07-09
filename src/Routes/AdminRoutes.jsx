@@ -7,6 +7,7 @@ import AdminPanel from '../components/pages/Admin-Dashboard-Pages/AdminPanel.jsx
 import Reports from '../components/pages/Admin-Dashboard-Pages/Reports.jsx';
 import SystemSetting from '../components/pages/Admin-Dashboard-Pages/SystemSetting.jsx';
 import EmployeeDetails from '../components/pages/EmployeeDetails.jsx';
+import AdminDashboard from '../components/AdminDashboardComponents/AdminDashboard.jsx';
 
 
 const AdminRoutes = () => {
@@ -20,6 +21,18 @@ const AdminRoutes = () => {
             </ProtectedRoute>
             }
         />
+
+
+        
+        <Route
+            path="/admin-dashboard/view-stats"
+            element={
+            <ProtectedRoute allowedRoles={['admin']}>
+                <AdminDashboard role="admin" />
+            </ProtectedRoute>
+            }
+        />
+
 
         <Route
             path="/admin-dashboard/business-details"

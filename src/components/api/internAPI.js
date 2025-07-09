@@ -85,3 +85,21 @@ export const fetchMyInternCertificate = async (token) => {
 
     return response.data.data;
 };
+
+
+
+export const deleteIntern = async (uniqueId, token) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/api/interns/${uniqueId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to delete intern' };
+    }
+};
+
+

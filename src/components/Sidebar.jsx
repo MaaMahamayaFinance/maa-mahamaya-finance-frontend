@@ -70,7 +70,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   ];
 
   const adminItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
+    { id: 'admin-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
     { id: 'employee-details', label: 'Employee Details', icon: <FaCogs /> },
     { id: 'intern-details', label: 'Intern Details', icon: <FaUser /> },
     { id: 'business-details', label: 'Business Details', icon: <FaCogs /> },
@@ -90,11 +90,12 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   }
 
   return (
+    <div className="h-full overflow-y-auto">
     <motion.aside
       variants={sidebarVariants}
       initial="hidden"
       animate="visible"
-      className="fixed top-0 left-0 z-50 bg-white w-64 h-full shadow-lg md:static md:block"
+      className="fixed top-0 left-0 z-50 bg-white w-64 h-screen overflow-y-auto shadow-lg md:static md:block"
     >
       {/* Close button for mobile */}
       <div className="md:hidden flex justify-end p-4">
@@ -152,6 +153,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
                 'profile': '/employee-dashboard/profile',
                 'businessprofile': '/business-dashboard/profile',
                 'internprofile': '/intern-dashboard/profile',
+                'admin-dashboard': '/admin-dashboard/view-stats',
 
               };
               if (routeMap[item.id]) navigate(routeMap[item.id]);
@@ -174,6 +176,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
         </motion.button>
       </div>
     </motion.aside>
+    </div>
   );
 };
 

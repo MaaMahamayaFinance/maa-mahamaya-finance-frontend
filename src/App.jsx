@@ -17,11 +17,13 @@ import InternRoutes from './Routes/InternRoutes.jsx';
 import EmployeeProfile from './components/pages/Employee-Dashboard-Pages/EmployeeProfile.jsx';
 import BusinessProfile from './components/pages/Business-Dashboard-Pages/BusinessProfile.jsx';
 import Home from './components/Home.jsx';
+import Layout from './utils/Layout.jsx';
 
 function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
+        <Layout>
         <Toaster position="top-right" reverseOrder={false} />
         <Routes>
 
@@ -120,6 +122,7 @@ function App() {
           {InternRoutes()}
           {AdminRoutes()}
         </Routes>
+        </Layout>
       </AuthProvider>
     </ErrorBoundary>
   );

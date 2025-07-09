@@ -59,3 +59,20 @@ export const fetchMyEmployeeOfferLetter = async (token) => {
 
     return response.data.data;
 };
+
+
+
+
+export const deleteEmployee = async (uniqueId, token) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/api/employees/${uniqueId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || { message: 'Failed to delete employee' };
+    }
+};

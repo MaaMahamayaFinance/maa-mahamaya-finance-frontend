@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { createBusinessCertificate } from "../api/businessAPI.js";
+import { createBusinessCertificate, deleteBusiness } from "../api/businessAPI.js";
+import { FaTrash } from "react-icons/fa";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import {
     FaEnvelope,
     FaUserTag,
@@ -13,7 +16,7 @@ import {
     FaTimes
 } from "react-icons/fa";
 
-const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated }) => {
+const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated, onDelete }) => {
     const {
         name,
         email,
@@ -64,9 +67,46 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated 
         }
     };
 
+
+    const MySwal = withReactContent(Swal);
+
+    const handleDeleteBusiness = async () => {
+    const result = await MySwal.fire({
+        title: `Delete ${name}?`,
+        text: "This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e3342f',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        });
+    
+        if (!result.isConfirmed) return;
+    
+        try {
+        const token = localStorage.getItem("token");
+        await deleteBusiness(uniqueId, token);
+        toast.success("Business deleted successfully");
+        
+        onDelete?.(uniqueId);
+
+        } catch (error) {
+        toast.error(error.message || "Failed to delete business");
+        }
+    };
+
+
+
     return (
         <>
-            <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+            <div className="relative bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+            <button
+                    onClick={handleDeleteBusiness}
+                    className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
+                    title="Delete Business"
+                    >
+                    <FaTrash size={18} />
+                </button>
             <div className="flex items-start justify-between gap-4">
                 {/* Left: Text Content */}
                 <div className="flex-1 text-sm text-gray-700 space-y-2">

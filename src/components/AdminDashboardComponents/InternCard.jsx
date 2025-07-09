@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { FaTrash } from "react-icons/fa";
+import { deleteIntern } from "../api/internAPI"; 
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 import { createInternOfferLetter, createInternCertificate } from "../api/internAPI.js";
 
@@ -22,6 +26,7 @@ const InternCard = ({
   isIdCreated,
   isOfferLetterCreated,
   isCertificateCreated,
+  onDelete
 }) => {
   const {
     name,
@@ -99,10 +104,45 @@ const InternCard = ({
     }
   };
 
+
+
+  const MySwal = withReactContent(Swal);
+
+
+  const handleDeleteIntern = async () => {
+  const result = await MySwal.fire({
+    title: `Delete ${name}?`,
+    text: "This action cannot be undone!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#e3342f',
+    cancelButtonColor: '#6c757d',
+    confirmButtonText: 'Yes, delete',
+  });
+
+  if (!result.isConfirmed) return;
+
+  try {
+    const token = localStorage.getItem("token");
+    await deleteIntern(uniqueId, token);
+    toast.success("Intern deleted successfully");
+    onDelete?.(uniqueId);
+  } catch (error) {
+    toast.error(error.message || "Failed to delete intern");
+  }
+};
+
   return (
     <>
-      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-        <div className="flex items-start justify-between gap-4">
+      <div className="relative bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+        <button
+          onClick={handleDeleteIntern}
+          className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
+          title="Delete Intern"
+        >
+          <FaTrash size={18} />
+        </button>
+        <div className="flex items-start justify-between gap-4">  
           <div className="flex-1 text-sm text-gray-700 space-y-2">
             <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2 flex items-center gap-2">
               <FaUserCircle className="text-blue-600" /> {name}

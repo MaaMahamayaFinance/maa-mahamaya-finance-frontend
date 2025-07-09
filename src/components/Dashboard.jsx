@@ -12,6 +12,7 @@ import { API_BASE_URL } from '../config.js'; // <-- Add this line
 import Reports from './pages/Admin-Dashboard-Pages/Reports.jsx';
 import SystemSetting from './pages/Admin-Dashboard-Pages/SystemSetting.jsx';
 import { FiMenu } from 'react-icons/fi';
+import AdminDashboard from './AdminDashboardComponents/AdminDashboard.jsx';
 
 function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -315,27 +316,7 @@ function Dashboard() {
 
   const renderAdminSections = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return (
-          <div className="w-full mx-4 p-6 bg-white rounded-md shadow-md border border-gray-200">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-1">Welcome back, {user?.name || 'Admin'}!</h1>
-            <p className="mb-6">Here is your admin dashboard overview.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-purple-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Total Users</h2>
-                <p className="text-3xl font-bold text-purple-700">{(users || []).length}</p>
-              </div>
-              <div className="bg-indigo-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">Active Reports</h2>
-                <p className="text-3xl font-bold text-indigo-700">7</p>
-              </div>
-              <div className="bg-pink-100 p-6 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">System Alerts</h2>
-                <p className="text-3xl font-bold text-pink-700">3</p>
-              </div>
-            </div>
-          </div>
-        );
+      
       case 'users':
         return <AdminPanel currentUser={user} />;
       case 'reports':
@@ -392,7 +373,7 @@ function Dashboard() {
       />
     </div>
 
-    <main className="flex-1 p-10 md:ml-64 w-full">
+    <main className="flex-1 p-6 md:ml-64 w-full min-h-screen overflow-y-auto">
       {renderContent()}
     </main>
   </div>

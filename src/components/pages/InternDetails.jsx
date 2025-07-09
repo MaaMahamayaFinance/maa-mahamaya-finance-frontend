@@ -35,12 +35,16 @@ const InternDetails = () => {
     }
   };
 
+  const handleDeleteInterns = (deletedId) => {
+      setInterns((prev) => prev.filter((biz) => biz.uniqueId !== deletedId));
+  };
+
   useEffect(() => {
     loadInterns();
   }, []);
 
   return (
-    <div className="p-4 sm:p-6 bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300">
+    <div className="p-4 sm:p-6">
       <h1 className="text-2xl text-gray-800 font-bold mb-6 text-center underline">Intern Details</h1>
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
@@ -54,6 +58,7 @@ const InternDetails = () => {
               isIdCreated={intn.isIdCardCreated}
               isOfferLetterCreated={intn.isOfferLetterCreated}
               isCertificateCreated={intn.isCertificateCreated}
+              onDelete={handleDeleteInterns}
             />
           ))}
         </div>

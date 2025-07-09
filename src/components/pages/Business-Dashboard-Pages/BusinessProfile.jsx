@@ -145,35 +145,42 @@ function BusinessProfile() {
     document.body.removeChild(link);
   };
 
-  return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-white rounded-md shadow-md border border-gray-200">
-      <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-      <p><strong>Name:</strong> {user?.name}</p>
-      <p><strong>Email:</strong> {user?.email}</p>
-      <p><strong>Role:</strong> {user?.role}</p>
+ return (
+  <div className="w-full max-w-6xl mx-auto px-6 py-10 bg-gradient-to-b from-blue-50 to-white rounded-xl shadow-lg border border-gray-200">
+    <h2 className="text-3xl font-bold text-blue-900 mb-8 text-center">Business Profile</h2>
 
-      <div className="mt-6 border-t pt-4">
-        <h3 className="text-lg font-semibold mb-2">Business ID Card</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Left Side - Basic Info */}
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Business Information</h3>
+        <div className="space-y-3 text-gray-700 text-base">
+          <p><span className="font-medium">Name:</span> {user?.name}</p>
+          <p><span className="font-medium">Email:</span> {user?.email}</p>
+          <p><span className="font-medium">Role:</span> {user?.role}</p>
+        </div>
+      </div>
 
-        {loading && (
-          <p className="text-gray-500 text-sm">Loading ID card...</p>
-        )}
+      {/* Right Side - ID Card Section */}
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+        <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Business ID Card</h3>
+
+        {loading && <p className="text-gray-500 text-sm">Loading ID card...</p>}
 
         {!loading && error === 'pending' && (
-          <p className="text-yellow-500 text-sm font-medium">
-            Your ID card has not been created yet. Please wait for the admin to generate it.
+          <p className="text-yellow-600 text-sm font-medium">
+            Your ID card has not been created yet. Please wait for the admin.
           </p>
         )}
 
         {!loading && error === 'error' && (
-          <p className="text-red-500 text-sm">
-            Something went wrong while fetching your ID card.
-          </p>
+          <p className="text-red-500 text-sm">Something went wrong while fetching your ID card.</p>
         )}
 
         {!loading && !error && idCard && profilePhotoBase64 && (
-          <div className="space-y-3 mt-4">
-            <div
+          <div className="flex flex-col items-center space-y-5">
+
+            {/* ID Card UI */}
+           <div
               ref={cardRef}
               className="w-[300px] h-[450px] relative overflow-hidden rounded-2xl shadow-2xl font-sans bg-white"
               style={{
@@ -268,17 +275,17 @@ function BusinessProfile() {
               </div>
             </div>
 
-            <div className="flex gap-3">
+            {/* Download Buttons */}
+            <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={handleDownloadPDF}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-5 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition"
               >
                 Download PDF
               </button>
-
               <button
                 onClick={handleDownloadImage}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                className="px-5 py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 transition"
               >
                 Download Image
               </button>
@@ -287,7 +294,10 @@ function BusinessProfile() {
         )}
       </div>
     </div>
-  );
+  </div>
+);
+
+
 }
 
 export default BusinessProfile;

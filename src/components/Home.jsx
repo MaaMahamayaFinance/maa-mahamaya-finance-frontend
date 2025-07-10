@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Navbar from './ReusableNavbarComponents/Navbar.jsx';
 import MobileSidebar from './ReusableNavbarComponents/MobileSidebar.jsx';
+import LoansOffered from './HomePageComponents/LoansOffered.jsx';
 
 
 
@@ -108,6 +109,8 @@ function Home() {
           </div>
         </div>
       </section>
+
+      <LoansOffered />
 
       {/* Features Section */}
       <section className="py-20 bg-white">

@@ -153,7 +153,7 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated,
           ) : (
             <button
               onClick={openModal}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-2 rounded-md transition-colors flex items-center gap-2"
+              className="md:ml-8 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-2 rounded-md transition-colors flex items-center gap-2"
               disabled={isSubmitting}
             >
               <FaFileSignature /> Generate Certificate

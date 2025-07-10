@@ -178,7 +178,7 @@ const InternCard = ({
     {!isIdCreated ? (
       <button
         onClick={() => onCreateId(intern)}
-        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+        className="bg-blue-600 justify-center hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
       >
         <FaIdCard /> Create ID Card
       </button>
@@ -195,7 +195,7 @@ const InternCard = ({
     ) : (
       <button
         onClick={() => openModal("offer")}
-        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+        className="md:ml-[43px] bg-blue-600 justify-center hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
         disabled={isSubmitting}
       >
         <FaFileSignature /> Generate Offer Letter
@@ -209,7 +209,7 @@ const InternCard = ({
     ) : (
       <button
         onClick={() => openModal("certificate")}
-        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+        className="bg-blue-600 hover:bg-blue-700 md:w-full justify-center text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
         disabled={isSubmitting}
       >
         <FaFileSignature /> Generate Certificate

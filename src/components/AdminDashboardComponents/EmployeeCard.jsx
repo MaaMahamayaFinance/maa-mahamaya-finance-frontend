@@ -40,7 +40,6 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
   const handleGenerateOffer = async () => {
     try {
       setIsSubmitting(true);
-
       const payload = {
         name,
         email,
@@ -52,12 +51,9 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
         ctc: ctcValue,
         userId: employee._id,
       };
-
-      // business
-      const response = await createEmployeeOfferLetter(payload);
+      await createEmployeeOfferLetter(payload);
       toast.success("Offer letter created");
-
-      setOfferLetterCreated(true); // ✅ instantly disable button
+      setOfferLetterCreated(true);
       closeModal();
     } catch (error) {
       console.error("Error generating offer letter:", error);
@@ -67,13 +63,9 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
     }
   };
 
+  const MySwal = withReactContent(Swal);
 
-
-
-    const MySwal = withReactContent(Swal);
-  
-  
-    const handleDeleteEmployee = async () => {
+  const handleDeleteEmployee = async () => {
     const result = await MySwal.fire({
       title: `Delete ${name}?`,
       text: "This action cannot be undone!",
@@ -83,9 +75,9 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
       cancelButtonColor: '#6c757d',
       confirmButtonText: 'Yes, delete',
     });
-  
+
     if (!result.isConfirmed) return;
-  
+
     try {
       const token = localStorage.getItem("token");
       await deleteEmployee(uniqueId, token);
@@ -96,21 +88,31 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
     }
   };
 
-
-
   return (
     <>
-      <div className=" relative bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+      <div className="relative bg-white shadow-md rounded-xl p-4 md:p-6 w-full max-w-md border border-gray-200 hover:shadow-xl transition-shadow duration-300">
         <button
-                  onClick={handleDeleteEmployee}
-                  className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
-                  title="Delete Intern"
-                >
-                  <FaTrash size={18} />
-                </button>
-        <div className="flex items-start justify-between gap-4">
+          onClick={handleDeleteEmployee}
+          className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
+          title="Delete Employee"
+        >
+          <FaTrash size={18} />
+        </button>
+
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+          {profilePhoto && (
+            <div className="flex-shrink-0">
+              <img
+                src={profilePhoto}
+                alt={`${name}'s profile`}
+                className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md"
+                onError={(e) => (e.target.style.display = "none")}
+              />
+            </div>
+          )}
+
           <div className="flex-1 text-sm text-gray-700 space-y-2">
-            <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
               <FaUserCircle className="text-blue-600" /> {name}
             </h2>
             <p className="flex items-center gap-2">
@@ -129,24 +131,13 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
               <FaPhoneAlt className="text-gray-500" /> {mobileNumber}
             </p>
           </div>
-
-          {profilePhoto && (
-            <div className="flex-shrink-0">
-              <img
-                src={profilePhoto}
-                alt={`${name}'s profile`}
-                className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md hover:scale-105 transition-transform duration-200"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            </div>
-          )}
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-col sm:flex-row flex-wrap sm:justify-start gap-2">
           {!isIdCreated ? (
             <button
               onClick={() => onCreateId(employee)}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-2 rounded-md transition-colors flex items-center gap-2"
             >
               <FaIdCard /> Create ID Card
             </button>
@@ -163,7 +154,7 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
           ) : (
             <button
               onClick={openModal}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-2 rounded-md transition-colors flex items-center gap-2"
               disabled={isSubmitting}
             >
               <FaFileSignature /> Generate Offer Letter
@@ -192,18 +183,16 @@ const EmployeeCard = ({ employee, onCreateId, isIdCreated, isOfferLetterCreated,
                 min="0"
                 value={ctcValue}
                 onChange={(e) => setCtcValue(e.target.value)}
-                className="no-spinner mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
               />
             </label>
             <label className="block text-sm font-medium text-gray-700">
               Joining Date
               <input
                 type="date"
-                placeholder="Enter Amount"
-                min="0"
                 value={joiningDate}
                 onChange={(e) => setJoiningDate(e.target.value)}
-                className="no-spinner mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
+                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
               />
             </label>
 

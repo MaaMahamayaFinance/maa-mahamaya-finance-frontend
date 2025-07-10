@@ -10,41 +10,41 @@ const BusinessDetails = () => {
 
     const loadBusiness = async () => {
         try {
-        const data = await fetchAllBusiness();
-        setBusiness(data);
+            const data = await fetchAllBusiness();
+            setBusiness(data);
         } catch (error) {
-        console.error("Error fetching business:", error);
+            console.error("Error fetching business:", error);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     };
 
     const handleSearch = async (uniqueId) => {
         if (!uniqueId) {
-        loadBusiness(); // Reset if search is cleared
-        return;
+            loadBusiness(); // Reset if search is cleared
+            return;
         }
 
         try {
-        const result = await searchBusinessByUniqueId(uniqueId);
-        setBusiness([result]);
+            const result = await searchBusinessByUniqueId(uniqueId);
+            setBusiness([result]);
         } catch (err) {
-        setBusiness([]); // No results found
+            setBusiness([]); // No results found
         }
     };
 
     const handleCreateId = async (businessItem) => {
         try {
-        const res = await createBusinessIdCard(businessItem);
-        toast.success(res.message || "ID Card created!");
-        setBusiness((prev) =>
-            prev.map((b) =>
-            b.email === businessItem.email ? { ...b, isIdCardCreated: true } : b
-            )
-        );
+            const res = await createBusinessIdCard(businessItem);
+            toast.success(res.message || "ID Card created!");
+            setBusiness((prev) =>
+                prev.map((b) =>
+                    b.email === businessItem.email ? { ...b, isIdCardCreated: true } : b
+                )
+            );
         } catch (error) {
-        toast.error("Failed to create ID Card.");
-        console.error(error);
+            toast.error("Failed to create ID Card.");
+            console.error(error);
         }
     };
 
@@ -58,28 +58,29 @@ const BusinessDetails = () => {
 
     return (
         <div className="text-gray-800 relative p-4 sm:p-6 min-h-screen">
-        <h1 className="text-2xl font-bold mb-6 text-center">Business Details</h1>
+            <h1 className="text-2xl font-bold mb-6 text-center underline">Business Details</h1>
 
-        <SearchBar placeholder="Search Business by Unique ID" onSearch={handleSearch} />
+            <SearchBar placeholder="Search Business by Unique ID" onSearch={handleSearch} />
 
-        {loading ? (
-            <p className="text-center text-gray-500">Loading...</p>
-        ) : business.length === 0 ? (
-            <p className="text-center text-red-500">No business found.</p>
-        ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {business.map((emp) => (
-                <BusinessCard
-                key={emp._id}
-                business={emp}
-                onCreateId={handleCreateId}
-                isIdCreated={emp.isIdCardCreated}
-                isCertificateCreated={emp.isCertificateCreated}
-                onDelete={handleDeleteBusiness}
-                />
-            ))}
-            </div>
-        )}
+            {loading ? (
+                <p className="text-center text-gray-500">Loading...</p>
+            ) : business.length === 0 ? (
+                <p className="text-center text-red-500">No business found.</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 justify-center">
+                    {business.map((emp) => (
+                        <div className="flex justify-center w-full" key={emp._id}>
+                            <BusinessCard
+                                business={emp}
+                                onCreateId={handleCreateId}
+                                isIdCreated={emp.isIdCardCreated}
+                                isCertificateCreated={emp.isCertificateCreated}
+                                onDelete={handleDeleteBusiness}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

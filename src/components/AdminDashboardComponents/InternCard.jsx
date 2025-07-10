@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
-import { deleteIntern } from "../api/internAPI"; 
+import { deleteIntern } from "../api/internAPI";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
@@ -41,7 +41,7 @@ const InternCard = ({
   } = intern;
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState(""); // 'offer' | 'certificate'
+  const [modalType, setModalType] = useState("");
   const [ctcValue, setCtcValue] = useState("");
   const [joiningDate, setJoiningDate] = useState("");
   const [certificateDate, setCertificateDate] = useState("");
@@ -104,128 +104,127 @@ const InternCard = ({
     }
   };
 
-
-
   const MySwal = withReactContent(Swal);
 
-
   const handleDeleteIntern = async () => {
-  const result = await MySwal.fire({
-    title: `Delete ${name}?`,
-    text: "This action cannot be undone!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#e3342f',
-    cancelButtonColor: '#6c757d',
-    confirmButtonText: 'Yes, delete',
-  });
+    const result = await MySwal.fire({
+      title: `Delete ${name}?`,
+      text: "This action cannot be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e3342f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete',
+    });
 
-  if (!result.isConfirmed) return;
+    if (!result.isConfirmed) return;
 
-  try {
-    const token = localStorage.getItem("token");
-    await deleteIntern(uniqueId, token);
-    toast.success("Intern deleted successfully");
-    onDelete?.(uniqueId);
-  } catch (error) {
-    toast.error(error.message || "Failed to delete intern");
-  }
-};
+    try {
+      const token = localStorage.getItem("token");
+      await deleteIntern(uniqueId, token);
+      toast.success("Intern deleted successfully");
+      onDelete?.(uniqueId);
+    } catch (error) {
+      toast.error(error.message || "Failed to delete intern");
+    }
+  };
 
   return (
     <>
-      <div className="relative bg-white shadow-lg rounded-xl p-6 w-full max-w-md m-4 border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-        <button
-          onClick={handleDeleteIntern}
-          className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
-          title="Delete Intern"
-        >
-          <FaTrash size={18} />
-        </button>
-        <div className="flex items-start justify-between gap-4">  
-          <div className="flex-1 text-sm text-gray-700 space-y-2">
-            <h2 className="text-xl font-semibold text-gray-800 capitalize mb-2 flex items-center gap-2">
-              <FaUserCircle className="text-blue-600" /> {name}
-            </h2>
-            <p className="flex items-center gap-2">
-              <FaEnvelope className="text-gray-500" /> {email}
-            </p>
-            <p className="flex items-center gap-2">
-              <FaUserTag className="text-gray-500" /> Intern ID: {uniqueId}
-            </p>
-            <p className="flex items-center gap-2">
-              <FaBuilding className="text-gray-500" /> Sub Role: {subRole}
-            </p>
-            <p className="flex items-center gap-2">
-              <FaMapMarkerAlt className="text-gray-500" /> {address}, {pincode}
-            </p>
-            <p className="flex items-center gap-2">
-              <FaPhoneAlt className="text-gray-500" /> {mobileNumber}
-            </p>
-          </div>
+      <div className="relative bg-white shadow-md rounded-xl p-4 md:p-6 w-full max-w-md border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+  <button
+    onClick={handleDeleteIntern}
+    className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
+    title="Delete Intern"
+  >
+    <FaTrash size={18} />
+  </button>
 
-          {profilePhoto && (
-            <div className="flex-shrink-0">
-              <img
-                src={profilePhoto}
-                alt={`${name}'s profile`}
-                className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md hover:scale-105 transition-transform duration-200"
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            </div>
-          )}
-        </div>
-
-        <div className="mt-5 flex flex-wrap gap-3">
-          {!isIdCreated ? (
-            <button
-              onClick={() => onCreateId(intern)}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
-            >
-              <FaIdCard /> Create ID Card
-            </button>
-          ) : (
-            <p className="text-sm font-medium text-green-600 flex items-center gap-2">
-              <FaCheckCircle /> ID Card Created
-            </p>
-          )}
-
-          {offerLetterCreated ? (
-            <p className="text-sm font-medium text-green-600 flex items-center gap-2">
-              <FaCheckCircle /> Offer Letter Created
-            </p>
-          ) : (
-            <button
-              onClick={() => openModal("offer")}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
-              disabled={isSubmitting}
-            >
-              <FaFileSignature /> Generate Offer Letter
-            </button>
-          )}
-
-          {certificateCreated ? (
-            <p className="text-sm font-medium text-green-600 flex items-center gap-2">
-              <FaCheckCircle /> Certificate Created
-            </p>
-          ) : (
-            <button
-              onClick={() => openModal("certificate")}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2 py-2 rounded-md transition-colors duration-200 flex items-center gap-2"
-              disabled={isSubmitting}
-            >
-              <FaFileSignature /> Generate Certificate
-            </button>
-          )}
-        </div>
+  <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
+    {profilePhoto && (
+      <div className="flex-shrink-0">
+        <img
+          src={profilePhoto}
+          alt={`${name}'s profile`}
+          className="w-24 h-24 object-cover rounded-full border-2 border-gray-300 shadow-md"
+          onError={(e) => (e.target.style.display = 'none')}
+        />
       </div>
+    )}
+
+    <div className="flex-1 text-sm text-gray-700 space-y-2">
+      <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+        <FaUserCircle className="text-blue-600" /> {name}
+      </h2>
+      <p className="flex items-center gap-2">
+        <FaEnvelope className="text-gray-500" /> {email}
+      </p>
+      <p className="flex items-center gap-2">
+        <FaUserTag className="text-gray-500" /> Intern ID: {uniqueId}
+      </p>
+      <p className="flex items-center gap-2">
+        <FaBuilding className="text-gray-500" /> Sub Role: {subRole}
+      </p>
+      <p className="flex items-center gap-2">
+        <FaMapMarkerAlt className="text-gray-500" /> {address}, {pincode}
+      </p>
+      <p className="flex items-center gap-2">
+        <FaPhoneAlt className="text-gray-500" /> {mobileNumber}
+      </p>
+    </div>
+  </div>
+
+  <div className="mt-4 flex flex-col sm:flex-row flex-wrap sm:justify-start gap-2">
+    {!isIdCreated ? (
+      <button
+        onClick={() => onCreateId(intern)}
+        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+      >
+        <FaIdCard /> Create ID Card
+      </button>
+    ) : (
+      <p className="text-sm font-medium text-green-600 flex items-center gap-2">
+        <FaCheckCircle /> ID Card Created
+      </p>
+    )}
+
+    {offerLetterCreated ? (
+      <p className="text-sm font-medium text-green-600 flex items-center gap-2">
+        <FaCheckCircle /> Offer Letter Created
+      </p>
+    ) : (
+      <button
+        onClick={() => openModal("offer")}
+        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+        disabled={isSubmitting}
+      >
+        <FaFileSignature /> Generate Offer Letter
+      </button>
+    )}
+
+    {certificateCreated ? (
+      <p className="text-sm font-medium text-green-600 flex items-center gap-2">
+        <FaCheckCircle /> Certificate Created
+      </p>
+    ) : (
+      <button
+        onClick={() => openModal("certificate")}
+        className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded-md transition-colors flex items-center gap-2"
+        disabled={isSubmitting}
+      >
+        <FaFileSignature /> Generate Certificate
+      </button>
+    )}
+  </div>
+</div>
+
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl space-y-6 animate-fadeIn">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold flex items-center gap-2">
-                <FaFileSignature className="text-blue-600" />{" "}
+                <FaFileSignature className="text-blue-600" />
                 {modalType === "offer" ? "Generate Offer Letter" : "Generate Certificate"}
               </h3>
               <button onClick={closeModal} className="text-gray-500 hover:text-gray-700">

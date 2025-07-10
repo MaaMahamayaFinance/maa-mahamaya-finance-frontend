@@ -186,8 +186,7 @@ function Dashboard() {
     }
   };
   
-  
-  
+
 
   const renderAdminSections = () => {
     switch (activeSection) {
@@ -219,27 +218,11 @@ function Dashboard() {
     }
   };
 
-  return (
-  <div className="flex bg-gray-50 min-h-screen relative">
-    {/* Mobile Hamburger Button */}
-    <button
-      className="absolute top-4 left-4 z-50 md:hidden bg-white p-2 rounded shadow"
-      onClick={() => setSidebarOpen(true)}
-    >
-      <FiMenu size={24} />
-    </button>
-
-    {/* Sidebar */}
-    {sidebarOpen && (
-      <Sidebar
-        role={user?.role}
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-        onClose={() => setSidebarOpen(false)} // Close on mobile
-      />
-    )}
-
-    <div className="hidden md:block">
+return (
+  <>
+    <div className="flex flex-col md:flex-row bg-gray-50 min-h-screen relative">
+    {/* Always visible Sidebar — full screen on mobile, fixed on desktop */}
+    <div className="w-full h-screen md:w-80 md:h-auto fixed md:relative z-40">
       <Sidebar
         role={user?.role}
         activeSection={activeSection}
@@ -247,11 +230,14 @@ function Dashboard() {
       />
     </div>
 
-    <main className="flex-1 p-6 md:ml-64 w-full min-h-screen overflow-y-auto">
+    {/* Main Content */}
+    <main className="flex-1 mt-screen md:mt-0 md:ml-64 p-6 w-full min-h-screen overflow-y-hidden overflow-x-hidden">
       {renderContent()}
     </main>
   </div>
+  </>
 );
+
 
 }
 

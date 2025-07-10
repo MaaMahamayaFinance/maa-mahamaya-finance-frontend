@@ -90,17 +90,17 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
   }
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-hidden overflow-x-hidden">
     <motion.aside
       variants={sidebarVariants}
       initial="hidden"
       animate="visible"
-      className="fixed top-0 left-0 z-50 bg-white w-64 h-screen overflow-y-hidden overflow-x-hidden shadow-lg md:static md:block"
+      className="fixed top-0 left-0 z-50 bg-white w-full md:w-80 h-screen flex flex-col justify-between shadow-lg md:static"
     >
       {/* Close button for mobile */}
-      <div className="md:hidden flex justify-end p-4">
+      {/* <div className="md:hidden flex justify-end p-4">
         <button onClick={onClose} className="text-3xl text-gray-600 hover:text-gray-800">×</button>
-      </div>
+      </div> */}
 
       <div className="p-6 border-b flex flex-col items-center">
         <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-2">
@@ -116,7 +116,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
         <motion.div
           whileHover="hover"
           variants={itemVariants}
-          className="px-6 py-3 cursor-pointer flex items-center gap-3 text-gray-800 hover:bg-gray-100 rounded"
+          className="px-6 py-3 cursor-pointer flex items-center gap-3 text-gray-800 hover:bg-blue-200 rounded"
           onClick={() => {
             setActiveSection('overview');
             navigate('/');
@@ -184,6 +184,7 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
       </div>
     </motion.aside>
     </div>
+    
   );
 };
 

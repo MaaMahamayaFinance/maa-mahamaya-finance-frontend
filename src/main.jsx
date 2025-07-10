@@ -11,11 +11,9 @@ const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <QueryClientProvider client={queryClient}>  {/* 2. Wrap here */}
       <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
         <App />
       </BrowserRouter>
     </QueryClientProvider>
-  </React.StrictMode>
 );

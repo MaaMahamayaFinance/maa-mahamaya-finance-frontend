@@ -1,5 +1,7 @@
 import axios from "axios";
 import {API_BASE_URL} from "../../config.js"
+import { useQuery } from "@tanstack/react-query";
+
 
 
 export const fetchAllBusiness = async () => {
@@ -32,7 +34,6 @@ export const fetchMyBusinessIdCard = async (token) => {
 
     return response.data.data;
 };
-
 
 
 

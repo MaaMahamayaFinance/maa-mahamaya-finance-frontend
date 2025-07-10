@@ -10,6 +10,9 @@ import FeaturesSection from './HomePageComponents/FeaturesSection.jsx';
 import Footer from './HomePageComponents/Footer.jsx';
 import FeaturedPartners from './HomePageComponents/FeaturedPartners.jsx';
 import HomeCardSection from './HomePageComponents/HomeCardSection.jsx';
+import VisionSection from './HomePageComponents/VisionSection.jsx';
+import ContactUsSection from './HomePageComponents/ContactUsSection.jsx';
+import CoursesOffered from './HomePageComponents/CoursesOffered.jsx';
 
 
 
@@ -38,10 +41,13 @@ function Home() {
       />
       <HomePageHeroSection />
       <LoansOffered />
+      <CoursesOffered />
+      <VisionSection />
       <FeaturesSection />
       <HomeCardSection />
       <FeaturedPartners />
       <FAQSection />
+      <ContactUsSection />
       <Footer />
     </div>
   );

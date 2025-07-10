@@ -18,7 +18,7 @@ const LoanCard = ({ type, requirements, note }) => {
 
   return (
     <div
-      className="w-[280px] h-[360px] mx-4 perspective cursor-pointer"
+      className="w-[320px] h-[400px] mx-4 perspective cursor-pointer"
       onClick={() => setFlipped(!flipped)}
     >
       <div
@@ -40,7 +40,7 @@ const LoanCard = ({ type, requirements, note }) => {
           className="absolute w-full h-full bg-white rounded-xl shadow-xl p-4 text-sm text-gray-800 transform rotateY-180 backface-hidden"
         >
           <h3 className="text-md font-bold mb-3 text-indigo-600">{type}</h3>
-          <div className="space-y-1 mb-3 max-h-[250px] pr-1 overflow-y-auto">
+          <div className="space-y-1 mb-3 max-h-[380px] pr-1 overflow-y-auto">
             {requirements.map((req, i) => {
               const hint = tooltipHints[req.trim().toUpperCase()];
               return (

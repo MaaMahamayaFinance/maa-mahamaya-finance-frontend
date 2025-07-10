@@ -1,90 +1,123 @@
+import { HiX } from 'react-icons/hi';
+
 function MobileSidebar({
-    isOpen,
-    onClose,
-    navigate,
-    user,
-    logout,
-    renderRoleNavItems,
-    roleDashboardRoutes
-    }) {
-    if (!isOpen) return null;
+  isOpen,
+  onClose,
+  navigate,
+  user,
+  logout,
+  renderRoleNavItems,
+  roleDashboardRoutes,
+}) {
+  if (!isOpen) return null;
 
-    return (
-        <>
-        <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={onClose}
+      ></div>
+
+      {/* Sidebar */}
+      <aside className="fixed top-0 left-0 bottom-0 w-64 bg-white text-[#4F46E5] z-50 p-6 flex flex-col h-full shadow-lg transition-all duration-300">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold">Menu</h2>
+          <button
             onClick={onClose}
-        ></div>
-
-        <aside className="fixed top-0 left-0 bottom-0 w-64 bg-slate-900 text-white z-50 p-6 flex flex-col space-y-6">
-            <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold">Menu</h2>
-            <button
-                onClick={onClose}
-                aria-label="Close menu"
-                className="text-white hover:text-gray-300"
-            >
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+            aria-label="Close menu"
+            className="text-[#4F46E5] hover:text-indigo-700 transition"
+          >
+            <button onClick={onClose} aria-label="Close menu">
+            <HiX className="h-6 w-6 text-black transition" />
             </button>
-            </div>
+          </button>
+        </div>
 
-            <nav className="flex flex-col space-y-4">
-            {/* Static Links */}
-            {/* <button onClick={() => { navigate('/'); onClose(); }} className="text-gray-300 hover:text-white text-left">HOME</button>
-            <button className="text-gray-300 hover:text-white text-left">PAGES</button> */}
-            <button onClick={() => { navigate('/services'); onClose(); }} className="text-gray-300 hover:text-white text-left">SERVICES</button>
-            {/* <button className="text-gray-300 hover:text-white text-left">PROJECT</button> */}
-            <button onClick={() => { navigate('/testimonials'); onClose(); }} className="text-gray-300 hover:text-white text-left">TESTIMONIALS</button>
-            <button className="text-gray-300 hover:text-white text-left">CONTACT US</button>
+        {/* Navigation Links */}
+        <div className="flex-1 flex flex-col items-start gap-4 mt-4 space-y-4 overflow-y-auto">
+          <button 
+            onClick={() => {
+              navigate('/services');
+              onClose();
+            }}
+            className="hover:text-indigo-700 text-center transition"
+          >
+            Services
+          </button>
+          <button
+            onClick={() => {
+              navigate('/testimonials');
+              onClose();
+            }}
+            className="hover:text-indigo-700 text-center transition"
+          >
+            Testimonials
+          </button>
+          <button className="hover:text-indigo-700 text-center transition">
+            Contact Us
+          </button>
 
-            {/* ✅ Role-based links */}
-            {user && renderRoleNavItems?.()}
+          {/* Role-based links */}
+          {user && renderRoleNavItems?.()}
 
-            {/* Auth & Dashboard Access */}
-            {user ? (
-                <>
-                <button
-                    onClick={() => {
-                    const route = roleDashboardRoutes[user.role] || '/';
-                    navigate(route);
-                    onClose();
-                    }}
-                    className="text-white font-semibold hover:underline text-left"
-                >
-                    Hello {user?.name}
-                </button>
-                <button
-                    onClick={() => {
-                    logout();
-                    navigate('/');
-                    onClose();
-                    }}
-                    className="btn-secondary text-white px-4 py-2 rounded-full font-medium text-left"
-                >
-                    Logout
-                </button>
-                </>
-            ) : (
-                <button
-                onClick={() => { navigate('/login'); onClose(); }}
-                className="btn-primary text-white px-6 py-2 rounded-full font-medium text-left"
-                >
-                SIGN IN
-                </button>
-            )}
-            </nav>
-        </aside>
-        </>
-    );
+          {user?.name && (
+        <button
+            onClick={() => {
+            const route = roleDashboardRoutes[user.role] || '/';
+            navigate(route);
+            onClose();
+            }}
+            className="font-semibold hover:underline text-left w-full mb-2"
+        >
+            Hello {user.name}
+        </button>
+        )}
+        </div>
+        
+
+
+        {/* Auth & Logout Button at the Bottom */}
+        <div className="mt-auto pt-4 border-t border-gray-200">
+          {user ? (
+            <>
+              {/* <button
+                onClick={() => {
+                  const route = roleDashboardRoutes[user.role] || '/';
+                  navigate(route);
+                  onClose();
+                }}
+                className="font-semibold hover:underline text-left w-full mb-2"
+              >
+                Hello {user?.name}
+              </button> */}
+              <button
+                onClick={() => {
+                  logout();
+                  navigate('/');
+                  onClose();
+                }}
+                className="w-full text-white bg-[#4F46E5] px-4 py-2 rounded-full font-medium hover:bg-indigo-700 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => {
+                navigate('/login');
+                onClose();
+              }}
+              className="w-full text-white bg-[#4F46E5] px-6 py-2 rounded-full font-medium hover:bg-indigo-700 transition"
+            >
+              Sign In
+            </button>
+          )}
+        </div>
+      </aside>
+    </>
+  );
 }
 
 export default MobileSidebar;

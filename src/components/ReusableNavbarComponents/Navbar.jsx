@@ -39,36 +39,36 @@ export default function Navbar({ user, navigate, logout }) {
 
     return (
         <>
-        <nav className="bg-slate-900 shadow-lg fixed w-full top-0 z-50">
+        <nav className="bg-white shadow-lg fixed w-full top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
                 <div className="flex items-center">
-                <img src="/logo.png" alt="Logo" className="h-8 w-auto mr-2 rounded-full" />
-                <span className="text-white text-xl font-bold">Maa Mahamaya Finance</span>
+                <img src="https://maamahamayafinancebucket.s3.ap-south-1.amazonaws.com/profile-images/logo.png " alt="Logo" className="h-16 w-auto mr-2 rounded-full" />
+                <span className="text-[#4F46E5] text-xl font-bold">Maa Mahamaya Finance</span>
                 </div>
 
-                <div className="hidden md:flex items-center space-x-8" role="menu">
-                {/* <button onClick={() => navigate('/')} className="text-gray-300 hover:text-white">HOME</button>
-                <button className="text-gray-300 hover:text-white">PAGES</button> */}
-                {/* <button onClick={() => navigate('/services')} className="text-gray-300 hover:text-white">SERVICES</button> */}
-                {/* <button className="text-gray-300 hover:text-white">PROJECT</button> */}
-                <button onClick={() => navigate('/testimonials')} className="text-gray-300 hover:text-white">TESTIMONIALS</button>
-                <button className="text-gray-300 hover:text-white">CONTACT US</button>
+                <div className="hidden md:flex items-center space-x-8 text-[#4F46E5]" role="menu">
+                {/* <button onClick={() => navigate('/')} className="text-gray-300 hover:text-[#4F46E5]">HOME</button>
+                <button className="text-gray-300 hover:text-[#4F46E5]">PAGES</button> */}
+                {/* <button onClick={() => navigate('/services')} className="text-gray-300 hover:text-[#4F46E5]">SERVICES</button> */}
+                {/* <button className="text-gray-300 hover:text-[#4F46E5]">PROJECT</button> */}
+                <button onClick={() => navigate('/testimonials')} className="text-[#4F46E5] hover:text-[#4F46E5]">TESTIMONIALS</button>
+                <button className="text-[#4F46E5] hover:text-[#4F46E5]">CONTACT US</button>
 
                 {/* Role-specific nav items */}
                 {renderRoleNavItems(user?.role)}
 
                 {user ? (
                     <div className="flex items-center space-x-4">
-                    <button onClick={handleDashboardRedirect} className="text-white font-semibold hover:underline">
+                    <button onClick={handleDashboardRedirect} className="text-[#4F46E5] font-semibold hover:underline">
                         Hello, {user.name}
                     </button>
-                    <button onClick={() => { logout(); navigate('/'); }} className="btn-secondary text-white px-4 py-2 rounded-full font-medium">
+                    <button onClick={() => { logout(); navigate('/'); }} className="btn-secondary text-[#4F46E5] px-4 py-2 rounded-full font-medium">
                         Logout
                     </button>
                     </div>
                 ) : (
-                    <button onClick={() => navigate('/login')} className="btn-primary text-white px-6 py-2 rounded-full font-medium">
+                    <button onClick={() => navigate('/login')} className="btn-primary text-[#4F46E5] px-6 py-2 rounded-full font-medium">
                     SIGN IN
                     </button>
                 )}
@@ -79,7 +79,7 @@ export default function Navbar({ user, navigate, logout }) {
                 <button
                     onClick={() => setIsMobileMenuOpen(true)}
                     aria-label="Toggle menu"
-                    className="text-gray-300 hover:text-white"
+                    className="text-gray-300 hover:text-[#4F46E5]"
                 >
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />

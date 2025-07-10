@@ -17,7 +17,14 @@ module.exports = {
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
       },
+      perspective: {
+        '1000': '1000px',
+        '1500': '1500px',
+      },
+      transformOrigin: {
+        'center': 'center',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 }

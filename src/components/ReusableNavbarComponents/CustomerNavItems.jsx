@@ -10,7 +10,7 @@ export default function CustomerNavItems({ navigate }) {
         whileHover={{ scale: 1.05 }}
         transition={{ type: 'tween', stiffness: 300 }}
         onClick={() => navigate('/customer-dashboard/get-services')}
-        className="text-gray-300 hover:text-white px-4 py-2 rounded-md transition-colors duration-300"
+        className="text-gray-300 hover:text-[#4F46E5] px-4 py-2 rounded-md transition-colors duration-300"
       >
         SERVICES IN YOUR AREA
       </motion.button>

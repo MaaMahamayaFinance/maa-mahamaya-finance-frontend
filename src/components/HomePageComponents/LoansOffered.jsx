@@ -1,64 +1,89 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import LoanCard from "./LoanCard.jsx";
 import loansData from "./loanData.js";
 
 const LoansOffered = () => {
-    const containerRef = useRef(null);
-    const [isPaused, setIsPaused] = useState(false);
-    const scrollAmount = useRef(0); // persist scroll position
+  const containerRef = useRef(null);
+  const scrollAmount = useRef(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollContainerRef = useRef(null);
+  const isInView = useInView(scrollContainerRef, { once: true });
 
-    useEffect(() => {
-        const container = containerRef.current;
+  // Repeat data to simulate infinity
+  const repeatedLoans = [...loansData, ...loansData, ...loansData];
 
-        const scroll = () => {
-        if (container && !isPaused) {
-            scrollAmount.current += 1;
-            container.scrollLeft = scrollAmount.current;
+  // Auto scroll logic
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-            // Loop when reached end
-            if (scrollAmount.current >= container.scrollWidth - container.clientWidth) {
-            scrollAmount.current = 0;
-            }
+    const scroll = () => {
+      if (!isPaused) {
+        scrollAmount.current += 1;
+        container.scrollLeft = scrollAmount.current;
+
+        // Reset scroll halfway (for loop illusion)
+        if (
+          scrollAmount.current >=
+          container.scrollWidth / 3 // adjust if you repeat 3 times
+        ) {
+          scrollAmount.current = 0;
+          container.scrollLeft = 0;
         }
-        };
-
-        const interval = setInterval(scroll, 20); // speed
-
-        return () => clearInterval(interval);
-    }, [isPaused]);
-
-    const handleCardClick = () => {
-        setIsPaused(true);
-
-        // Resume after 3 seconds
-        setTimeout(() => {
-        setIsPaused(false);
-        }, 3000);
+      }
     };
 
-    const repeatedLoans = [...loansData, ...loansData, ...loansData];
+    const interval = setInterval(scroll, 20); // Speed
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
-    return (
-        <section className="py-10 bg-gray-100">
-        <h1 className="text-3xl font-bold text-center mb-6 text-[#2c3e50]">
-            Loans We Offer
-        </h1>
-        <div
-            ref={containerRef}
-            className="flex overflow-x-scroll no-scrollbar whitespace-nowrap px-4"
-        >
-            {repeatedLoans.map((loan, index) => (
-            <div key={index} className="inline-block" onClick={handleCardClick}>
-                <LoanCard
-                type={loan.type}
-                requirements={loan.requirements}
-                note={loan.note}
-                />
-            </div>
-            ))}
-        </div>
-        </section>
-    );
+  // Animation variant
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4 },
+    },
+  };
+
+  return (
+    <section
+      ref={scrollContainerRef}
+      className="py-16"
+    >
+      <motion.h1
+        className="text-4xl font-bold text-center mb-10 text-[#1a202c]"
+        initial={{ opacity: 0, y: 0 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        Loans We Offer
+      </motion.h1>
+
+      <div
+        ref={containerRef}
+        className="flex overflow-x-scroll no-scrollbar whitespace-nowrap gap-6 px-6 max-h-[400px]"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        {repeatedLoans.map((loan, index) => (
+          <motion.div
+            key={index}
+            className="inline-block snap-start"
+            variants={cardVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            whileHover={{ scale: 1.01 }}
+            transition={{ delay: index * 0.01 }}
+          >
+            <LoanCard {...loan} />
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default LoansOffered;

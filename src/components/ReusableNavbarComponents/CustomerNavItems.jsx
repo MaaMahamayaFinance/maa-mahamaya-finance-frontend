@@ -12,7 +12,7 @@ export default function CustomerNavItems({ navigate }) {
         onClick={() => navigate('/customer-dashboard/get-services')}
         className="text-gray-300 hover:text-[#4F46E5] px-4 py-2 rounded-md transition-colors duration-300"
       >
-        SERVICES IN YOUR AREA
+        Services in Your Area
       </motion.button>
     </Tippy>
   );

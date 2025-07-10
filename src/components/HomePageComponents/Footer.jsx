@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 const Footer = () => {
+
+    const navigate = useNavigate();
 
     return (
 
@@ -20,7 +24,9 @@ const Footer = () => {
                     <a className="cursor-pointer hover:underline">Terms & Conditions</a>
                     </li>
                     <li>
-                    <a className="cursor-pointer hover:underline">Privacy Policy</a>
+                    <a 
+                        onClick={() => navigate('/privacy-policy')}
+                    className="cursor-pointer hover:underline">Privacy Policy</a>
                     </li>
                 </ul>
                 </div>

@@ -162,14 +162,25 @@ function EmployeeProfile() {
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* Left Side - Basic Info */}
-      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
+      {!loading && !error && idCard && profilePhotoBase64 && (
+        <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100 relative">
+        {/* Profile Image on top right */}
+
         <h3 className="text-xl font-semibold text-gray-800 mb-4 border-b pb-2">Employee Information</h3>
+        <img
+          src={profilePhotoBase64 || idCard.profilePhoto}
+          alt="Profile"
+          className="top-6 right-6 h-20 w-20 rounded-full object-cover border border-gray-300 shadow-sm"
+        />
+        
         <div className="space-y-3 text-gray-700 text-base">
           <p><span className="font-medium">Name:</span> {user?.name}</p>
           <p><span className="font-medium">Email:</span> {user?.email}</p>
           <p><span className="font-medium">Role:</span> {user?.role}</p>
         </div>
       </div>
+      )}
+
 
       {/* Right Side - ID Card Section */}
       <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">

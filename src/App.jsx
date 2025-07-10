@@ -14,6 +14,7 @@ import InternRoutes from './Routes/InternRoutes.jsx';
 import EmployeeRoutes from './Routes/EmployeeRoutes.jsx';
 import BusinessRoutes from './Routes/BusinessRoutes.jsx';
 import CustomerRoutes from './Routes/CustomerRoutes.jsx';
+import PrivacyPolicy from './utils/PrivacyPolicy.jsx';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/certificate" element={<BusinessCertificateTemplate />} />
               <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
               {CustomerRoutes()}
               {BusinessRoutes()}
               {EmployeeRoutes()}

@@ -1,8 +1,8 @@
-// src/routes/AdminRoutes.jsx
 import { Route } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import Dashboard from '../components/Dashboard.jsx';
 import CustomerDashboard from '../components/CustomerDashboardComponents/CustomerDashboard.jsx';
+import ServiceDetails from '../components/pages/Customer-Navbar-Pages/ServiceDetails.jsx';
 
 
 
@@ -25,6 +25,16 @@ const CustomerRoutes = () => {
                 element={
                 <ProtectedRoute allowedRoles={['customer']}>
                     <CustomerDashboard role="customer" />
+                </ProtectedRoute>
+                }
+            />
+
+
+            <Route
+                path="/customer-dashboard/get-services"
+                element={
+                <ProtectedRoute allowedRoles={['customer']}>
+                    <ServiceDetails role="customer" />
                 </ProtectedRoute>
                 }
             />

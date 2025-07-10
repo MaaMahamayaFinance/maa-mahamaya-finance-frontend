@@ -4,12 +4,15 @@ import AdminNavItems from './AdminNavItems';
 import BusinessNavItems from './BusinessNavItems';
 import CustomerNavItems from './CustomerNavItems';
 import InternNavItems from './InternNavItems';
-import MobileSidebar from './MobileSidebar'; // if separated
+import MobileSidebar from './MobileSidebar';
+import Home from '../../components/Home.jsx'
+// if separated
 
 export default function Navbar({ user, navigate, logout }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const roleDashboardRoutes = {
+        logout: '/',
         employee: '/employee-dashboard',
         admin: '/admin-dashboard',
         business: '/business-dashboard',
@@ -19,6 +22,7 @@ export default function Navbar({ user, navigate, logout }) {
 
     const renderRoleNavItems = (role) => {
         switch (role) {
+        case 'logout': return <Home navigate={navigate} />;
         case 'employee': return <EmployeeNavItems navigate={navigate} />;
         case 'admin': return <AdminNavItems navigate={navigate} />;
         case 'business': return <BusinessNavItems navigate={navigate} />;
@@ -46,7 +50,7 @@ export default function Navbar({ user, navigate, logout }) {
                 <div className="hidden md:flex items-center space-x-8" role="menu">
                 {/* <button onClick={() => navigate('/')} className="text-gray-300 hover:text-white">HOME</button>
                 <button className="text-gray-300 hover:text-white">PAGES</button> */}
-                <button onClick={() => navigate('/services')} className="text-gray-300 hover:text-white">SERVICES</button>
+                {/* <button onClick={() => navigate('/services')} className="text-gray-300 hover:text-white">SERVICES</button> */}
                 {/* <button className="text-gray-300 hover:text-white">PROJECT</button> */}
                 <button onClick={() => navigate('/testimonials')} className="text-gray-300 hover:text-white">TESTIMONIALS</button>
                 <button className="text-gray-300 hover:text-white">CONTACT US</button>

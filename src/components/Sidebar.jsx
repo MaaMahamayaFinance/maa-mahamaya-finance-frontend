@@ -118,7 +118,7 @@ const businessItems = [
         variants={sidebarVariants}
         initial="hidden"
         animate="visible"
-        className="fixed top-0 left-0 z-50 bg-white w-full md:w-60 h-screen flex flex-col justify-between shadow-lg md:static"
+        className="fixed top-0 left-0 z-50 bg-white w-full md:w-72 h-screen flex flex-col justify-between shadow-lg md:static"
       >
         <div className="p-6 border-b flex flex-col items-center">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-2">
@@ -217,7 +217,7 @@ const businessItems = [
         />
         )}
 
-        {kycSubmitted && (
+        {role === 'business' &&kycSubmitted && (
           <div className="text-sm text-yellow-700 bg-yellow-100 p-4 mx-4 mb-4 rounded text-center border border-yellow-300">
             KYC submitted. Verification pending from admin.
           </div>

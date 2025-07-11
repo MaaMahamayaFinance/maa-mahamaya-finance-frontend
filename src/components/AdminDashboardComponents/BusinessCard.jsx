@@ -1,8 +1,6 @@
-// ✅ Updated BusinessCard.jsx (Perfect Desktop + Mobile Responsive UI)
-
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { createBusinessCertificate, deleteBusiness } from "../api/businessAPI.js";
+import { createBusinessCertificate, deleteBusiness, fetchBusinessKYCDetails } from "../api/businessAPI.js";
 import { FaTrash } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -15,7 +13,7 @@ import {
   FaIdCard,
   FaBuilding,
   FaFileSignature,
-  FaTimes
+  FaTimes,
 } from "react-icons/fa";
 
 const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated, onDelete }) => {
@@ -35,8 +33,32 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated,
   const [certificateCreated, setCertificateCreated] = useState(isCertificateCreated);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [kycModalOpen, setKycModalOpen] = useState(false);
+  const [kycData, setKycData] = useState(null);
+  const [kycLoading, setKycLoading] = useState(false);
+  const [kycError, setKycError] = useState('');
+
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const fetchKYCDetails = async () => {
+    setKycLoading(true);
+    setKycError('');
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetchBusinessKYCDetails(business._id, token);
+      if (response.data) {
+        setKycData(response.data);
+      } else {
+        setKycData(null);
+      }
+    } catch (err) {
+      console.error("Error fetching KYC:", err);
+      setKycError("Something went wrong fetching KYC.");
+    } finally {
+      setKycLoading(false);
+    }
+  };
 
   const handleGenerateCertificate = async () => {
     try {
@@ -90,13 +112,26 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated,
   return (
     <>
       <div className="relative bg-white shadow-md rounded-xl p-4 md:p-6 w-full max-w-md border border-gray-200 hover:shadow-xl transition-shadow duration-300">
-        <button
-          onClick={handleDeleteBusiness}
-          className="absolute top-2 right-2 text-red-600 hover:text-red-800 transition duration-200"
-          title="Delete Business"
-        >
-          <FaTrash size={18} />
-        </button>
+        <div className="absolute top-2 right-2 flex gap-2">
+          <button
+            onClick={() => {
+              setKycModalOpen(true);
+              fetchKYCDetails();
+            }}
+            className="text-blue-600 hover:text-blue-800 transition duration-200"
+            title="View KYC"
+          >
+            <FaIdCard size={18} />
+          </button>
+
+          <button
+            onClick={handleDeleteBusiness}
+            className="text-red-600 hover:text-red-800 transition duration-200"
+            title="Delete Business"
+          >
+            <FaTrash size={18} />
+          </button>
+        </div>
 
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
           {profilePhoto && (
@@ -162,6 +197,7 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated,
         </div>
       </div>
 
+      {/* Certificate Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl space-y-6 animate-fadeIn">
@@ -202,6 +238,60 @@ const BusinessCard = ({ business, onCreateId, isIdCreated, isCertificateCreated,
           </div>
         </div>
       )}
+
+      {/* KYC Modal */}
+      {kycModalOpen && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
+    <div className="bg-white rounded-xl w-full max-w-md shadow-2xl p-6 sm:p-8 space-y-6 animate-fadeIn transition-all">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b pb-3">
+        <h3 className="text-lg sm:text-xl font-semibold flex items-center gap-2 text-gray-800">
+          <FaIdCard className="text-blue-600" /> KYC Details
+        </h3>
+        <button
+          onClick={() => setKycModalOpen(false)}
+          className="text-gray-500 hover:text-gray-700 transition"
+        >
+          <FaTimes className="text-lg" />
+        </button>
+      </div>
+
+      {/* Body */}
+      <div className="text-sm sm:text-base text-gray-700 space-y-2">
+        {kycLoading ? (
+          <p className="text-gray-600">Loading KYC data...</p>
+        ) : kycError ? (
+          <p className="text-red-600">{kycError}</p>
+        ) : kycData ? (
+          <>
+            <div className="flex flex-col sm:flex-row sm:justify-between">
+              <span className="font-medium">PAN:</span>
+              <span>{kycData.panNumber}</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:justify-between">
+              <span className="font-medium">Aadhaar:</span>
+              <span>{kycData.aadhaarNumber}</span>
+            </div>
+            {/* Add more KYC fields here if needed */}
+          </>
+        ) : (
+          <p className="text-yellow-600">KYC not filled yet.</p>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-end pt-3 border-t">
+        <button
+          onClick={() => setKycModalOpen(false)}
+          className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </>
   );
 };

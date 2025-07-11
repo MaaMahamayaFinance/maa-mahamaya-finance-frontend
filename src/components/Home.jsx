@@ -20,29 +20,45 @@ function Home() {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    // Cleanup on unmount
-    return () => {
-      lenis.destroy();
-    };
+    setMounted(true); // Prevents hydration mismatch
   }, []);
 
+  useEffect(() => {
+    const handleLoad = () => {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+
+      // Cleanup
+      return () => {
+        lenis.destroy();
+      };
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <div>
+    <div className="overflow-x-hidden min-h-screen">
       <Navbar
         user={user}
         navigate={navigate}

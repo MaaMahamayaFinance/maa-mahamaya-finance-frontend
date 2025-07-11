@@ -20,15 +20,15 @@ const loansData = [
         "AADHAR CARD",
         "ADDRESS PROOF",
         "3 YEAR ITR WITH FINANCIAL",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "GST REGISTRATION",
-        "LAST 1 YEAR 3B GSTR RETURN",
-        "3 YEAR OLD BUSINESS PROOF",
-        "OWNERSHIP PROOF",
+        "GST RETURN LAST ONE YEAR 3B GSTR",
+        "3 YEAR OLD BUSINESS PROOF REQ",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
-        "NOMINI PAN, AADHAR, PHOTO"
+        "NOMINI PAN CARD, AADHAR CARD, PHOTO REQ"
         ],
-        note: "Minimum turnover ₹50 Lakhs"
+        note: "Minimum turnover ₹50 Lakhs Required"
     },
     {
         type: "Home Loan (Salaried)",
@@ -52,11 +52,11 @@ const loansData = [
         "AADHAR CARD",
         "ADDRESS PROOF",
         "3 YEAR ITR WITH FINANCIAL",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "GST REGISTRATION",
-        "LAST 1 YEAR 3B GSTR",
-        "3 YEAR OLD BUSINESS PROOF",
-        "OWNERSHIP PROOF",
+        "GST RETURN LAST 1 YEAR 3B GSTR",
+        "3 YEAR OLD BUSINESS PROOF REQ",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
         "NOMINI PAN CARD, AADHAR CARD, PHOTO REQ",
         "PROPERTY PAPER / ALLOTMENT LETTER COPY",
@@ -85,14 +85,14 @@ const loansData = [
         "AADHAR CARD",
         "ADDRESS PROOF",
         "3 YEAR ITR WITH FINANCIAL",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "GST REGISTRATION",
-        "LAST 1 YEAR 3B GSTR",
-        "3 YEAR OLD BUSINESS PROOF",
-        "OWNERSHIP PROOF",
+        "GST RETURN LAST 1 YEAR 3B GSTR",
+        "3 YEAR OLD BUSINESS PROOF REQ",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
         "NOMINI PAN CARD, AADHAR CARD, PHOTO REQ",
-        "PROPERTY PAPER (REGISTRY COPY ONLY)",
+        "PROPERTY PAPER COPY (REGISTRY ONLY)",
         "1 CHEQUE ₹6K (FOR LEGAL VALUATION)"
         ]
     },
@@ -117,9 +117,9 @@ const loansData = [
         "AADHAR CARD",
         "ADDRESS PROOF",
         "3 YEAR ITR WITH FINANCIAL",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "GST REGISTRATION",
-        "OWNERSHIP PROOF",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
         "QUOTATION OF CAR"
         ]
@@ -145,11 +145,11 @@ const loansData = [
         "AADHAR CARD",
         "ADDRESS PROOF",
         "3 YEAR ITR WITH FINANCIAL",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "GST REGISTRATION",
-        "OWNERSHIP PROOF",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
-        "RC INSURANCE OF CAR"
+        "RC, INSURANCE OF CAR"
         ]
     },
     {
@@ -172,16 +172,16 @@ const loansData = [
         "PAN CARD",
         "AADHAR CARD",
         "ADDRESS PROOF",
-        "1 YEAR BANK STATEMENT (ALL ACCOUNTS)",
+        "LAST 1 YEAR BANK STATEMENT ALL ACCOUNTS",
         "3 YEAR ITR WITH FINANCIAL",
         "GST REGISTRATION",
-        "LAST 1 YEAR 3B GSTR",
-        "3 YEAR OLD BUSINESS PROOF",
-        "OWNERSHIP PROOF",
+        "GST RETURN LAST 1 YEAR 3B GSTR",
+        "3 YEAR OLD BUSINESS PROOF REQ",
+        "OWNERSHIP PROOF REQ",
         "PHOTO",
         "NOMINI PAN CARD, AADHAR CARD, PHOTO REQ"
         ],
-        note: "Minimum turnover ₹1 Crore"
+        note: "Minimum turnover ₹1 Crore Required"
     }
 ];
 

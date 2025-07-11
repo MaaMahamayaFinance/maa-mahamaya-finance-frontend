@@ -15,6 +15,7 @@ import EmployeeRoutes from './Routes/EmployeeRoutes.jsx';
 import BusinessRoutes from './Routes/BusinessRoutes.jsx';
 import CustomerRoutes from './Routes/CustomerRoutes.jsx';
 import PrivacyPolicy from './utils/PrivacyPolicy.jsx';
+import AboutUs from './components/pages/Aboutus.jsx';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
+              <Route path="/aboutus" element={<AboutUs/>} />
               <Route path="/testimonials" element={<Testimonials />} />
               <Route path="/services" element={<Services />} />
               <Route path="/certificate" element={<BusinessCertificateTemplate />} />

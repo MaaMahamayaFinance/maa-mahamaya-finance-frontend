@@ -83,6 +83,13 @@ export default function Navbar({ user, navigate, logout }) {
               </button>
 
               <button
+                onClick={() => navigate('/aboutus')}
+                className="hover:underline hover:text-indigo-700 transition"
+              >
+                About Us
+              </button>
+
+              <button
                 onClick={() => navigate('/testimonials')}
                 className="hover:underline hover:text-indigo-700 transition"
               >

@@ -125,3 +125,20 @@ export const submitBusinessKYC = async ({ userId, aadhaarNumber, panNumber, toke
         }
     }
 };
+
+
+
+export const fetchBusinessKYCDetails = async (userId, token) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/api/admin/business/getkyc/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+        });
+
+        return response.data; // Contains success, data, and message
+    } catch (error) {
+        console.error('Error fetching KYC details:', error);
+        throw error;
+    }
+};

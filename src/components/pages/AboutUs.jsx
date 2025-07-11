@@ -43,6 +43,9 @@ const AboutUs = () => {
     <div className=" text-gray-800 px-6 py-16 space-y-24">
       {/* About MMF */}
       <section className="text-center max-w-5xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-10">
+          <span className="text-blue-600">About</span> Us
+        </h2>
         <h1 className="text-5xl font-bold mb-6">Empowering Dreams, Building Financial Freedom</h1>
         <p className="text-lg leading-8 text-gray-700">
           Maa Mahamaya Finance is not just a financial service provider — it's a movement towards financial empowerment. We specialize in comprehensive financial products, business consultation, and financial literacy services, tailored to both individuals and enterprises across India and the world.

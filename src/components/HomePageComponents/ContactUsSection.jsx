@@ -35,7 +35,7 @@ const ContactSection = () => {
             </p>
 
             <div className="flex flex-col gap-2">
-              <a href="https://www.linkedin.com/company/maa-mahamaya-finance/" target="_blank" className="flex items-center gap-2 text-indigo-700 hover:underline">
+              <a href="#" className="flex items-center gap-2 text-indigo-700 hover:underline">
                 <FaLinkedin /> LinkedIn
               </a>
               <a href="#" className="flex items-center gap-2 text-indigo-700 hover:underline">

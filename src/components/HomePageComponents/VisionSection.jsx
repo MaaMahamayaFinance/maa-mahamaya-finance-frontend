@@ -1,15 +1,31 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
+import { FiSmartphone } from "react-icons/fi"; // React icon
 import VisionImage from "../../../public/vision.png";
 
-const textVariant = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 1) => ({
+// Animation Variants
+const containerVariant = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.2, duration: 0.6, ease: "easeOut" },
-  }),
+    transition: {
+      duration: 0.7,
+      type: "spring",
+      stiffness: 60,
+      damping: 12,
+    },
+  },
 };
 
 const imageVariant = {
@@ -17,7 +33,7 @@ const imageVariant = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { delay: 0.5, duration: 0.8, ease: "easeOut" },
+    transition: { delay: 0.4, duration: 1, ease: "easeOut" },
   },
 };
 
@@ -36,52 +52,53 @@ const VisionSection = () => {
   }, [isInView]);
 
   return (
-    <section id="vision" className="px-4 md:px-8" ref={ref}>
-      <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+    <section id="vision" className="px-4 md:px-8 py-20" ref={ref}>
+      <motion.div
+        className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-14"
+        variants={containerVariant}
+        initial="hidden"
+        animate={textControls}
+      >
         {/* Text Section */}
-        <motion.div
-          className="flex-1"
-          initial="hidden"
-          animate={textControls}
-        >
+        <motion.div className="flex-1 space-y-6">
           <motion.h2
-            className="text-4xl font-bold text-gray-900 mb-4"
-            variants={textVariant}
-            custom={1}
+            className="text-4xl font-bold text-gray-900"
+            variants={fadeInUp}
           >
             Our Vision
           </motion.h2>
 
           <motion.p
-            className="text-gray-700 text-base md:text-lg leading-relaxed mb-6"
-            variants={textVariant}
-            custom={2}
+            className="text-gray-700 text-base md:text-lg leading-relaxed"
+            variants={fadeInUp}
           >
-            At Maa Mahamaya Finance, we envision a financially empowered India
-            by delivering transparent, technology-driven financial solutions
-            tailored to every individual and business. Our goal is to be a
-            trusted partner in every step of your financial journey.
+            To become a globally trusted financial powerhouse that transforms
+            lives through responsible financial products, informed decisions,
+            and strategic guidance.
+          </motion.p>
+
+          <motion.h2
+            className="text-4xl font-bold text-gray-900 pt-8"
+            variants={fadeInUp}
+          >
+            Our Mission
+          </motion.h2>
+
+          <motion.p
+            className="text-gray-700 text-base md:text-lg leading-relaxed"
+            variants={fadeInUp}
+          >
+            To empower individuals and businesses with the right financial
+            tools, education, and consultancy — enabling them to make confident,
+            sustainable, and smart financial decisions.
           </motion.p>
 
           <motion.div
-            className="flex items-start gap-4"
-            variants={textVariant}
-            custom={3}
+            className="flex items-start gap-4 pt-4"
+            variants={fadeInUp}
           >
-            <div className="bg-indigo-600 text-white p-3 rounded-lg">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 17v-6h6v6m2 4H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z"
-                />
-              </svg>
+            <div className="bg-indigo-600 text-white p-3 rounded-lg shadow-lg">
+              <FiSmartphone className="w-6 h-6" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-1">
@@ -106,10 +123,10 @@ const VisionSection = () => {
           <img
             src={VisionImage}
             alt="Vision Illustration"
-            className="w-full max-w-sm md:max-w-md lg:max-w-lg"
+            className="w-full max-w-sm md:max-w-md lg:max-w-lg drop-shadow-xl"
           />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

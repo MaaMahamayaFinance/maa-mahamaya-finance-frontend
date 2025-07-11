@@ -1,6 +1,5 @@
 import axios from "axios";
 import {API_BASE_URL} from "../../config.js"
-import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -24,8 +23,6 @@ export const createBusinessIdCard = async (business) => {
 
 
 export const fetchMyBusinessIdCard = async (token) => {
-    // console.log("🔐 Token being sent to API:", token);
-
     const response = await axios.get(`${API_BASE_URL}/api/businessidcard/me`, {
         headers: {
         Authorization: `Bearer ${token}`,
@@ -34,7 +31,6 @@ export const fetchMyBusinessIdCard = async (token) => {
 
     return response.data.data;
 };
-
 
 
 export const createBusinessCertificate = async (business) => {
@@ -89,5 +85,43 @@ export const searchBusinessByUniqueId = async (uniqueId) => {
     } catch (error) {
         console.error('Error searching business:', error.response?.data || error.message);
         throw error;
+    }
+};
+
+
+
+
+
+export const submitBusinessKYC = async ({ userId, aadhaarNumber, panNumber, token }) => {
+    try {
+        const response = await axios.post(
+        `${API_BASE_URL}/api/business/kyc`,
+        {
+            userId,           // ✅ include this
+            aadhaarNumber,
+            panNumber,
+        },
+        {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
+        }
+        );
+
+        return { ...response.data, success: true }; // Add success flag
+    } catch (error) {
+        if (error.response) {
+        return {
+            success: false,
+            status: error.response.status,
+            message: error.response.data.message,
+            errors: error.response.data.errors || null,
+        };
+        } else {
+        return {
+            success: false,
+            message: 'Something went wrong. Please try again later.',
+        };
+        }
     }
 };

@@ -78,7 +78,7 @@ const HomePageHeroSection = () => {
           >
             <div className="text-center sm:text-left">
               <h3 className="text-3xl font-bold text-indigo-700">
-                {showCount ? <CountUp end={450} duration={2} /> : 0}+
+                {showCount ? <CountUp end={1500} duration={2} /> : 0}+
               </h3>
               <p className="text-gray-800 text-sm font-medium">Channel Partners</p>
             </div>
@@ -86,7 +86,7 @@ const HomePageHeroSection = () => {
               <h3 className="text-3xl font-bold text-indigo-700">
                 {showCount ? <CountUp end={486} duration={2.5} /> : 0}+
               </h3>
-              <p className="text-gray-800 text-sm font-medium">NBFC Partners</p>
+              <p className="text-gray-800 text-sm font-medium">NBFC, MFF, MFI, BANKING, Private Institutions Partners</p>
             </div>
           </motion.div>
         </motion.div>

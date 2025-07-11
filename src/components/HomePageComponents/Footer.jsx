@@ -33,7 +33,7 @@ const Footer = () => {
                 <div>
                 <h3 className="cursor-pointer text-lg font-semibold mb-3">Company</h3>
                 <ul className="cursor-pointer space-y-2 text-sm">
-                    <li><a className="cursor-pointer hover:underline">About Us</a></li>
+                    <li><a onClick={() => navigate('/aboutus')} className="cursor-pointer hover:underline">About Us</a></li>
                     <li><a className="cursor-pointer hover:underline">Careers</a></li>
                     <li><a className="cursor-pointer hover:underline">Blog</a></li>
                 </ul>

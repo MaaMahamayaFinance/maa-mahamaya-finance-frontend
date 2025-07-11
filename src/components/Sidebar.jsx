@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import KYCModal from './pages/Business-Dashboard-Pages/KycModal.jsx';
 import {
   FaTachometerAlt, FaUniversity, FaCreditCard, FaHandHoldingUsd, FaChartPie, FaUserCog,
-  FaExchangeAlt, FaUsers, FaChartBar, FaCog, FaTasks, FaChartLine, FaHome, FaUser,
+  FaUsers, FaChartBar, FaCog, FaTasks, FaChartLine, FaHome, FaUser,
   FaSignOutAlt, FaCogs, FaDownload,
 } from 'react-icons/fa';
 import { PiCertificate } from 'react-icons/pi';

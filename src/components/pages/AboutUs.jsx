@@ -1,31 +1,33 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Footer from "../HomePageComponents/Footer";
+
 
 const teamMembers = [
   {
-    name: "jhon",
+    name: "Jhon",
     role: "Software Developer",
-    img: "/images/ceo.png",
+    img: "/about1.png",
   },
   {
     name: "Deewan Singh Mewada",
     role: "Software Developer",
-    img: "/images/cto.png",
+    img: "/about2.png",
   },
   {
     name: "Nitin",
     role: "Software Developer",
-    img: "/images/cmo.png",
+    img: "/about3.png",
   },
   {
     name: "Akshay",
     role: "Sales Head",
-    img: "/images/sales.png",
+    img: "/about4.png",
   },
   {
     name: "Deewan Rajput",
     role: "Web Developer",
-    img: "/images/deewan.png",
+    img: "/about5.png",
   },
 ];
 
@@ -40,51 +42,63 @@ const cardVariants = {
 
 const AboutUs = () => {
   return (
-    <div className=" text-gray-800 px-6 py-16 space-y-24">
-      {/* About MMF */}
-      <section className="text-center max-w-5xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-10">
+    <>
+    <div className="py-16 px-6 max-w-7xl mx-auto space-y-24 text-gray-800">
+      {/* About Section */}
+      <section className="text-center">
+        <h2 className="text-4xl font-bold mb-6">
           <span className="text-blue-600">About</span> Us
         </h2>
         <h1 className="text-5xl font-bold mb-6">Empowering Dreams, Building Financial Freedom</h1>
-        <p className="text-lg leading-8 text-gray-700">
+        <p className="text-lg leading-8 text-gray-700 max-w-4xl mx-auto">
           Maa Mahamaya Finance is not just a financial service provider — it's a movement towards financial empowerment. We specialize in comprehensive financial products, business consultation, and financial literacy services, tailored to both individuals and enterprises across India and the world.
         </p>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 text-gray-600 max-w-3xl mx-auto">
           Founded with a bold vision and backed by a team of strategic thinkers and financial experts, we are here to turn complexity into clarity — and your financial goals into reality.
         </p>
       </section>
 
       {/* Who We Are */}
-      <section className="max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center">Who We Are</h2>
-        <p className="text-lg text-gray-700 text-center">
+      <section className="text-center max-w-5xl mx-auto space-y-4">
+        <h2 className="text-3xl font-bold">Who We Are</h2>
+        <p className="text-lg text-gray-700">
           We are a team of passionate professionals committed to helping people grow, protect, and understand their wealth. Inspired by the power of Maa Mahamaya — a symbol of strength and wisdom — our company was established to become a trusted financial partner for individuals, startups, SMEs, and enterprises.
         </p>
-        <p className="mt-4 text-gray-600 text-center">
+        <p className="text-gray-600">
           From Tier-1 cities in India to international business hubs, our services reflect reliability, scalability, and ethical commitment.
         </p>
       </section>
 
       {/* Vision & Mission */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto text-center">
-        <div>
-          <h3 className="text-2xl font-semibold mb-2">Our Vision</h3>
-          <p className="text-gray-700">
-            To become a globally trusted financial powerhouse that transforms lives through responsible financial products, informed decisions, and strategic guidance.
-          </p>
-        </div>
-        <div>
-          <h3 className="text-2xl font-semibold mb-2">Our Mission</h3>
-          <p className="text-gray-700">
-            To empower individuals and businesses with the right financial tools, education, and consultancy — enabling them to make confident, sustainable, and smart financial decisions.
-          </p>
-        </div>
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto text-center">
+        {[
+          {
+            title: "Our Vision",
+            desc: "To become a globally trusted financial powerhouse that transforms lives through responsible financial products, informed decisions, and strategic guidance.",
+          },
+          {
+            title: "Our Mission",
+            desc: "To empower individuals and businesses with the right financial tools, education, and consultancy — enabling them to make confident, sustainable, and smart financial decisions.",
+          },
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            className="bg-white p-6 rounded-xl shadow-md"
+            initial="hidden"
+            animate="visible"
+            custom={i}
+            variants={cardVariants}
+            whileHover={{ scale: 1.03 }}
+          >
+            <h3 className="text-2xl font-semibold mb-2">{item.title}</h3>
+            <p className="text-gray-700">{item.desc}</p>
+          </motion.div>
+        ))}
       </section>
 
       {/* What We Do */}
-      <section className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8">What We Do</h2>
+      <section className="max-w-6xl mx-auto text-center">
+        <h2 className="text-3xl font-bold mb-10">What We Do</h2>
         <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-3">
           {[
             {
@@ -118,7 +132,7 @@ const AboutUs = () => {
           ].map((section, i) => (
             <motion.div
               key={i}
-              className="bg-gray-100 p-6 rounded-xl shadow-md"
+              className="bg-white p-6 rounded-xl shadow-md text-left"
               initial="hidden"
               animate="visible"
               custom={i}
@@ -126,7 +140,7 @@ const AboutUs = () => {
               whileHover={{ scale: 1.03 }}
             >
               <h4 className="font-bold text-xl mb-2">{section.title}</h4>
-              <ul className="text-gray-700 list-disc pl-5 space-y-1">
+              <ul className="list-disc pl-5 space-y-1 text-gray-700 text-sm">
                 {section.items.map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
@@ -134,7 +148,7 @@ const AboutUs = () => {
             </motion.div>
           ))}
         </div>
-        <p className="mt-6 text-sm text-red-500 italic text-center">
+        <p className="mt-6 text-sm text-red-500 italic text-center max-w-3xl mx-auto">
           ⚠️ Important Disclaimer: While we offer educational content and courses on the stock market, Maa Mahamaya Finance is <strong>not SEBI-registered</strong>. Our training is for <strong>educational and awareness purposes only</strong>. Consult certified advisors before investing.
         </p>
       </section>
@@ -143,19 +157,25 @@ const AboutUs = () => {
       <section className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-6">Our Core Values</h2>
         <div className="grid sm:grid-cols-2 gap-6 text-left text-gray-700">
-          <p><strong>Integrity:</strong> We do what’s right, not what’s easy.</p>
-          <p><strong>Transparency:</strong> Clear terms. No hidden agendas.</p>
-          <p><strong>Empowerment:</strong> We educate clients, not just advise them.</p>
-          <p><strong>Accessibility:</strong> Quality services at fair prices for everyone.</p>
-          <p><strong>Innovation:</strong> Using technology and data to bring smarter solutions.</p>
-          <p><strong>Client-Centricity:</strong> Every client is unique. So is our approach.</p>
+          {[
+            "Integrity: We do what’s right, not what’s easy.",
+            "Transparency: Clear terms. No hidden agendas.",
+            "Empowerment: We educate clients, not just advise them.",
+            "Accessibility: Quality services at fair prices for everyone.",
+            "Innovation: Using technology and data to bring smarter solutions.",
+            "Client-Centricity: Every client is unique. So is our approach.",
+          ].map((value, i) => (
+            <p key={i}>
+              <strong>{value.split(":")[0]}:</strong> {value.split(":")[1]}
+            </p>
+          ))}
         </div>
       </section>
 
       {/* Why Choose Us */}
       <section className="max-w-5xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-6">Why Choose Maa Mahamaya Finance?</h2>
-        <ul className="list-disc list-inside text-gray-700 space-y-2 text-left">
+        <ul className="list-disc list-inside text-gray-700 space-y-3 text-left text-sm sm:text-base">
           <li><strong>Tailored Financial Solutions:</strong> We listen before we advise. Our services are designed around your needs and goals.</li>
           <li><strong>Global Vision, Local Expertise:</strong> Whether you're in Delhi, Dubai, or Durban — we understand the financial climate, laws, and market behaviors.</li>
           <li><strong>Affordable & High-Impact:</strong> Our services are crafted to deliver exceptional value without straining your pocket.</li>
@@ -164,7 +184,7 @@ const AboutUs = () => {
         </ul>
       </section>
 
-      {/* Final Call to Action */}
+      {/* Final CTA */}
       <section className="text-center max-w-3xl mx-auto text-gray-700 space-y-4">
         <h2 className="text-2xl font-semibold mt-12">Ready to Take Charge of Your Financial Future?</h2>
         <p>Let us walk this journey with you — from confusion to confidence, from survival to success.</p>
@@ -173,8 +193,8 @@ const AboutUs = () => {
       </section>
 
       {/* Team Section */}
-      <section className="mt-20">
-        <h2 className="text-4xl font-bold text-center mb-10">People Behind MMF</h2>
+      <section className="mt-20 text-center">
+        <h2 className="text-4xl font-bold mb-10">People Behind MMF</h2>
         <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center">
           {teamMembers.map((member, index) => (
             <motion.div
@@ -200,6 +220,10 @@ const AboutUs = () => {
         </div>
       </section>
     </div>
+    <Footer/>
+    </>
+
+
   );
 };
 

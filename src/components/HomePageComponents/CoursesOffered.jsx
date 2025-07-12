@@ -3,7 +3,7 @@ import Tippy from "@tippyjs/react";
 import 'tippy.js/dist/tippy.css';
 import stockImg from "../../../public/stockmarket.jpg";
 import businessImg from "../../../public/businessConsulting.jpg";
-import financialImg from "../../../public/financialConsulting.jpg";
+import financialImg from "../../../public/Financialconsultant.png";
 
 const courses = [
   {

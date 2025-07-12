@@ -11,6 +11,8 @@ import MobileSidebar from './MobileSidebar';
 
 export default function Navbar({ user, navigate, logout }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [signingIn, setSigningIn] = useState(false);
 
   const roleDashboardRoutes = {
     employee: '/employee-dashboard',
@@ -38,13 +40,29 @@ export default function Navbar({ user, navigate, logout }) {
 
   return (
     <>
+    {(loggingOut || signingIn) && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-white/80 flex flex-col items-center justify-center z-[100]"
+        >
+          <svg className="animate-spin h-12 w-12 text-indigo-600" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+          </svg>
+          <div className="mt-6 text-xl font-semibold text-indigo-700">
+            {loggingOut ? 'Logging out...' : 'Redirecting...'}
+          </div>
+        </motion.div>
+      )}
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 80, damping: 14 }}
         className="bg-white shadow-lg fixed w-full top-0 z-50"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             {/* Logo */}
             <motion.div
@@ -65,7 +83,7 @@ export default function Navbar({ user, navigate, logout }) {
 
             {/* Desktop Nav */}
             <motion.div
-              className="hidden md:flex items-center space-x-8 text-[#4F46E5]"
+              className="hidden md:flex items-center space-x-14 text-[#4F46E5]"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
@@ -77,27 +95,27 @@ export default function Navbar({ user, navigate, logout }) {
                     el.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
-                className="hover:underline hover:text-indigo-700 transition"
+                className="hover:scale-105 hover:text-indigo-700 transition"
               >
                 Home
               </button>
 
               <button
                 onClick={() => navigate('/aboutus')}
-                className="hover:underline hover:text-indigo-700 transition"
+                className=" hover:scale-105 hover:text-indigo-700 transition whitespace-nowrap"
               >
                 About Us
               </button>
 
               <button
                 onClick={() => navigate('/testimonials')}
-                className="hover:underline hover:text-indigo-700 transition"
+                className="hover:scale-105 hover:text-indigo-700 transition"
               >
                 Testimonials
               </button>
 
               <button
-                className="hover:underline hover:text-indigo-700 transition"
+                className="hover:scale-105 hover:text-indigo-700 transition whitespace-nowrap"
                 onClick={() => {
                   const el = document.getElementById("contact");
                   if (el) {
@@ -115,39 +133,48 @@ export default function Navbar({ user, navigate, logout }) {
                 <div className="flex items-center space-x-4">
                   <button
                     onClick={handleDashboardRedirect}
-                    className="font-semibold hover:underline hover:text-indigo-700"
+                    className="font-semibold hover:scale-105 hover:text-indigo-700"
                   >
                     Hello {user.name}
                   </button>
                   <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    whileHover={{ scale: 1.05 }}
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                    className="btn-secondary text-[#4F46E5] px-4 py-2 rounded-full font-medium transition-all flex items-center gap-2"
-                  >
-                    <FiLogOut className="text-lg" />
-                    Logout
-                  </motion.button>
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={async () => {
+                    setLoggingOut(true);
+                    await new Promise(res => setTimeout(res, 1000));
+                    logout();
+                    navigate('/');
+                    setLoggingOut(false);
+                  }}
+                  className="btn-secondary text-[#4F46E5] px-4 py-2 rounded-full font-medium transition-all flex items-center gap-2"
+                  disabled={loggingOut}
+                >
+                  <FiLogOut className="text-lg" />
+                  Logout
+                </motion.button>
                 </div>
               ) : (
                 <>
                   <button
                     onClick={() => navigate('/services')}
-                    className="hover:underline hover:text-indigo-700 transition"
+                    className="hover:scale-105 hover:text-indigo-700 transition"
                   >
                     Services
                   </button>
-                  <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    whileHover={{ scale: 1.05 }}
-                    onClick={() => navigate('/login')}
-                    className="btn-primary text-[#4F46E5] px-6 py-2 rounded-full font-medium transition-all"
+                  <button
+                    onClick={async () => {
+                      setSigningIn(true);
+                      await new Promise(res => setTimeout(res, 1000));
+                      navigate('/login');
+                      setSigningIn(false);
+                      onClose();
+                    }}
+                    className="w-full text-white bg-[#4F46E5] px-6 py-2 rounded-full font-medium hover:bg-indigo-700 transition"
+                    disabled={signingIn}
                   >
                     Sign In
-                  </motion.button>
+                  </button>
                 </>
               )}
             </motion.div>

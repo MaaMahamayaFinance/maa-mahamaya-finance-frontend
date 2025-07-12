@@ -209,7 +209,7 @@ const requestOtp = async () => {
 
 
 return (
-  <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 flex items-center justify-center py-6 px-2">
+  <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 flex items-center justify-center py-6 px-2 overflow-x-hidden">
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}

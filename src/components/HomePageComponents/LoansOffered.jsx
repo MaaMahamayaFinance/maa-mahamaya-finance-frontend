@@ -3,6 +3,35 @@ import { motion, useInView } from "framer-motion";
 import LoanCard from "./LoanCard.jsx";
 import loansData from "./loanData.js";
 
+const gradients = [
+  // Purple-Pink (Personal Loan style)
+  "bg-gradient-to-br from-[#a18cd1] to-[#fbc2eb]",
+
+  // Blue-Cyan (Home Loan style)
+  "bg-gradient-to-br from-[#36d1c4] to-[#1e90ff]",
+
+  // Orange-Red (Car Insurance style)
+  "bg-gradient-to-br from-[#ff9966] to-[#ff5e62]",
+
+  // Teal-Green (Health Insurance style)
+  "bg-gradient-to-br from-[#11998e] to-[#38ef7d]",
+
+  // Indigo-Blue (Extra)
+  "bg-gradient-to-br from-[#6a11cb] to-[#2575fc]",
+
+  // Blue-Violet (Extra)
+  "bg-gradient-to-br from-[#43cea2] to-[#185a9d]",
+
+  // Orange-Yellow (Extra)
+  "bg-gradient-to-br from-[#f7971e] to-[#ffd200]",
+
+  // Pink-Red (Extra)
+  "bg-gradient-to-br from-[#ff6a00] to-[#ee0979]",
+];
+
+
+
+
 const LoansOffered = () => {
   const containerRef = useRef(null);
   const scrollAmount = useRef(0);
@@ -26,7 +55,7 @@ const LoansOffered = () => {
         // Reset scroll halfway (for loop illusion)
         if (
           scrollAmount.current >=
-          container.scrollWidth / 3 // adjust if you repeat 3 times
+          container.scrollWidth / 3
         ) {
           scrollAmount.current = 0;
           container.scrollLeft = 0;
@@ -78,7 +107,10 @@ const LoansOffered = () => {
             whileHover={{ scale: 1.01 }}
             transition={{ delay: index * 0.01 }}
           >
-            <LoanCard {...loan} />
+            <LoanCard
+              {...loan}
+              gradientClass={gradients[index % gradients.length]}
+            />
           </motion.div>
         ))}
       </div>

@@ -35,37 +35,37 @@ const Sidebar = ({ role, activeSection, setActiveSection, onClose }) => {
 
   const customerItems = [
     { id: 'customer-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
-    { id: 'accounts', label: 'Accounts', icon: <FaUniversity /> },
-    { id: 'payments', label: 'Payments', icon: <FaCreditCard /> },
-    { id: 'loans', label: 'Loans', icon: <FaHandHoldingUsd /> },
-    { id: 'investments', label: 'Investments', icon: <FaChartPie /> },
-    { id: 'profile', label: 'Profile', icon: <FaUserCog /> },
+    // { id: 'accounts', label: 'Accounts', icon: <FaUniversity /> },
+    // { id: 'payments', label: 'Payments', icon: <FaCreditCard /> },
+    // { id: 'loans', label: 'Loans', icon: <FaHandHoldingUsd /> },
+    // { id: 'investments', label: 'Investments', icon: <FaChartPie /> },
+    // { id: 'profile', label: 'Profile', icon: <FaUserCog /> },
   ];
 
 const businessItems = [
   { id: 'business-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
   { id: 'view-authorization-certificate', label: 'View Certificate', icon: <PiCertificate /> },
-  { id: 'reports', label: 'Reports', icon: <FaChartBar /> },
+  // { id: 'reports', label: 'Reports', icon: <FaChartBar /> },
   // only show if KYC not submitted
   ...(!kycSubmitted ? [{ id: 'kyc-details', label: 'KYC Details', icon: <BsFileEarmarkPerson /> }] : []),
-  { id: 'settings', label: 'Settings', icon: <FaCog /> },
+  // { id: 'settings', label: 'Settings', icon: <FaCog /> },
   { id: 'businessprofile', label: 'Profile', icon: <FaUserCog /> },
 ];
 
   const employeeItems = [
     { id: 'employee-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
-    { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
-    { id: 'clients', label: 'Clients', icon: <FaUsers /> },
-    { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
+    // { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
+    // { id: 'clients', label: 'Clients', icon: <FaUsers /> },
+    // { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
     { id: 'view-offer-letter', label: 'View Offer Letter', icon: <FaDownload /> },
     { id: 'profile', label: 'Profile', icon: <FaUser /> },
   ];
 
   const internItems = [
     { id: 'intern-dashboard', label: 'Dashboard', icon: <FaTachometerAlt /> },
-    { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
-    { id: 'clients', label: 'Clients', icon: <FaUsers /> },
-    { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
+    // { id: 'tasks', label: 'Tasks', icon: <FaTasks /> },
+    // { id: 'clients', label: 'Clients', icon: <FaUsers /> },
+    // { id: 'performance', label: 'Performance', icon: <FaChartLine /> },
     { id: 'view-intern-offer-letter', label: 'View Offer Letter', icon: <FaDownload /> },
     { id: 'view-intern-certificate', label: 'View Certificate', icon: <FaUser /> },
     { id: 'internprofile', label: 'Profile', icon: <FaUser /> }
@@ -76,9 +76,9 @@ const businessItems = [
     { id: 'employee-details', label: 'Employee Details', icon: <FaCogs /> },
     { id: 'intern-details', label: 'Intern Details', icon: <FaUser /> },
     { id: 'business-details', label: 'Business Details', icon: <FaCogs /> },
-    { id: 'users', label: 'User Management', icon: <FaUsers /> },
-    { id: 'reports', label: 'System Reports', icon: <FaChartBar /> },
-    { id: 'settings', label: 'System Settings', icon: <FaCog /> },
+    // { id: 'users', label: 'User Management', icon: <FaUsers /> },
+    // { id: 'reports', label: 'System Reports', icon: <FaChartBar /> },
+    // { id: 'settings', label: 'System Settings', icon: <FaCog /> },
   ];
 
   let items = [];
@@ -134,7 +134,7 @@ const businessItems = [
           <motion.div
             whileHover="hover"
             variants={itemVariants}
-            className="px-6 py-3 cursor-pointer flex items-center gap-3 text-gray-800 hover:bg-blue-200 rounded"
+            className="px-6 py-4 cursor-pointer flex items-center gap-6 text-gray-800 hover:bg-blue-200 rounded"
             onClick={() => {
               setActiveSection('overview');
               navigate('/');
@@ -149,7 +149,7 @@ const businessItems = [
               key={item.id}
               whileHover="hover"
               variants={itemVariants}
-              className={`px-6 py-2 cursor-pointer flex items-center gap-3 ${
+              className={`px-6 py-4 cursor-pointer flex items-center gap-6 ${
                 activeSection === item.id
                   ? 'bg-blue-100 font-semibold rounded text-blue-800'
                   : 'text-gray-800'

@@ -44,23 +44,64 @@ function MobileSidebar({
 
 
       {/* Sidebar */}
-      <aside className="fixed top-0 left-0 bottom-0 w-64 bg-white text-[#4F46E5] z-50 p-6 flex flex-col h-full shadow-lg transition-all duration-300">
+      <aside className="fixed top-0 left-0 bottom-0 w-72 bg-white text-[#4F46E5] z-50 p-6 flex flex-col h-full shadow-lg transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold">Menu</h2>
+          <h2 className="text-2xl font-bold">Menu</h2>
           <button
             onClick={onClose}
             aria-label="Close menu"
             className="text-[#4F46E5] hover:text-indigo-700 transition"
           >
             <button onClick={onClose} aria-label="Close menu">
-            <HiX className="h-6 w-6 text-black transition" />
+            <HiX className="h-6 w-6  transition" />
             </button>
           </button>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex-1 flex flex-col items-start gap-4 mt-4 space-y-4 overflow-y-auto">
+        <div className="flex-1 flex flex-col text-xl gap-6 items-center mt-4 space-y-4 overflow-y-auto">
+          <button 
+            onClick={() => {
+                  const el = document.getElementById("home-hero");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  }
+                  onClose()
+                }}
+            className="hover:text-indigo-700 text-center transition hover:scale-105"
+          >
+            Home
+          </button>
+          <button 
+            onClick={() => {
+              navigate('/aboutus');
+              onClose()
+            }}
+            className="hover:text-indigo-700 text-center transition hover:scale-105"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => {
+              navigate('/testimonials');
+              onClose();
+            }}
+            className="hover:text-indigo-700 text-center transition hover:scale-105"
+          >
+            Testimonials
+          </button>
+          <button className="hover:text-indigo-700 text-center transition hover:scale-105"
+            onClick={() => {
+                  const el = document.getElementById("contact");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  }
+                  onClose()
+                }}
+          >
+            Contact Us
+          </button>
           <button 
             onClick={() => {
               navigate('/services');
@@ -69,18 +110,6 @@ function MobileSidebar({
             className="hover:text-indigo-700 text-center transition"
           >
             Services
-          </button>
-          <button
-            onClick={() => {
-              navigate('/testimonials');
-              onClose();
-            }}
-            className="hover:text-indigo-700 text-center transition"
-          >
-            Testimonials
-          </button>
-          <button className="hover:text-indigo-700 text-center transition">
-            Contact Us
           </button>
 
           {/* Role-based links */}
@@ -93,7 +122,7 @@ function MobileSidebar({
             navigate(route);
             onClose();
             }}
-            className="font-semibold hover:underline text-left w-full mb-2"
+            className="font-semibold hover:underline text-center w-full mb-2 hover:scale-105"
         >
             Hello {user.name}
         </button>

@@ -135,7 +135,7 @@ export default function Navbar({ user, navigate, logout }) {
                     onClick={handleDashboardRedirect}
                     className="font-semibold hover:scale-105 hover:text-indigo-700"
                   >
-                    Hello {user.name}
+                    Hello {user.name?.split(" ")[0] || ""}
                   </button>
                   <motion.button
                   whileTap={{ scale: 0.95 }}

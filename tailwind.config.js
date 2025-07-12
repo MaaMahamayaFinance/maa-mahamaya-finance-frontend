@@ -24,6 +24,9 @@ module.exports = {
       transformOrigin: {
         'center': 'center',
       },
+      screens: {
+        xs: '375px',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],

@@ -15,7 +15,7 @@ import EmployeeRoutes from './Routes/EmployeeRoutes.jsx';
 import BusinessRoutes from './Routes/BusinessRoutes.jsx';
 import CustomerRoutes from './Routes/CustomerRoutes.jsx';
 import PrivacyPolicy from './utils/PrivacyPolicy.jsx';
-import AboutUs from './components/pages/Aboutus.jsx';
+import AboutUs from './components/pages/AboutUs.jsx';
 
 function App() {
   return (

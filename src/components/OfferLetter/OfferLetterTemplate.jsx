@@ -11,7 +11,7 @@ const OfferLetterTemplate = ({
   ctc
 }) => {
   return (
-    <div className="offer-letter w-[210mm] mx-auto bg-white p-10 sm:p-12 shadow-2xl text-gray-900 font-serif border border-gray-300">
+    <div className="offer-letter w-full max-w-[210mm] mx-auto bg-white p-4 sm:p-10 shadow-2xl text-gray-900 font-serif border border-gray-300">
       <style>{`
         @media print {
           .offer-letter {
@@ -32,7 +32,7 @@ const OfferLetterTemplate = ({
         <div className="flex items-center gap-4">
           <img src="/logo.png" alt="Company Logo" className="h-20 w-auto" />
           <div>
-            <h1 className="text-3xl font-extrabold tracking-wide text-indigo-800 uppercase leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-wide text-indigo-800 uppercase leading-tight">
               Maa Mahamaya Finance
             </h1>
             <p className="text-sm font-semibold uppercase tracking-widest text-gray-600">
@@ -118,9 +118,9 @@ const OfferLetterTemplate = ({
           <p><span className="font-semibold">Warm Regards,</span></p>
           <p className="font-medium">Position: CEO</p>
           <div className="space-y-2">
-          <p><strong>Signature:</strong></p>
-          <p><strong>Date:</strong> {letterDate}</p>
-        </div>
+            <p><strong>Signature:</strong></p>
+            <p><strong>Date:</strong> {letterDate}</p>
+          </div>
         </div>
       </section>
 
